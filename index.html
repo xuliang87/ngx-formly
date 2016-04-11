@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Ng2-formly by formly-js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Ng2-formly</h1>
+      <h2 class="project-tagline">JavaScript powered FORMS for ANGULAR 2</h2>
+      <a href="https://github.com/formly-js/ng2-formly" class="btn">View on GitHub</a>
+      <a href="https://github.com/formly-js/ng2-formly/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/formly-js/ng2-formly/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><img src="https://raw.githubusercontent.com/formly-js/angular-formly/master/other/logo/angular-formly-logo-64px.png" alt="angular-formly logo" title="angular-formly" align="right" width="64" height="64"></p>
+
+<h1>
+<a id="ng2-formly" class="anchor" href="#ng2-formly" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ng2-formly</h1>
+
+<p>Status: 
+<a href="https://travis-ci.org/formly-js/ng2-formly"><img src="https://travis-ci.org/formly-js/ng2-formly.svg?branch=master" alt="Build Status"></a>
+<a href="https://badge.fury.io/js/ng2-formly"><img src="https://badge.fury.io/js/ng2-formly.svg" alt="npm version"></a></p>
+
+<p>Links:
+<a href="https://gitter.im/formly-js/angular2-formly?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge"><img src="https://badges.gitter.im/formly-js/angular2-formly.svg" alt="Gitter"></a>
+<a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome"></a></p>
+
+<p>angular2-formly is an Angular 2 module which has a Components to help customize and render JavaScript/JSON configured forms.
+The <code>formly-form</code> Component and the <code>FormlyConfig</code> service are very powerful and bring unmatched maintainability to your
+application's forms.</p>
+
+<p><strong><em>This is still a serious WIP.</em></strong></p>
+
+<p>Include the FormlyForm in the <code>directives</code> attribute of you <code>Component</code> and put this in your template</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">formly</span><span class="pl-e">-form</span> [<span class="pl-e">model</span>]=<span class="pl-s"><span class="pl-pds">"</span>user<span class="pl-pds">"</span></span> [<span class="pl-e">fields</span>]=<span class="pl-s"><span class="pl-pds">"</span>userFields<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>btn btn-default<span class="pl-pds">"</span></span> (<span class="pl-e">click</span>)=<span class="pl-s"><span class="pl-pds">"</span>submit(user)<span class="pl-pds">"</span></span>&gt;Button&lt;/<span class="pl-ent">button</span>&gt;
+&lt;/<span class="pl-ent">formly</span><span class="pl-e">-form</span>&gt;</pre></div>
+
+<p>and in your TypeScript file define the the <code>model</code> and <code>fields</code> attrnbutes</p>
+
+<div class="highlight highlight-source-ts"><pre><span class="pl-c1">this</span>.userFields <span class="pl-k">=</span> [{
+  className: <span class="pl-s">'row'</span>,
+  fieldGroup: [{
+      className: <span class="pl-s">'col-xs-6'</span>,
+      key: <span class="pl-s">'email'</span>,
+      type: <span class="pl-s">'input'</span>,
+      templateOptions: {
+          type: <span class="pl-s">'email'</span>,
+          label: <span class="pl-s">'Email address'</span>,
+          placeholder: <span class="pl-s">'Enter email'</span>
+      },
+      validation: Validators.compose([Validators.required, ValidationService.emailValidator])
+  }, {
+      className: <span class="pl-s">'col-xs-6'</span>,
+      key: <span class="pl-s">'password'</span>,
+      type: <span class="pl-s">'input'</span>,
+      templateOptions: {
+          type: <span class="pl-s">'password'</span>,
+          label: <span class="pl-s">'Password'</span>,
+          placeholder: <span class="pl-s">'Password'</span>,
+          pattern: <span class="pl-s">''</span>
+      },
+      validation: Validators.compose([Validators.required, Validators.maxLength(<span class="pl-c1">10</span>), Validators.minLength(<span class="pl-c1">2</span>)])
+  }]
+}];
+
+<span class="pl-c1">this</span>.user <span class="pl-k">=</span> {
+  email: <span class="pl-s">'email@gmail.com'</span>,
+  checked: <span class="pl-c1">false</span>
+};
+</pre></div>
+
+<p>From there, it's just JavaScript. Allowing for DRY, maintainable, reusable forms.</p>
+
+<h2>
+<a id="roadmap" class="anchor" href="#roadmap" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Roadmap</h2>
+
+<p>See the <a href="https://github.com/formly-js/angular2-formly/labels/enhancement">issues labeled enhancement</a></p>
+
+<h2>
+<a id="financial-support" class="anchor" href="#financial-support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Financial Support</h2>
+
+<p>Some have expressed a desire to contribute financially as a way of expressing gratitude. I appreciate anything you (or
+your company) would be willing to contribute :-) You can support me <a href="https://www.patreon.com/mohammedzamakhan">here</a>. Thanks!</p>
+
+<h2>
+<a id="thanks" class="anchor" href="#thanks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Thanks</h2>
+
+<p>A special thanks to <a href="https://twitter.com/kentcdodds">Kent C. Dodds</a> for giving me opportunity to work on this.
+This library is maintained (with love) by me, <a href="https://twitter.com/mohamedzamakhan">Mohammed Zama Khan</a>.
+Thanks to all <a href="https://github.com/formly-js/angular2-formly/graphs/contributors">contributors</a>!
+If you're trying to find angular-formly, go <a href="https://github.com/formly-js/angular-formly">here</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/formly-js/ng2-formly">Ng2-formly</a> is maintained by <a href="https://github.com/formly-js">formly-js</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
