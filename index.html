@@ -78,6 +78,64 @@ application's forms.</p>
 };
 </pre></div>
 
+<h2>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quick Start</h2>
+
+<ul>
+<li>install <code>ng2-formly</code>
+</li>
+</ul>
+
+<div class="highlight highlight-source-shell"><pre>  npm install ng2-formly --save</pre></div>
+
+<ul>
+<li>add the script to the HTML file</li>
+</ul>
+
+<div class="highlight highlight-text-html-basic"><pre><span class="pl-c">&lt;!-- index.html --&gt;</span>
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>node_modules/ng2-formly/bundles/ng2-formly.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+</pre></div>
+
+<ul>
+<li>and to your component add</li>
+</ul>
+
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> {Component} <span class="pl-k">from</span> <span class="pl-s">'angular2/core'</span>;
+<span class="pl-k">import</span> {bootstrap} <span class="pl-k">from</span> <span class="pl-s">'angular2/platform/browser'</span>;
+<span class="pl-k">import</span> {FormlyForm, FormlyConfig, FormlyMessages, TemplateDirectives, FormlyProviders} <span class="pl-k">from</span> <span class="pl-s">'ng2-formly/ng2-formly'</span>
+
+@Component({
+    selector: <span class="pl-s">'hello-app'</span>,
+    template: <span class="pl-s">`</span>
+<span class="pl-s">        &lt;h1&gt;Hello, {{name}}!&lt;/h1&gt;</span>
+<span class="pl-s">        Say hello to: &lt;input [value]="name" (input)="name = $event.target.value"&gt;</span>
+<span class="pl-s">        &lt;formly-form [model]="user" [fields]="userFields"&gt;&lt;/formly-form&gt;</span>
+<span class="pl-s">    `</span>,
+    directives: [FormlyForm],
+    providers: [FormlyConfig, FormlyMessages]
+})
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">HelloApp</span> {
+    <span class="pl-v">name</span>: <span class="pl-k">string</span> <span class="pl-k">=</span> <span class="pl-s">'World'</span>;
+    <span class="pl-v">user</span> <span class="pl-k">=</span> {};
+    userFields;
+    <span class="pl-en">constructor</span>(<span class="pl-v">fc</span>: FormlyConfig) {
+        [<span class="pl-s">'input'</span>, <span class="pl-s">'checkbox'</span>].forEach((field) <span class="pl-k">=&gt;</span> {
+            fc.setType({
+                name: field,
+                component: TemplateDirectives[field]
+            })
+        });
+
+        <span class="pl-c1">this</span>.userFields <span class="pl-k">=</span> [{
+            key: <span class="pl-s">'nameOfPerson'</span>,
+            type: <span class="pl-s">'input'</span>,
+            templateOptions: {}
+        }]
+    }
+}
+
+bootstrap(HelloApp, [FormlyProviders]);</pre></div>
+
 <p>From there, it's just JavaScript. Allowing for DRY, maintainable, reusable forms.</p>
 
 <h2>
