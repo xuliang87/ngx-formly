@@ -19,12 +19,13 @@
     </section>
 
     <section class="main-content">
-      <p><img src="https://raw.githubusercontent.com/formly-js/angular-formly/master/other/logo/angular-formly-logo-64px.png" alt="angular-formly logo" title="angular-formly" align="right" width="64" height="64"></p>
+      <p><a href="https://waffle.io/formly-js/ng2-formly"><img src="https://badge.waffle.io/formly-js/ng2-formly.png?label=ready&amp;title=Ready" alt="Stories in Ready"></a>
+<img src="https://raw.githubusercontent.com/formly-js/angular-formly/master/other/logo/angular-formly-logo-64px.png" alt="angular-formly logo" title="angular-formly" align="right" width="64" height="64"></p>
 
 <h1>
 <a id="ng2-formly" class="anchor" href="#ng2-formly" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ng2-formly</h1>
 
-<p>Status: 
+<p>Status:
 <a href="https://travis-ci.org/formly-js/ng2-formly"><img src="https://travis-ci.org/formly-js/ng2-formly.svg?branch=master" alt="Build Status"></a>
 <a href="https://badge.fury.io/js/ng2-formly"><img src="https://badge.fury.io/js/ng2-formly.svg" alt="npm version"></a></p>
 
@@ -38,13 +39,15 @@ application's forms.</p>
 
 <p><strong><em>This is still a serious WIP.</em></strong></p>
 
-<p>Include the FormlyForm in the <code>directives</code> attribute of you <code>Component</code> and put this in your template</p>
+<p>Include the FormlyForm component import in the <code>directives</code> attribute of your <code>Component</code> and put this in your template</p>
 
-<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">formly</span><span class="pl-e">-form</span> [<span class="pl-e">model</span>]=<span class="pl-s"><span class="pl-pds">"</span>user<span class="pl-pds">"</span></span> [<span class="pl-e">fields</span>]=<span class="pl-s"><span class="pl-pds">"</span>userFields<span class="pl-pds">"</span></span>&gt;
-    &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>btn btn-default<span class="pl-pds">"</span></span> (<span class="pl-e">click</span>)=<span class="pl-s"><span class="pl-pds">"</span>submit(user)<span class="pl-pds">"</span></span>&gt;Button&lt;/<span class="pl-ent">button</span>&gt;
-&lt;/<span class="pl-ent">formly</span><span class="pl-e">-form</span>&gt;</pre></div>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">form</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>formly<span class="pl-pds">"</span></span> <span class="pl-e">role</span>=<span class="pl-s"><span class="pl-pds">"</span>form<span class="pl-pds">"</span></span> <span class="pl-e">novalidate</span> [<span class="pl-e">formGroup</span>]=<span class="pl-s"><span class="pl-pds">"</span>form<span class="pl-pds">"</span></span> (<span class="pl-e">ngSubmit</span>)=<span class="pl-s"><span class="pl-pds">"</span>submit(user)<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">formly</span><span class="pl-e">-form</span> [<span class="pl-e">model</span>]=<span class="pl-s"><span class="pl-pds">"</span>user<span class="pl-pds">"</span></span> [<span class="pl-e">fields</span>]=<span class="pl-s"><span class="pl-pds">"</span>userFields<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>btn btn-default<span class="pl-pds">"</span></span>&gt;Button&lt;/<span class="pl-ent">button</span>&gt;
+    &lt;/<span class="pl-ent">formly</span><span class="pl-e">-form</span>&gt;
+&lt;/<span class="pl-ent">form</span>&gt;</pre></div>
 
-<p>and in your TypeScript file define the the <code>model</code> and <code>fields</code> attrnbutes</p>
+<p>and in your TypeScript file define the the <code>model</code> and <code>fields</code> attributes</p>
 
 <div class="highlight highlight-source-ts"><pre><span class="pl-c1">this</span>.userFields <span class="pl-k">=</span> [{
   className: <span class="pl-s">'row'</span>,
@@ -89,7 +92,7 @@ application's forms.</p>
 <div class="highlight highlight-source-shell"><pre>  npm install ng2-formly --save</pre></div>
 
 <ul>
-<li>add the script to the HTML file</li>
+<li>add the script to the HTML file (if necessary)</li>
 </ul>
 
 <div class="highlight highlight-text-html-basic"><pre><span class="pl-c">&lt;!-- index.html --&gt;</span>
@@ -100,9 +103,9 @@ application's forms.</p>
 <li>and to your component add</li>
 </ul>
 
-<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> {Component} <span class="pl-k">from</span> <span class="pl-s">'angular2/core'</span>;
-<span class="pl-k">import</span> {bootstrap} <span class="pl-k">from</span> <span class="pl-s">'angular2/platform/browser'</span>;
-<span class="pl-k">import</span> {FormlyForm, FormlyConfig, FormlyMessages, TemplateDirectives, FormlyProviders} <span class="pl-k">from</span> <span class="pl-s">'ng2-formly/ng2-formly'</span>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> {Component} <span class="pl-k">from</span> <span class="pl-s">'@angular/core'</span>;
+<span class="pl-k">import</span> {bootstrap} <span class="pl-k">from</span> <span class="pl-s">'@angular/platform/browser'</span>;
+<span class="pl-k">import</span> {FormlyForm, FormlyConfig, FormlyMessages, TemplateDirectives, FormlyProviders} <span class="pl-k">from</span> <span class="pl-s">'ng2-formly'</span>
 
 @Component({
     selector: <span class="pl-s">'hello-app'</span>,
@@ -144,10 +147,12 @@ bootstrap(HelloApp, [FormlyProviders]);</pre></div>
 <p>See the <a href="https://github.com/formly-js/angular2-formly/labels/enhancement">issues labeled enhancement</a></p>
 
 <h2>
-<a id="financial-support" class="anchor" href="#financial-support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Financial Support</h2>
+<a id="supported-templates" class="anchor" href="#supported-templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported templates</h2>
 
-<p>Some have expressed a desire to contribute financially as a way of expressing gratitude. I appreciate anything you (or
-your company) would be willing to contribute :-) You can support me <a href="https://www.patreon.com/mohammedzamakhan">here</a>. Thanks!</p>
+<ul>
+<li><a href="https://github.com/formly-js/ng2-formly-template-material">Material2</a></li>
+<li><a href="https://github.com/formly-js/ng2-formly-templates-bootstrap">Bootstrap</a></li>
+</ul>
 
 <h2>
 <a id="thanks" class="anchor" href="#thanks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Thanks</h2>
