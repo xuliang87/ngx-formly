@@ -115,10 +115,10 @@ application's forms.</p>
     providers: [FormlyConfig, FormlyMessages]
 })
 <span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">HelloApp</span> {
-    <span class="pl-v">name</span>: <span class="pl-k">string</span> <span class="pl-k">=</span> <span class="pl-s">'World'</span>;
+    <span class="pl-v">name</span>: <span class="pl-c1">string</span> <span class="pl-k">=</span> <span class="pl-s">'World'</span>;
     <span class="pl-v">user</span> <span class="pl-k">=</span> {};
     userFields;
-    <span class="pl-en">constructor</span>(<span class="pl-v">fc</span>: FormlyConfig) {
+    <span class="pl-k">constructor</span>(<span class="pl-v">fc</span>: FormlyConfig) {
         [<span class="pl-s">'input'</span>, <span class="pl-s">'checkbox'</span>].forEach((field) <span class="pl-k">=&gt;</span> {
             fc.setType({
                 name: field,
