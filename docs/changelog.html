@@ -1,0 +1,616 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Angular Formly</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	    <link rel="stylesheet" href="./styles/style.css">
+                 <link rel="stylesheet" href="./styles/laravel.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">Angular Formly</a>
+            <button type="button" class="btn btn-default btn-menu fa fa-bars" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+            <div id="book-search-input" role="search">
+                <input type="text" placeholder="Type to search">
+            </div>
+            <nav>
+            
+                <ul class="list">
+            
+                    <li class="title">
+                        <a href="./index.html">Angular Formly</a>
+                    </li>
+            
+                    <li class="divider"></li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./index.html"><span class="fa fa-home"></span>Getting started</a>
+                        <ul class="links">
+                                <li class="link">
+                                    <a 
+                                        
+                                         href="./overview.html" 
+                                         href="./overview.html" 
+                                        >
+                                        <span class="fa fa-th"></span>Overview
+                                    </a>
+                                </li>
+                                <li class="link">
+                                  <a href="./index.html" ><span class="fa fa-file-text-o"></span>README</a>
+                                </li>
+                                <li class="link">
+                                        <a href="./changelog.html"
+                                    >
+                                        <span class="fa fa-file-text-o"></span>CHANGELOG
+                                    </a>
+                                </li>
+                                <li class="link">
+                                        <a href="./contributing.html"
+                                    >
+                                        <span class="fa fa-file-text-o"></span>CONTRIBUTING
+                                    </a>
+                                </li>
+                                <li class="link">
+                                        <a href="./license.html"
+                                    >
+                                        <span class="fa fa-file-text-o"></span>LICENSE
+                                    </a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./modules.html" >
+                            <div class="menu-toggler linked" data-toggle="collapse"
+                                    data-target="#xs-modules-links"
+                            >
+                                <span class="fa fa-archive"></span>
+                                <span class="link-name">Modules</span>
+                                <span class="fa fa-angle-down"></span>
+                            </div>
+                        </a>
+                        <ul class="links collapse "
+                                id="xs-modules-links"
+                            >
+                                <li class="link">
+                                    <a href="./modules/FormlyModule.html" >FormlyModule</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-components-links"
+                            >
+                            <span class="fa fa-cogs"></span>
+                            <span>Components</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-components-links"
+                            >
+                                <li class="link">
+                                    <a href="./components/FormlyField.html" >FormlyField</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./components/FormlyForm.html" >FormlyForm</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./components/FormlyGroup.html" >FormlyGroup</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./components/FormlyValidationMessage.html" >FormlyValidationMessage</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-directives-links"
+                            >
+                            <span class="fa fa-code"></span>
+                            <span>Directives</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-directives-links"
+                            >
+                                <li class="link">
+                                    <a href="./directives/FormlyAttributes.html" >FormlyAttributes</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-classes-links"
+                            >
+                            <span class="fa fa-file-code-o"></span>
+                            <span>Classes</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-classes-links"
+                            >
+                                <li class="link">
+                                    <a href="./classes/Field.html" >Field</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/FieldType.html" >FieldType</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/FieldWrapper.html" >FieldWrapper</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-injectables-links"
+                            >
+                            <span class="fa fa-long-arrow-down"></span>
+                            <span>Injectables</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-injectables-links"
+                            >
+                                <li class="link">
+                                    <a href="./injectables/FormlyConfig.html" >FormlyConfig</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./injectables/FormlyFormBuilder.html" >FormlyFormBuilder</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-interfaces-links"
+                            >
+                            <span class="fa fa-info"></span>
+                            <span>Interfaces</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-interfaces-links"
+                            >
+                                <li class="link">
+                                    <a href="./interfaces/ConfigOption.html" >ConfigOption</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/FormlyOptions.html" >FormlyOptions</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/FormlyValueChangeEvent.html" >FormlyValueChangeEvent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ManipulatorOption.html" >ManipulatorOption</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/TypeOption.html" >TypeOption</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ValidationMessageOption.html" >ValidationMessageOption</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ValidatorOption.html" >ValidatorOption</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/WrapperOption.html" >WrapperOption</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-miscellaneous-links"
+                            >
+                            <span class="fa fa-cubes"></span>
+                            <span>Miscellaneous</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-miscellaneous-links"
+                            >
+                                <li class="link">
+                                  <a href="./miscellaneous/functions.html" data-type="entity-link" >Functions</a>
+                                </li>
+                                <li class="link">
+                                  <a href="./miscellaneous/variables.html" data-type="entity-link" >Variables</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+            
+            
+                </ul>
+            
+            </nav>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <nav>
+                   
+                       <ul class="list">
+                   
+                           <li class="title">
+                               <a href="./index.html">Angular Formly</a>
+                           </li>
+                   
+                           <li class="divider"></li>
+                   
+                               <div id="book-search-input" role="search">
+                                   <input type="text" placeholder="Type to search">
+                               </div>
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./index.html"><span class="fa fa-home"></span>Getting started</a>
+                               <ul class="links">
+                                       <li class="link">
+                                           <a 
+                                               
+                                                href="./overview.html" 
+                                                href="./overview.html" 
+                                               >
+                                               <span class="fa fa-th"></span>Overview
+                                           </a>
+                                       </li>
+                                       <li class="link">
+                                         <a href="./index.html" ><span class="fa fa-file-text-o"></span>README</a>
+                                       </li>
+                                       <li class="link">
+                                               <a href="./changelog.html"
+                                           >
+                                               <span class="fa fa-file-text-o"></span>CHANGELOG
+                                           </a>
+                                       </li>
+                                       <li class="link">
+                                               <a href="./contributing.html"
+                                           >
+                                               <span class="fa fa-file-text-o"></span>CONTRIBUTING
+                                           </a>
+                                       </li>
+                                       <li class="link">
+                                               <a href="./license.html"
+                                           >
+                                               <span class="fa fa-file-text-o"></span>LICENSE
+                                           </a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./modules.html" >
+                                   <div class="menu-toggler linked" data-toggle="collapse"
+                                           data-target="#modules-links"
+                                   >
+                                       <span class="fa fa-archive"></span>
+                                       <span class="link-name">Modules</span>
+                                       <span class="fa fa-angle-down"></span>
+                                   </div>
+                               </a>
+                               <ul class="links collapse "
+                                       id="modules-links"
+                   >
+                                       <li class="link">
+                                           <a href="./modules/FormlyModule.html" >FormlyModule</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#components-links"
+                   >
+                                   <span class="fa fa-cogs"></span>
+                                   <span>Components</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="components-links"
+                   >
+                                       <li class="link">
+                                           <a href="./components/FormlyField.html" >FormlyField</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./components/FormlyForm.html" >FormlyForm</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./components/FormlyGroup.html" >FormlyGroup</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./components/FormlyValidationMessage.html" >FormlyValidationMessage</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#directives-links"
+                   >
+                                   <span class="fa fa-code"></span>
+                                   <span>Directives</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="directives-links"
+                   >
+                                       <li class="link">
+                                           <a href="./directives/FormlyAttributes.html" >FormlyAttributes</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#classes-links"
+                   >
+                                   <span class="fa fa-file-code-o"></span>
+                                   <span>Classes</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="classes-links"
+                   >
+                                       <li class="link">
+                                           <a href="./classes/Field.html" >Field</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/FieldType.html" >FieldType</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/FieldWrapper.html" >FieldWrapper</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#injectables-links"
+                   >
+                                   <span class="fa fa-long-arrow-down"></span>
+                                   <span>Injectables</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="injectables-links"
+                   >
+                                       <li class="link">
+                                           <a href="./injectables/FormlyConfig.html" >FormlyConfig</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./injectables/FormlyFormBuilder.html" >FormlyFormBuilder</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#interfaces-links"
+                   >
+                                   <span class="fa fa-info"></span>
+                                   <span>Interfaces</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="interfaces-links"
+                   >
+                                       <li class="link">
+                                           <a href="./interfaces/ConfigOption.html" >ConfigOption</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/FormlyOptions.html" >FormlyOptions</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/FormlyValueChangeEvent.html" >FormlyValueChangeEvent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ManipulatorOption.html" >ManipulatorOption</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/TypeOption.html" >TypeOption</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ValidationMessageOption.html" >ValidationMessageOption</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ValidatorOption.html" >ValidatorOption</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/WrapperOption.html" >WrapperOption</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#miscellaneous-links"
+                   >
+                                   <span class="fa fa-cubes"></span>
+                                   <span>Miscellaneous</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="miscellaneous-links"
+                   >
+                                       <li class="link">
+                                         <a href="./miscellaneous/functions.html" data-type="entity-link" >Functions</a>
+                                       </li>
+                                       <li class="link">
+                                         <a href="./miscellaneous/variables.html" data-type="entity-link" >Variables</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                   
+                   
+                       </ul>
+                   
+                   </nav>
+               </div>
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="change-log">Change Log</h1>
+<p>All notable changes to this project will be documented in this file. See <a href="https://github.com/conventional-changelog/standard-version">standard-version</a> for commit guidelines.</p>
+<p><a name="2.0.0-beta.3"></a></p>
+<h1 id="-2-0-0-beta-3-https-github-com-formly-js-ng-formly-compare-v2-0-0-beta-2-v2-0-0-beta-3-2017-11-07-"><a href="https://github.com/formly-js/ng-formly/compare/v2.0.0-beta.2...v2.0.0-beta.3">2.0.0-beta.3</a> (2017-11-07)</h1>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>#551:</strong> ensure templateOptions is defined (<a href="https://github.com/formly-js/ng-formly/issues/553">#553</a>) (<a href="https://github.com/formly-js/ng-formly/commit/48f4a36">48f4a36</a>)</li>
+<li><strong>#551:</strong> fixed assign object to string for <code>assignModelValue</code> (<a href="https://github.com/formly-js/ng-formly/issues/552">#552</a>) (<a href="https://github.com/formly-js/ng-formly/commit/7b37c56">7b37c56</a>)</li>
+</ul>
+<p><a name="2.0.0-beta.2"></a></p>
+<h1 id="-2-0-0-beta-2-https-github-com-formly-js-ng-formly-compare-v2-0-0-beta-1-v2-0-0-beta-2-2017-11-07-"><a href="https://github.com/formly-js/ng-formly/compare/v2.0.0-beta.1...v2.0.0-beta.2">2.0.0-beta.2</a> (2017-11-07)</h1>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>clone:</strong> create clone of date instead of empty object. (<a href="https://github.com/formly-js/ng-formly/issues/549">#549</a>) (<a href="https://github.com/formly-js/ng-formly/commit/0dea289">0dea289</a>)</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>field:</strong> allow passing function for field expression. (<a href="https://github.com/formly-js/ng-formly/issues/548">#548</a>) (<a href="https://github.com/formly-js/ng-formly/commit/5e630fe">5e630fe</a>)</li>
+<li><strong>material2:</strong> update to 5.0.0-rc0 (<a href="https://github.com/formly-js/ng-formly/issues/550">#550</a>) (<a href="https://github.com/formly-js/ng-formly/commit/10baf1e">10baf1e</a>)</li>
+</ul>
+<p><a name="2.0.0-beta.1"></a></p>
+<h1 id="-2-0-0-beta-1-https-github-com-formly-js-ng-formly-compare-v2-0-0-beta-0-v2-0-0-beta-1-2017-11-03-"><a href="https://github.com/formly-js/ng-formly/compare/v2.0.0-beta.0...v2.0.0-beta.1">2.0.0-beta.1</a> (2017-11-03)</h1>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>textarea:</strong>  set default value for rows and cols (<a href="https://github.com/formly-js/ng-formly/issues/546">#546</a>) (<a href="https://github.com/formly-js/ng-formly/commit/2a0f783">2a0f783</a>)</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>validation:</strong> move FormlyValidationMessage into core module (<a href="https://github.com/formly-js/ng-formly/issues/547">#547</a>) (<a href="https://github.com/formly-js/ng-formly/commit/da502f2">da502f2</a>)</li>
+</ul>
+<p><a name="2.0.0-beta.0"></a></p>
+<h1 id="-2-0-0-beta-0-https-github-com-formly-js-ng-formly-compare-1-0-0-rc-14-2-0-0-beta-0-2017-11-01-"><a href="https://github.com/formly-js/ng-formly/compare/1.0.0-rc.14...2.0.0-beta.0">2.0.0-beta.0</a> (2017-11-01)</h1>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li>replace deprecated OpaqueToken with InjectionToken (<a href="https://github.com/formly-js/ng-formly/issues/508">#508</a>) (<a href="https://github.com/formly-js/ng-formly/commit/fbf1dc3">fbf1dc3</a>)</li>
+<li><strong>#514:</strong> avoid supress and/or force validation messages. (<a href="https://github.com/formly-js/ng-formly/issues/524">#524</a>) (<a href="https://github.com/formly-js/ng-formly/commit/1ffe899">1ffe899</a>)</li>
+<li><strong>field:</strong> use showError instead of valid. (<a href="https://github.com/formly-js/ng-formly/commit/2ba78a3">2ba78a3</a>)</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>#536:</strong> use standard-version for CHANGELOG generation (<a href="https://github.com/formly-js/ng-formly/issues/538">#538</a>) (<a href="https://github.com/formly-js/ng-formly/commit/9061311">9061311</a>)</li>
+<li><strong>bootstrap:</strong> support Bootstrap 4 Beta (<a href="https://github.com/formly-js/ng-formly/issues/529">#529</a>) (<a href="https://github.com/formly-js/ng-formly/commit/2b70567">2b70567</a>)</li>
+<li><strong>core:</strong> rename package to <code>@ngx-formly</code> + follow Angular Package Format. (<a href="https://github.com/formly-js/ng-formly/issues/497">#497</a>) (<a href="https://github.com/formly-js/ng-formly/commit/2197a51">2197a51</a>)</li>
+<li><strong>demo:</strong> use angular-cli for demo-example (<a href="https://github.com/formly-js/ng-formly/issues/542">#542</a>) (<a href="https://github.com/formly-js/ng-formly/commit/b8d6483">b8d6483</a>)</li>
+<li><strong>field:</strong> remove deprecated <code>valid</code> prop. (<a href="https://github.com/formly-js/ng-formly/issues/537">#537</a>) (<a href="https://github.com/formly-js/ng-formly/commit/88a9652">88a9652</a>)</li>
+<li><strong>fieldChanges:</strong> remove FormlyPubSub in favor of fieldChanges option. (<a href="https://github.com/formly-js/ng-formly/issues/525">#525</a>) (<a href="https://github.com/formly-js/ng-formly/commit/e78916f">e78916f</a>)</li>
+<li><strong>label:</strong> append with an asterisk when required (<a href="https://github.com/formly-js/ng-formly/issues/523">#523</a>) (<a href="https://github.com/formly-js/ng-formly/commit/bad3ecb">bad3ecb</a>)</li>
+<li><strong>material:</strong> initial work for ui-material (<a href="https://github.com/formly-js/ng-formly/issues/534">#534</a>) (<a href="https://github.com/formly-js/ng-formly/commit/11b8f9b">11b8f9b</a>)</li>
+<li>remove deprecated options. (<a href="https://github.com/formly-js/ng-formly/issues/507">#507</a>) (<a href="https://github.com/formly-js/ng-formly/commit/6c46667">6c46667</a>)</li>
+<li>replace deprecated <code>Renderer</code> by <code>Renderer2</code> (<a href="https://github.com/formly-js/ng-formly/issues/498">#498</a>) (<a href="https://github.com/formly-js/ng-formly/commit/0754b26">0754b26</a>)</li>
+<li>use <code>ng-template</code> for dynamic components (<a href="https://github.com/formly-js/ng-formly/issues/499">#499</a>) (<a href="https://github.com/formly-js/ng-formly/commit/9203f1e">9203f1e</a>)</li>
+<li><strong>npm:</strong> add publish script (<a href="https://github.com/formly-js/ng-formly/issues/510">#510</a>) (<a href="https://github.com/formly-js/ng-formly/commit/0788a51">0788a51</a>)</li>
+<li><strong>npm:</strong> allow angular v5. (<a href="https://github.com/formly-js/ng-formly/issues/520">#520</a>) (<a href="https://github.com/formly-js/ng-formly/commit/1c6fb06">1c6fb06</a>)</li>
+<li><strong>npm:</strong> update packages. (<a href="https://github.com/formly-js/ng-formly/issues/522">#522</a>) (<a href="https://github.com/formly-js/ng-formly/commit/ecf5e0f">ecf5e0f</a>)</li>
+<li><strong>validation-message:</strong> move FormlyValidationMessages into FormlyConfig (<a href="https://github.com/formly-js/ng-formly/issues/526">#526</a>) (<a href="https://github.com/formly-js/ng-formly/commit/9b2e39f">9b2e39f</a>)</li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li><strong>field:</strong> <code>Field::valid</code> is no longer available, use <code>showError</code> instead.</li>
+<li><strong>validation-message:</strong> removed FormlyValidationMessages</li>
+<li><strong>fieldChanges:</strong> removed FormlyPubSub.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+           </div>
+       </div>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script>var COMPODOC_CURRENT_PAGE_DEPTH = 0;</script>
+
+       <script src="./js/search/search.js"></script>
+       <script src="./js/search/lunr.min.js"></script>
+       <script src="./js/search/search-lunr.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+       <script src="./js/search/search_index.js"></script>
+
+    </body>
+</html>
