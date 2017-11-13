@@ -9,7 +9,6 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	    <link rel="stylesheet" href="../styles/style.css">
-                 <link rel="stylesheet" href="../styles/laravel.css">
     </head>
     <body>
 
@@ -194,13 +193,13 @@
                                     <a href="../interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/FormlyFormOptions.html" >FormlyFormOptions</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/FormlyOptions.html" >FormlyOptions</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
@@ -436,13 +435,13 @@
                                            <a href="../interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/FormlyFormOptions.html" >FormlyFormOptions</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/FormlyOptions.html" >FormlyOptions</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
@@ -521,6 +520,9 @@
     </li>
 
 
+    <li>
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    </li>
 </ul>
 
 <div class="tab-content">
@@ -619,6 +621,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/core/src/templates/field.type.ts:22</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -646,6 +653,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/core/src/templates/field.type.ts:18</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -673,6 +685,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/core/src/templates/field.type.ts:30</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -700,6 +717,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/core/src/templates/field.type.ts:26</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -727,6 +749,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/core/src/templates/field.type.ts:14</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -754,6 +781,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/core/src/templates/field.type.ts:10</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -810,6 +842,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/core/src/templates/field.type.ts:34</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -837,6 +874,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/core/src/templates/field.type.ts:6</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -856,6 +898,56 @@
     </div>
 
 
+    <div class="tab-pane fade tab-source-code" id="source">
+        <pre class="line-numbers"><code class="language-typescript">import { Field } from &#x27;./field&#x27;;
+import { OnInit, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, OnDestroy, AfterViewChecked, SimpleChanges } from &#x27;@angular/core&#x27;;
+import { FormlyLifeCycleOptions, FormlyLifeCycleFn } from &#x27;./../components/formly.field.config&#x27;;
+
+export abstract class FieldType extends Field implements OnInit, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
+  ngOnInit() {
+    this.lifeCycleHooks(this.lifecycle.onInit);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.lifeCycleHooks(this.lifecycle.onChanges);
+  }
+
+  ngDoCheck() {
+    this.lifeCycleHooks(this.lifecycle.doCheck);
+  }
+
+  ngAfterContentInit() {
+    this.lifeCycleHooks(this.lifecycle.afterContentInit);
+  }
+
+  ngAfterContentChecked() {
+    this.lifeCycleHooks(this.lifecycle.afterContentChecked);
+  }
+
+  ngAfterViewInit() {
+    this.lifeCycleHooks(this.lifecycle.afterViewInit);
+  }
+
+  ngAfterViewChecked() {
+    this.lifeCycleHooks(this.lifecycle.afterViewChecked);
+  }
+
+  ngOnDestroy() {
+    this.lifeCycleHooks(this.lifecycle.onDestroy);
+  }
+
+  private get lifecycle(): FormlyLifeCycleOptions {
+    return this.field.lifecycle || {};
+  }
+
+  private lifeCycleHooks(callback: FormlyLifeCycleFn) {
+    if (callback) {
+      callback.bind(this)(this.form, this.field, this.model, this.options);
+    }
+  }
+}
+</code></pre>
+    </div>
 </div>
 
 

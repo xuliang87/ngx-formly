@@ -9,7 +9,6 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	    <link rel="stylesheet" href="../styles/style.css">
-                 <link rel="stylesheet" href="../styles/laravel.css">
     </head>
     <body>
 
@@ -194,13 +193,13 @@
                                     <a href="../interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/FormlyFormOptions.html" >FormlyFormOptions</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/FormlyOptions.html" >FormlyOptions</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
@@ -436,13 +435,13 @@
                                            <a href="../interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/FormlyFormOptions.html" >FormlyFormOptions</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/FormlyOptions.html" >FormlyOptions</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
@@ -518,6 +517,9 @@
     </li>
 
 
+    <li>
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    </li>
 </ul>
 
 <div class="tab-content">
@@ -562,6 +564,11 @@
                                     <code>constructor(formlyConfig: <a href="../injectables/FormlyConfig.html">FormlyConfig</a>)</code>
                                 </td>
                             </tr>
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/core/src/services/formly.form.builder.ts:13</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -610,11 +617,16 @@
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-            <code>buildForm(form: <a href="https://angular.io/docs/ts/latest/api/api/forms/FormGroup" target="_blank">FormGroup</a>, fields: <a href="../interfaces/FormlyFieldConfig.html">FormlyFieldConfig[]</a>, model: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, options: <a href="../interfaces/FormlyOptions.html">FormlyOptions</a>)</code>
+            <code>buildForm(form: <a href="https://angular.io/docs/ts/latest/api/api/forms/FormGroup" target="_blank">FormGroup</a>, fields: <a href="../interfaces/FormlyFieldConfig.html">FormlyFieldConfig[]</a>, model: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, options: <a href="../interfaces/FormlyFormOptions.html">FormlyFormOptions</a>)</code>
                                 </td>
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/core/src/services/formly.form.builder.ts:17</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -661,7 +673,7 @@
                                                             <tr>
                                                               <td>options</td>
                                                               <td>
-                                                                      <code><a href="../interfaces/FormlyOptions.html" target="_self" >FormlyOptions</a></code>
+                                                                      <code><a href="../interfaces/FormlyFormOptions.html" target="_self" >FormlyFormOptions</a></code>
                                                               </td>
                                                               <td>
                                                               </td>
@@ -689,6 +701,308 @@
     </div>
 
 
+    <div class="tab-pane fade tab-source-code" id="source">
+        <pre class="line-numbers"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { FormGroup, FormArray, FormControl, AbstractControl, Validators } from &#x27;@angular/forms&#x27;;
+import { FormlyConfig } from &#x27;./formly.config&#x27;;
+import { evalStringExpression, evalExpressionValueSetter, evalExpression, getFieldId, assignModelValue, isObject } from &#x27;./../utils&#x27;;
+import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x27;../components/formly.field.config&#x27;;
+import { getKeyPath, isUndefined, isFunction } from &#x27;../utils&#x27;;
+import { Subject } from &#x27;rxjs/Subject&#x27;;
+
+@Injectable()
+export class FormlyFormBuilder {
+  private defaultPath;
+  private validationOpts &#x3D; [&#x27;required&#x27;, &#x27;pattern&#x27;, &#x27;minLength&#x27;, &#x27;maxLength&#x27;, &#x27;min&#x27;, &#x27;max&#x27;];
+  private formId &#x3D; 0;
+
+  constructor(private formlyConfig: FormlyConfig) {}
+
+  buildForm(form: FormGroup, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
+    this.formId++;
+
+    options &#x3D; options || {};
+    if (!options.showError) {
+      options.showError &#x3D; this.formlyConfig.extras.showError;
+    }
+    if (!options.fieldChanges) {
+      options.fieldChanges &#x3D; new Subject&lt;FormlyValueChangeEvent&gt;();
+    }
+
+    let fieldTransforms &#x3D; (options &amp;&amp; options.fieldTransform) || this.formlyConfig.extras.fieldTransform;
+    if (!Array.isArray(fieldTransforms)) {
+      fieldTransforms &#x3D; [fieldTransforms];
+    }
+
+    fieldTransforms.forEach(fieldTransform &#x3D;&gt; {
+      if (fieldTransform) {
+        fields &#x3D; fieldTransform(fields, model, form, options);
+        if (!fields) {
+          throw new Error(&#x27;fieldTransform must return an array of fields&#x27;);
+        }
+      }
+    });
+
+    this.registerFormControls(form, fields, model, options);
+  }
+
+  private registerFormControls(form: FormGroup, fields: FormlyFieldConfig[], model: any, options: FormlyFormOptions) {
+    fields.map((field, index) &#x3D;&gt; {
+      field.id &#x3D; getFieldId(&#x60;formly_${this.formId}&#x60;, field, index);
+
+      this.initFieldTemplateOptions(field);
+      this.initFieldExpression(field, model, options);
+      this.initFieldValidation(field);
+      this.initFieldAsyncValidation(field);
+
+      if (field.key &amp;&amp; field.type) {
+        this.formlyConfig.getMergedField(field);
+        let path: any &#x3D; field.key;
+        if (typeof path &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+          if (!isUndefined(field.defaultValue)) {
+            this.defaultPath &#x3D; path;
+          }
+          path &#x3D; getKeyPath({key: field.key});
+        }
+
+        if (path.length &gt; 1) {
+          const rootPath &#x3D; path.shift();
+          let nestedForm &#x3D; &lt;FormGroup&gt;(form.get(rootPath.toString()) ? form.get(rootPath.toString()) : new FormGroup({}));
+          if (!form.get(rootPath.toString())) {
+            form.addControl(rootPath, nestedForm);
+          }
+          if (!model[rootPath]) {
+            model[rootPath] &#x3D; isNaN(path[0]) ? {} : [];
+          }
+
+          const originalKey &#x3D; field.key;
+          // Should this reassignment not be refactored?
+          field.key &#x3D; path;
+          this.buildForm(nestedForm, [field], model[rootPath], options);
+          field.key &#x3D; originalKey;
+        } else {
+          if (!isUndefined(field.defaultValue) &amp;&amp; isUndefined(model[path[0]])) {
+            let modelPath: any &#x3D; getKeyPath({key: this.defaultPath});
+            modelPath &#x3D; modelPath.pop();
+            assignModelValue(model, modelPath, field.defaultValue);
+            this.defaultPath &#x3D; undefined;
+          }
+          this.addFormControl(form, field, model[path[0]]);
+        }
+      }
+
+      if (field.fieldGroup) {
+        if (field.key) {
+          if (!model.hasOwnProperty(field.key)) {
+            model[field.key] &#x3D; {};
+          }
+          let nestedForm &#x3D; &lt;FormGroup&gt;form.get(field.key),
+            nestedModel &#x3D; model[field.key] || {};
+
+          if (!nestedForm) {
+            nestedForm &#x3D; new FormGroup(
+              {},
+              field.validators ? field.validators.validation : undefined,
+              field.asyncValidators ? field.asyncValidators.validation : undefined,
+            );
+            this.addControl(form, field.key, nestedForm, field);
+          }
+
+          this.buildForm(nestedForm, field.fieldGroup, nestedModel, options);
+        } else {
+          this.buildForm(form, field.fieldGroup, model, options);
+        }
+      }
+
+      if (field.fieldArray &amp;&amp; field.key) {
+        if (!(form.get(field.key) instanceof FormArray)) {
+          const arrayForm &#x3D; new FormArray(
+            [],
+            field.validators ? field.validators.validation : undefined,
+            field.asyncValidators ? field.asyncValidators.validation : undefined,
+          );
+          this.addControl(form, field.key, arrayForm, field);
+        }
+      }
+    });
+  }
+
+  private initFieldExpression(field: FormlyFieldConfig, model, options: FormlyFormOptions) {
+    options.formState &#x3D; options.formState || {};
+
+    if (field.expressionProperties) {
+      for (let key in field.expressionProperties as any) {
+        if (typeof field.expressionProperties[key] &#x3D;&#x3D;&#x3D; &#x27;string&#x27; || isFunction(field.expressionProperties[key])) {
+          // cache built expression
+          field.expressionProperties[key] &#x3D; {
+            expression: isFunction(field.expressionProperties[key]) ? field.expressionProperties[key] : evalStringExpression(field.expressionProperties[key], [&#x27;model&#x27;, &#x27;formState&#x27;]),
+            expressionValueSetter: evalExpressionValueSetter(key, [&#x27;expressionValue&#x27;, &#x27;model&#x27;, &#x27;templateOptions&#x27;, &#x27;validation&#x27;]),
+          };
+        }
+
+        const expressionValue &#x3D; evalExpression(field.expressionProperties[key].expression, { field }, [model, options.formState]);
+        field.expressionProperties[key].expressionValue &#x3D; expressionValue;
+        evalExpression(field.expressionProperties[key].expressionValueSetter, { field }, [expressionValue, model, field.templateOptions || {}, field.validation]);
+      }
+    }
+
+    if (typeof field.hideExpression &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+      // cache built expression
+      field.hideExpression &#x3D; evalStringExpression(field.hideExpression, [&#x27;model&#x27;, &#x27;formState&#x27;]);
+      field.hide &#x3D; evalExpression(field.hideExpression, { field }, [model, options.formState]);
+    }
+  }
+
+  private initFieldTemplateOptions(field: FormlyFieldConfig) {
+    field.templateOptions &#x3D; field.templateOptions || {};
+    if (field.key &amp;&amp; field.type) {
+      field.templateOptions &#x3D; Object.assign({
+        label: &#x27;&#x27;,
+        placeholder: &#x27;&#x27;,
+        focus: false,
+      }, field.templateOptions);
+    }
+  }
+
+  private initFieldAsyncValidation(field: FormlyFieldConfig) {
+    let validators &#x3D; [];
+    if (field.asyncValidators) {
+      for (let validatorName in field.asyncValidators) {
+        if (validatorName !&#x3D;&#x3D; &#x27;validation&#x27;) {
+          validators.push((control: FormControl) &#x3D;&gt; {
+            let validator &#x3D; field.asyncValidators[validatorName];
+            if (isObject(validator)) {
+              validator &#x3D; validator.expression;
+            }
+
+            return new Promise((resolve) &#x3D;&gt; {
+              return validator(control).then(result &#x3D;&gt; {
+                resolve(result ? null : {[validatorName]: true});
+              });
+            });
+          });
+        }
+      }
+    }
+    if (field.asyncValidators &amp;&amp; Array.isArray(field.asyncValidators.validation)) {
+      field.asyncValidators.validation.map(validate &#x3D;&gt; {
+        if (typeof validate &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+          validators.push(this.formlyConfig.getValidator(validate).validation);
+        } else {
+          validators.push(validate);
+        }
+      });
+    }
+
+    if (validators.length) {
+      if (field.asyncValidators &amp;&amp; !Array.isArray(field.asyncValidators.validation)) {
+        field.asyncValidators.validation &#x3D; Validators.composeAsync([field.asyncValidators.validation, ...validators]);
+      } else {
+        field.asyncValidators &#x3D; {
+          validation: Validators.composeAsync(validators),
+        };
+      }
+    }
+  }
+
+  private initFieldValidation(field: FormlyFieldConfig) {
+    let validators &#x3D; [];
+    this.validationOpts.filter(opt &#x3D;&gt; field.templateOptions &amp;&amp; field.templateOptions[opt]).map((opt) &#x3D;&gt; {
+      validators.push(this.getValidation(opt, field.templateOptions[opt]));
+    });
+    if (field.validators) {
+      for (let validatorName in field.validators) {
+        if (validatorName !&#x3D;&#x3D; &#x27;validation&#x27;) {
+          validators.push((control: FormControl) &#x3D;&gt; {
+            let validator &#x3D; field.validators[validatorName];
+            if (isObject(validator)) {
+              validator &#x3D; validator.expression;
+            }
+
+            return validator(control) ? null : {[validatorName]: true};
+          });
+        }
+      }
+    }
+
+    if (field.validators &amp;&amp; Array.isArray(field.validators.validation)) {
+      field.validators.validation.map(validate &#x3D;&gt; {
+        if (typeof validate &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+          validators.push(this.formlyConfig.getValidator(validate).validation);
+        } else {
+          validators.push(validate);
+        }
+      });
+    }
+
+    if (validators.length) {
+      if (field.validators &amp;&amp; !Array.isArray(field.validators.validation)) {
+        field.validators.validation &#x3D; Validators.compose([field.validators.validation, ...validators]);
+      } else {
+        field.validators &#x3D; {
+          validation: Validators.compose(validators),
+        };
+      }
+    }
+  }
+
+  private addFormControl(form: FormGroup, field: FormlyFieldConfig, model: any) {
+    /* Although the type of the key property in FormlyFieldConfig is declared to be a string,
+     the recurstion of this FormBuilder uses an Array.
+     This should probably be addressed somehow. */
+    let name: string &#x3D; typeof field.key &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? field.key : field.key[0],
+      formControl: AbstractControl;
+
+    if (field.formControl instanceof AbstractControl) {
+      formControl &#x3D; field.formControl;
+    } else if (field.component &amp;&amp; field.component.createControl) {
+      formControl &#x3D; field.component.createControl(model, field);
+    } else {
+      formControl &#x3D; new FormControl(
+        model,
+        field.validators ? field.validators.validation : undefined,
+        field.asyncValidators ? field.asyncValidators.validation : undefined,
+      );
+    }
+
+    if (field.templateOptions.disabled) {
+      formControl.disable();
+    }
+
+    this.addControl(form, name, formControl, field);
+  }
+
+  private getValidation(opt, value) {
+    switch (opt) {
+      case &#x27;required&#x27;:
+        return Validators.required;
+      case &#x27;pattern&#x27;:
+        return Validators.pattern(value);
+      case &#x27;minLength&#x27;:
+        return Validators.minLength(value);
+      case &#x27;maxLength&#x27;:
+        return Validators.maxLength(value);
+      case &#x27;min&#x27;:
+        return Validators.min(value);
+      case &#x27;max&#x27;:
+        return Validators.max(value);
+    }
+  }
+
+  private addControl(form: FormGroup, key: string, formControl: AbstractControl, field: FormlyFieldConfig) {
+    field.formControl &#x3D; formControl;
+    if (field.hide) {
+      return;
+    }
+    if (formControl instanceof FormArray) {
+      form.setControl(key, formControl);
+    } else {
+      form.addControl(key, formControl);
+    }
+  }
+}
+</code></pre>
+    </div>
 </div>
 
 

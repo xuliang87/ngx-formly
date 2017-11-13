@@ -9,7 +9,6 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	    <link rel="stylesheet" href="../styles/style.css">
-                 <link rel="stylesheet" href="../styles/laravel.css">
     </head>
     <body>
 
@@ -194,13 +193,13 @@
                                     <a href="../interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/FormlyFormOptions.html" >FormlyFormOptions</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/FormlyOptions.html" >FormlyOptions</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
@@ -436,13 +435,13 @@
                                            <a href="../interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/FormlyFormOptions.html" >FormlyFormOptions</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/FormlyOptions.html" >FormlyOptions</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
@@ -517,6 +516,9 @@
     </li>
 
 
+    <li>
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    </li>
 
 </ul>
 
@@ -617,6 +619,11 @@
                                     <code>constructor(renderer: <a href="https://angular.io/docs/ts/latest/api/api/core/Renderer2" target="_blank">Renderer2</a>, elementRef: <a href="https://angular.io/docs/ts/latest/api/api/core/ElementRef" target="_blank">ElementRef</a>)</code>
                                 </td>
                             </tr>
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/core/src/components/formly.attributes.ts:20</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -675,6 +682,11 @@
                                       </p>
                                 </td>
                             </tr>
+                                    <tr>
+                                        <td class="col-md-2" colspan="2">
+                                            <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/core/src/components/formly.attributes.ts:10</a></div>
+                                        </td>
+                                    </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -691,6 +703,11 @@
                                       </p>
                                 </td>
                             </tr>
+                                    <tr>
+                                        <td class="col-md-2" colspan="2">
+                                            <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/core/src/components/formly.attributes.ts:9</a></div>
+                                        </td>
+                                    </tr>
                         </tbody>
                     </table>
             </section>
@@ -713,6 +730,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/core/src/components/formly.attributes.ts:18</a></div>
+                                        </td>
+                                    </tr>
             
                         </tbody>
                     </table>
@@ -731,6 +753,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/core/src/components/formly.attributes.ts:14</a></div>
+                                        </td>
+                                    </tr>
             
                         </tbody>
                     </table>
@@ -756,6 +783,11 @@
                             </tr>
             
             
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/core/src/components/formly.attributes.ts:27</a></div>
+                                        </td>
+                                    </tr>
             
                             <tr>
                                 <td class="col-md-4">
@@ -804,6 +836,90 @@
     </div>
 
 
+    <div class="tab-pane fade tab-source-code" id="source">
+        <pre class="line-numbers"><code class="language-typescript">import { Directive, HostListener, ElementRef, Input, OnChanges, SimpleChanges, SimpleChange, Renderer2 } from &#x27;@angular/core&#x27;;
+import { AbstractControl } from &#x27;@angular/forms&#x27;;
+import { FormlyFieldConfig } from &#x27;./formly.field.config&#x27;;
+
+@Directive({
+  selector: &#x27;[formlyAttributes]&#x27;,
+})
+export class FormlyAttributes implements OnChanges {
+  @Input(&#x27;formlyAttributes&#x27;) field: FormlyFieldConfig;
+  @Input() formControl: AbstractControl;
+  private attributes &#x3D; [&#x27;id&#x27;, &#x27;name&#x27;, &#x27;placeholder&#x27;, &#x27;tabindex&#x27;, &#x27;step&#x27;, &#x27;aria-describedby&#x27;];
+  private statements &#x3D; [&#x27;change&#x27;, &#x27;keydown&#x27;, &#x27;keyup&#x27;, &#x27;keypress&#x27;, &#x27;click&#x27;, &#x27;focus&#x27;, &#x27;blur&#x27;];
+
+  @HostListener(&#x27;focus&#x27;) onFocus() {
+    this.field.focus &#x3D; true;
+  }
+
+  @HostListener(&#x27;blur&#x27;) onBlur() {
+    this.field.focus &#x3D; false;
+  }
+
+  constructor(
+    private renderer: Renderer2,
+    private elementRef: ElementRef,
+  ) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.field) {
+      const fieldChanges &#x3D; changes.field;
+      this.attributes
+        .filter(attr &#x3D;&gt; this.canApplyRender(fieldChanges, attr))
+        .map(attr &#x3D;&gt; this.renderer.setAttribute(
+          this.elementRef.nativeElement, attr, this.getPropValue(this.field, attr),
+        ));
+
+      this.statements
+        .filter(statement &#x3D;&gt; this.canApplyRender(fieldChanges, statement))
+        .map(statement &#x3D;&gt; this.renderer.listen(
+          this.elementRef.nativeElement, statement, this.getStatementValue(statement),
+        ));
+
+      if ((fieldChanges.previousValue || {}).focus !&#x3D;&#x3D; (fieldChanges.currentValue || {}).focus &amp;&amp; this.elementRef.nativeElement.focus) {
+        this.elementRef.nativeElement[this.field.focus ? &#x27;focus&#x27; : &#x27;blur&#x27;]();
+      }
+    }
+  }
+
+  private getPropValue(field: FormlyFieldConfig, prop: string) {
+    field &#x3D; field || {};
+    if (field.id &amp;&amp; prop &#x3D;&#x3D;&#x3D; &#x27;aria-describedby&#x27;) {
+      return field.id + &#x27;-message&#x27;;
+    }
+
+    if (field.templateOptions &amp;&amp; field.templateOptions[prop]) {
+      return field.templateOptions[prop];
+    }
+
+    return field[prop] || &#x27;&#x27;;
+  }
+
+  private getStatementValue(statement: string) {
+    const fn &#x3D; this.field.templateOptions[statement];
+
+    return () &#x3D;&gt; fn(this.field, this.formControl);
+  }
+
+  private canApplyRender(fieldChange: SimpleChange, prop: string): Boolean {
+    const currentValue &#x3D; this.getPropValue(this.field, prop),
+      previousValue &#x3D; this.getPropValue(fieldChange.previousValue, prop);
+
+    if (previousValue !&#x3D;&#x3D; currentValue) {
+      if (this.statements.indexOf(prop) !&#x3D;&#x3D; -1) {
+        return typeof currentValue &#x3D;&#x3D;&#x3D; &#x27;function&#x27;;
+      }
+
+      return true;
+    }
+
+    return false;
+  }
+}
+</code></pre>
+    </div>
 
 </div>
 

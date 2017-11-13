@@ -9,7 +9,6 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	    <link rel="stylesheet" href="../styles/style.css">
-                 <link rel="stylesheet" href="../styles/laravel.css">
     </head>
     <body>
 
@@ -194,13 +193,13 @@
                                     <a href="../interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/FormlyFormOptions.html"  data-type="entity-link" class="active" >FormlyFormOptions</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/FormlyOptions.html"  data-type="entity-link" class="active" >FormlyOptions</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
@@ -436,13 +435,13 @@
                                            <a href="../interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/FormlyFormOptions.html"  data-type="entity-link" class="active" >FormlyFormOptions</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/FormlyOptions.html"  data-type="entity-link" class="active" >FormlyOptions</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
@@ -513,7 +512,7 @@
 
 <ol class="breadcrumb">
   <li>Interfaces</li>
-  <li>FormlyOptions</li>
+  <li>FormlyFormOptions</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -522,6 +521,9 @@
     </li>
 
 
+    <li>
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    </li>
 </ul>
 
 <div class="tab-content">
@@ -601,6 +603,11 @@
 
 
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="186" class="link-to-prism">src/core/src/components/formly.field.config.ts:186</a></div>
+                                        </td>
+                                    </tr>
 
                         </tbody>
                     </table>
@@ -629,6 +636,11 @@
 
 
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="187" class="link-to-prism">src/core/src/components/formly.field.config.ts:187</a></div>
+                                        </td>
+                                    </tr>
 
                         </tbody>
                     </table>
@@ -657,6 +669,11 @@
 
 
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="185" class="link-to-prism">src/core/src/components/formly.field.config.ts:185</a></div>
+                                        </td>
+                                    </tr>
 
                         </tbody>
                     </table>
@@ -685,6 +702,11 @@
 
 
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="184" class="link-to-prism">src/core/src/components/formly.field.config.ts:184</a></div>
+                                        </td>
+                                    </tr>
 
                         </tbody>
                     </table>
@@ -713,6 +735,11 @@
 
 
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="188" class="link-to-prism">src/core/src/components/formly.field.config.ts:188</a></div>
+                                        </td>
+                                    </tr>
 
                         </tbody>
                     </table>
@@ -741,6 +768,11 @@
 
 
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="183" class="link-to-prism">src/core/src/components/formly.field.config.ts:183</a></div>
+                                        </td>
+                                    </tr>
 
                         </tbody>
                     </table>
@@ -748,6 +780,205 @@
     </div>
 
 
+    <div class="tab-pane fade tab-source-code" id="source">
+        <pre class="line-numbers"><code class="language-typescript">import { FormGroup, AbstractControl } from &#x27;@angular/forms&#x27;;
+import { Subject } from &#x27;rxjs/Subject&#x27;;
+import { Field } from &#x27;./../templates/field&#x27;;
+
+export interface FormlyFieldConfig {
+  /**
+   * The key that relates to the model. This will link the field value to the model
+   */
+  key?: string;
+
+  /**
+   * This allows you to specify the &#x60;id&#x60; of your field. Note, the &#x60;id&#x60; is generated if not set.
+   */
+  id?: string;
+
+  /**
+   * If you wish, you can specify a specific &#x60;name&#x60; for your field. This is useful if you&#x27;re posting the form to a server using techniques of yester-year.
+   */
+  name?: string;
+
+  /**
+   * This is reserved for the templates. Any template-specific options go in here. Look at your specific template implementation to know the options required for this.
+   */
+  templateOptions?: FormlyTemplateOptions;
+
+  optionsTypes?: string[];
+
+  /**
+   * An object with a few useful properties
+   * - &#x60;validation.messages&#x60;: A map of message names that will be displayed when the field has errors.
+   * - &#x60;validation.show&#x60;: A boolean you as the developer can set to force displaying errors whatever the state of field. This is useful when you&#x27;re trying to call the user&#x27;s attention to some fields for some reason.
+   */
+  validation?: {
+    messages?: {
+      [messageProperties: string]: string | Function;
+    };
+    show?: boolean;
+    [additionalProperties: string]: any;
+  };
+
+  /**
+   * Used to set validation rules for a particular field.
+   * Should be an object of key - value pairs. The value can either be an expression to evaluate or a function to run.
+   * Each should return a boolean value, returning true when the field is valid. See Validation for more information.
+   */
+  validators?: any;
+
+  /**
+   * Use this one for anything that needs to validate asynchronously.
+   * Pretty much exactly the same as the validators api, except it must be a function that returns a promise.
+   */
+  asyncValidators?: any;
+
+  /**
+   * Can be set instead of &#x60;type&#x60; to render custom html content.
+   */
+  template?: string;
+
+  /**
+   *  It is expected to be the name of the wrappers.
+   *  The formly field template will be wrapped by the first wrapper, then the second, then the third, etc.
+   *  You can also specify these as part of a type (which is the recommended approach).
+   */
+  wrappers?: string[];
+
+  /**
+   * Whether to hide the field. Defaults to false. If you wish this to be conditional use &#x60;hideExpression&#x60;
+   */
+  hide?: boolean;
+
+  /**
+   * Conditionally hiding Field based on values from other Fields
+   */
+  hideExpression?: boolean | string | ((model: any, formState: any) &#x3D;&gt; boolean);
+
+  /**
+   * An object where the key is a property to be set on the main field config and the value is an expression used to assign that property.
+   */
+  expressionProperties?: { [property: string]: string | ((model: any, formState: any) &#x3D;&gt; boolean) } | any;
+
+  /**
+   * This is the [FormControl](https://angular.io/api/forms/FormControl) for the field.
+   * It provides you more control like running validators, calculating status, and resetting state.
+   */
+  formControl?: AbstractControl;
+
+  /**
+   * You can specify your own class that will be applied to the &#x60;formly-field&#x60; component.
+   */
+  className?: string;
+
+  /**
+   * Specify your own class that will be applied to the &#x60;formly-group&#x60; component.
+   */
+  fieldGroupClassName?: string;
+
+  /**
+   * A field group is a way to group fields together, making advanced layout very simple.
+   * It can also be used to group fields that are associated with the same model (useful if it&#x27;s different than the model for the rest of the fields).
+   */
+  fieldGroup?: FormlyFieldConfig[];
+
+  fieldArray?: FormlyFieldConfig;
+
+  /**
+   * This should be a formly-field type added either by you or a plugin. More information over at Creating Formly Fields.
+   */
+  type?: string;
+
+  /**
+   * Can be set to replace the component that is defined in &#x60;type&#x60;.
+   */
+  component?: any;
+
+  /**
+   * Whether to focus or blur the element field. Defaults to false. If you wish this to be conditional use &#x60;expressionProperties&#x60;
+   */
+  focus?: boolean;
+
+  /**
+   * An object with a few useful properties to control the model changes
+   * - &#x60;debounce&#x60;: integer value which contains the debounce model update value in milliseconds. A value of 0 triggers an immediate update.
+   */
+  modelOptions?: any;
+
+  lifecycle?: FormlyLifeCycleOptions;
+
+  /**
+   * Use &#x60;defaultValue&#x60; to initialize it the model. If this is provided and the value of the model at compile-time is undefined, then the value of the model will be assigned to &#x60;defaultValue&#x60;.
+   */
+  defaultValue?: any;
+
+  /**
+   * Array of functions to execute, as a pipeline, whenever the model updates, usually via user input.
+   */
+  parsers?: [(value: any, index: number) &#x3D;&gt; {}];
+}
+
+export interface FormlyTemplateOptions {
+  type?: string;
+  label?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  options?: any[];
+  rows?: number;
+  cols?: number;
+  description?: string;
+  hidden?: boolean;
+  max?: number;
+  min?: number;
+  minLength?: number;
+  maxLength?: number;
+  pattern?: string;
+  required?: boolean;
+  tabindex?: number;
+  step?: number;
+  focus?: Function;
+  blur?: Function;
+  keyup?: Function;
+  keydown?: Function;
+  click?: Function;
+  change?: Function;
+  keypress?: Function;
+  [additionalProperties: string]: any;
+}
+
+export interface FormlyLifeCycleFn {
+    (form?: FormGroup, field?: FormlyFieldConfig, model?: any, options?: any): void;
+}
+
+export interface FormlyLifeCycleOptions {
+  onInit?: FormlyLifeCycleFn;
+  onChanges?: FormlyLifeCycleFn;
+  doCheck?: FormlyLifeCycleFn;
+  afterContentInit?: FormlyLifeCycleFn;
+  afterContentChecked?: FormlyLifeCycleFn;
+  afterViewInit?: FormlyLifeCycleFn;
+  afterViewChecked?: FormlyLifeCycleFn;
+  onDestroy?: FormlyLifeCycleFn;
+}
+
+export interface FormlyFormOptions {
+  updateInitialValue?: () &#x3D;&gt; void;
+  resetModel?: (model?: any) &#x3D;&gt; void;
+  formState?: any;
+  fieldChanges?: Subject&lt;FormlyValueChangeEvent&gt;;
+  fieldTransform?: any;
+  showError?: (field: Field) &#x3D;&gt; boolean;
+}
+
+export interface FormlyValueChangeEvent {
+  field: FormlyFieldConfig;
+  type: string;
+  value: any;
+}
+
+</code></pre>
+    </div>
 </div>
 
 

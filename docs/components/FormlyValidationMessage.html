@@ -9,7 +9,6 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	    <link rel="stylesheet" href="../styles/style.css">
-                 <link rel="stylesheet" href="../styles/laravel.css">
     </head>
     <body>
 
@@ -194,13 +193,13 @@
                                     <a href="../interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/FormlyFormOptions.html" >FormlyFormOptions</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/FormlyOptions.html" >FormlyOptions</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
@@ -436,13 +435,13 @@
                                            <a href="../interfaces/FormlyFieldConfig.html" >FormlyFieldConfig</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/FormlyFormOptions.html" >FormlyFormOptions</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/FormlyLifeCycleFn.html" >FormlyLifeCycleFn</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/FormlyLifeCycleOptions.html" >FormlyLifeCycleOptions</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/FormlyOptions.html" >FormlyOptions</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/FormlyTemplateOptions.html" >FormlyTemplateOptions</a>
@@ -515,6 +514,9 @@
         <a href="#info" id="info-tab" role="tab" data-toggle="tab" data-link="info">Info</a>
     </li>
 
+    <li>
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    </li>
 
     <li>
         <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
@@ -611,6 +613,11 @@
                             <code>constructor(formlyConfig: <a href="../injectables/FormlyConfig.html">FormlyConfig</a>)</code>
                         </td>
                     </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/templates/formly.validation-message.ts:12</a></div>
+                                </td>
+                            </tr>
     
                     <tr>
                         <td class="col-md-4">
@@ -660,6 +667,11 @@
                               </p>
                         </td>
                     </tr>
+                            <tr>
+                                <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/templates/formly.validation-message.ts:12</a></div>
+                                </td>
+                            </tr>
                 </tbody>
             </table>
             <table class="table table-sm table-bordered">
@@ -676,6 +688,11 @@
                               </p>
                         </td>
                     </tr>
+                            <tr>
+                                <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/core/src/templates/formly.validation-message.ts:11</a></div>
+                                </td>
+                            </tr>
                 </tbody>
             </table>
     </section>
@@ -703,6 +720,11 @@
                             <span class="accessor"><b>get</b><code>errorMessage()</code></span>
                         </td>
                     </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/core/src/templates/formly.validation-message.ts:16</a></div>
+                                    </td>
+                                </tr>
                         <tr>
                             <td class="col-md-4">
     
@@ -719,6 +741,50 @@
 </div>
 
 
+    <div class="tab-pane fade tab-source-code" id="source">
+        <pre class="line-numbers"><code class="language-typescript">import { Component, Input } from &#x27;@angular/core&#x27;;
+import { FormControl } from &#x27;@angular/forms&#x27;;
+import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
+import { FormlyFieldConfig } from &#x27;../components/formly.field.config&#x27;;
+
+@Component({
+  selector: &#x27;formly-validation-message&#x27;,
+  template: &#x60;{{ errorMessage }}&#x60;,
+})
+export class FormlyValidationMessage {
+  @Input() fieldForm: FormControl;
+  @Input() field: FormlyFieldConfig;
+
+  constructor(private formlyConfig: FormlyConfig) {}
+
+  get errorMessage(): string {
+    for (let error in this.fieldForm.errors) {
+      if (this.fieldForm.errors.hasOwnProperty(error)) {
+        let message: string | Function &#x3D; this.formlyConfig.getValidatorMessage(error);
+
+        if (this.field.validation &amp;&amp; this.field.validation.messages &amp;&amp; this.field.validation.messages[error]) {
+          message &#x3D; this.field.validation.messages[error];
+        }
+
+        if (this.field.validators &amp;&amp; this.field.validators[error] &amp;&amp; this.field.validators[error].message) {
+          message &#x3D; this.field.validators[error].message;
+        }
+
+        if (this.field.asyncValidators &amp;&amp; this.field.asyncValidators[error] &amp;&amp; this.field.asyncValidators[error].message) {
+          message &#x3D; this.field.asyncValidators[error].message;
+        }
+
+        if (typeof message &#x3D;&#x3D;&#x3D; &#x27;function&#x27;) {
+          return message(this.fieldForm.errors[error], this.field);
+        }
+
+        return message;
+      }
+    }
+  }
+}
+</code></pre>
+    </div>
 
 
     <div class="tab-pane fade" id="tree">
