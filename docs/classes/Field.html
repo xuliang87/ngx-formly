@@ -722,13 +722,13 @@
     <div class="tab-pane fade tab-source-code" id="source">
         <pre class="line-numbers"><code class="language-typescript">import { Input } from &#x27;@angular/core&#x27;;
 import { FormGroup, AbstractControl } from &#x27;@angular/forms&#x27;;
-import { FormlyTemplateOptions, FormlyFieldConfig } from &#x27;../components/formly.field.config&#x27;;
+import { FormlyTemplateOptions, FormlyFieldConfig, FormlyFormOptions } from &#x27;../components/formly.field.config&#x27;;
 
 export abstract class Field {
   @Input() form: FormGroup;
   @Input() field: FormlyFieldConfig;
   @Input() model: any;
-  @Input() options: any;
+  @Input() options: FormlyFormOptions;
 
   get key() { return this.field.key; }
 

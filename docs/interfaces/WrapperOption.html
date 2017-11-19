@@ -710,7 +710,7 @@ export class FormlyConfig {
   } &#x3D; {
     fieldTransform: undefined,
     showError: function(field: Field) {
-      return (field.formControl.touched || (field.field.validation &amp;&amp; field.field.validation.show)) &amp;&amp; !field.formControl.valid;
+      return (field.formControl.dirty || (field.options.parentForm &amp;&amp; field.options.parentForm.submitted) || (field.field.validation &amp;&amp; field.field.validation.show)) &amp;&amp; field.formControl.invalid;
     },
   };
 

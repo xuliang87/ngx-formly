@@ -579,64 +579,6 @@
 
 
 
-    <section>
-        <h3 id="accessors">
-            Accessors
-        </h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <a name="newOptions"></a>
-                            <span class="name"><b>newOptions</b><a href="#newOptions"><span class="fa fa-link"></span></a></span>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="accessor"><b>get</b><code>newOptions()</code></span>
-                        </td>
-                    </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/core/src/components/formly.group.ts:13</a></div>
-                                    </td>
-                                </tr>
-    
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <a name="formlyGroup"></a>
-                            <span class="name"><b>formlyGroup</b><a href="#formlyGroup"><span class="fa fa-link"></span></a></span>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="accessor"><b>get</b><code>formlyGroup()</code></span>
-                        </td>
-                    </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/core/src/components/formly.group.ts:17</a></div>
-                                    </td>
-                                </tr>
-                        <tr>
-                            <td class="col-md-4">
-    
-                                    <div class="io-description">
-                                        <b>Returns : </b>    <code><a href="https://angular.io/docs/ts/latest/api/api/forms/AbstractControl" target="_blank" >AbstractControl</a></code>
-    
-                                    </div>
-                            </td>
-                        </tr>
-    
-                </tbody>
-            </table>
-    </section>
 </div>
 
 
@@ -648,23 +590,10 @@ import { FieldType } from &#x27;../templates/field.type&#x27;;
 @Component({
   selector: &#x27;formly-group&#x27;,
   template: &#x60;
-    &lt;formly-form [fields]&#x3D;&quot;field.fieldGroup&quot; [model]&#x3D;&quot;model&quot; [form]&#x3D;&quot;formlyGroup&quot; [options]&#x3D;&quot;newOptions&quot; [ngClass]&#x3D;&quot;field.fieldGroupClassName&quot; [buildForm]&#x3D;&quot;false&quot;&gt;&lt;/formly-form&gt;
+    &lt;formly-form [fields]&#x3D;&quot;field.fieldGroup&quot; [model]&#x3D;&quot;model&quot; [form]&#x3D;&quot;field.formControl || form&quot; [options]&#x3D;&quot;options&quot; [ngClass]&#x3D;&quot;field.fieldGroupClassName&quot; [buildForm]&#x3D;&quot;false&quot;&gt;&lt;/formly-form&gt;
   &#x60;,
 })
-export class FormlyGroup extends FieldType {
-
-  get newOptions() {
-    return { ...this.options };
-  }
-
-  get formlyGroup(): AbstractControl {
-    if (this.field.formControl) {
-      return this.field.formControl;
-    } else {
-      return this.form;
-    }
-  }
-}
+export class FormlyGroup extends FieldType {}
 </code></pre>
     </div>
 

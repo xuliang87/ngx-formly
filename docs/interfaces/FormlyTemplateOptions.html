@@ -1447,7 +1447,7 @@
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import { FormGroup, AbstractControl } from &#x27;@angular/forms&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { FormGroup, AbstractControl, FormGroupDirective, NgForm } from &#x27;@angular/forms&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
 import { Field } from &#x27;./../templates/field&#x27;;
 
@@ -1635,6 +1635,7 @@ export interface FormlyFormOptions {
   fieldChanges?: Subject&lt;FormlyValueChangeEvent&gt;;
   fieldTransform?: any;
   showError?: (field: Field) &#x3D;&gt; boolean;
+  parentForm?: FormGroupDirective | NgForm | null;
 }
 
 export interface FormlyValueChangeEvent {
