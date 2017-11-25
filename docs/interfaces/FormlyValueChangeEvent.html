@@ -596,7 +596,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="193" class="link-to-prism">src/core/src/components/formly.field.config.ts:193</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="207" class="link-to-prism">src/core/src/components/formly.field.config.ts:207</a></div>
                                         </td>
                                     </tr>
 
@@ -629,7 +629,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="194" class="link-to-prism">src/core/src/components/formly.field.config.ts:194</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="208" class="link-to-prism">src/core/src/components/formly.field.config.ts:208</a></div>
                                         </td>
                                     </tr>
 
@@ -662,7 +662,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="195" class="link-to-prism">src/core/src/components/formly.field.config.ts:195</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="209" class="link-to-prism">src/core/src/components/formly.field.config.ts:209</a></div>
                                         </td>
                                     </tr>
 
@@ -673,7 +673,7 @@
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import { FormGroup, AbstractControl, FormGroupDirective, NgForm } from &#x27;@angular/forms&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { FormGroup, AbstractControl, FormGroupDirective, NgForm, ValidatorFn, AsyncValidatorFn } from &#x27;@angular/forms&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
 import { Field } from &#x27;./../templates/field&#x27;;
 
@@ -707,7 +707,7 @@ export interface FormlyFieldConfig {
    */
   validation?: {
     messages?: {
-      [messageProperties: string]: string | Function;
+      [messageProperties: string]: string | ((error, field: FormlyFieldConfig) &#x3D;&gt; string);
     };
     show?: boolean;
     [additionalProperties: string]: any;
@@ -717,12 +717,22 @@ export interface FormlyFieldConfig {
    * Used to set validation rules for a particular field.
    * Should be an object of key - value pairs. The value can either be an expression to evaluate or a function to run.
    * Each should return a boolean value, returning true when the field is valid. See Validation for more information.
+   *
+   * {
+   *   validation?: (string | ValidatorFn)[] | ValidatorFn;
+   *   [key: string]: ((control: AbstractControl) &#x3D;&gt; boolean) | ({ expression: (control: AbstractControl) &#x3D;&gt; boolean, message: string });
+   * }
    */
   validators?: any;
 
   /**
    * Use this one for anything that needs to validate asynchronously.
    * Pretty much exactly the same as the validators api, except it must be a function that returns a promise.
+   *
+   * {
+   *   validation?: (string | AsyncValidatorFn)[] | AsyncValidatorFn;
+   *   [key: string]: ((control: AbstractControl) &#x3D;&gt; Promise&lt;boolean&gt;) | ({ expression: (control: AbstractControl) &#x3D;&gt; Promise&lt;boolean&gt;, message: string });
+   * }
    */
   asyncValidators?: any;
 
@@ -796,7 +806,11 @@ export interface FormlyFieldConfig {
    * An object with a few useful properties to control the model changes
    * - &#x60;debounce&#x60;: integer value which contains the debounce model update value in milliseconds. A value of 0 triggers an immediate update.
    */
-  modelOptions?: any;
+  modelOptions?: {
+    debounce?: {
+      default: number;
+    };
+  };
 
   lifecycle?: FormlyLifeCycleOptions;
 
@@ -840,7 +854,7 @@ export interface FormlyTemplateOptions {
 }
 
 export interface FormlyLifeCycleFn {
-    (form?: FormGroup, field?: FormlyFieldConfig, model?: any, options?: any): void;
+  (form?: FormGroup, field?: FormlyFieldConfig, model?: any, options?: FormlyFormOptions): void;
 }
 
 export interface FormlyLifeCycleOptions {
@@ -859,7 +873,7 @@ export interface FormlyFormOptions {
   resetModel?: (model?: any) &#x3D;&gt; void;
   formState?: any;
   fieldChanges?: Subject&lt;FormlyValueChangeEvent&gt;;
-  fieldTransform?: any;
+  fieldTransform?: (fields: FormlyFieldConfig[], model: any, form: FormGroup, options: FormlyFormOptions) &#x3D;&gt; FormlyFieldConfig[];
   showError?: (field: Field) &#x3D;&gt; boolean;
   parentForm?: FormGroupDirective | NgForm | null;
 }

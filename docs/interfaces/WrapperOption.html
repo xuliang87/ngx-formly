@@ -596,7 +596,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="204" class="link-to-prism">src/core/src/services/formly.config.ts:204</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="205" class="link-to-prism">src/core/src/services/formly.config.ts:205</a></div>
                                         </td>
                                     </tr>
 
@@ -629,7 +629,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="203" class="link-to-prism">src/core/src/services/formly.config.ts:203</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="204" class="link-to-prism">src/core/src/services/formly.config.ts:204</a></div>
                                         </td>
                                     </tr>
 
@@ -662,7 +662,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="205" class="link-to-prism">src/core/src/services/formly.config.ts:205</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="206" class="link-to-prism">src/core/src/services/formly.config.ts:206</a></div>
                                         </td>
                                     </tr>
 
@@ -674,6 +674,7 @@
 
     <div class="tab-pane fade tab-source-code" id="source">
         <pre class="line-numbers"><code class="language-typescript">import { Injectable, Inject, InjectionToken } from &#x27;@angular/core&#x27;;
+import { ValidationErrors } from &#x27;@angular/forms&#x27;;
 import { FormlyGroup } from &#x27;../components/formly.group&#x27;;
 import { Field } from &#x27;./../templates/field&#x27;;
 import { reverseDeepMerge } from &#x27;./../utils&#x27;;
@@ -692,9 +693,9 @@ export class FormlyConfig {
       component: FormlyGroup,
     },
   };
-  validators: {[name: string]: ValidatorOption} &#x3D; {};
-  wrappers: {[name: string]: WrapperOption} &#x3D; {};
-  messages: { [name: string]: string; } &#x3D; {};
+  validators: { [name: string]: ValidatorOption } &#x3D; {};
+  wrappers: { [name: string]: WrapperOption } &#x3D; {};
+  messages: { [name: string]: string | ((error, field: FormlyFieldConfig) &#x3D;&gt; string); } &#x3D; {};
 
   templateManipulators: {
     preWrapper: ManipulatorWrapper[];
@@ -839,7 +840,7 @@ export class FormlyConfig {
     return this.validators[name];
   }
 
-  addValidatorMessage(name: string, message: string) {
+  addValidatorMessage(name: string, message: string | ((error, field: FormlyFieldConfig) &#x3D;&gt; string)) {
     this.messages[name] &#x3D; message;
   }
 
@@ -882,12 +883,12 @@ export interface WrapperOption {
 
 export interface ValidatorOption {
   name: string;
-  validation: any;
+  validation: string | ValidationErrors;
 }
 
 export interface ValidationMessageOption {
   name: string;
-  message: any;
+  message: string | ((error, field: FormlyFieldConfig) &#x3D;&gt; string);
 }
 
 export interface ManipulatorOption {
