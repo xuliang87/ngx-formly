@@ -550,7 +550,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-1511775977862">Unamed property</a>
+                                        <a href="#call-declaration-1511824637785">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -569,7 +569,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-1511775977862"></a>
+                                            <a name="call-declaration-1511824637785"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [f: FormlyFieldConfig]
@@ -638,7 +638,7 @@ export class FormlyConfig {
   } &#x3D; {
     fieldTransform: undefined,
     showError: function(field: Field) {
-      return (field.formControl.dirty || (field.options.parentForm &amp;&amp; field.options.parentForm.submitted) || (field.field.validation &amp;&amp; field.field.validation.show)) &amp;&amp; field.formControl.invalid;
+      return (field.formControl.touched || field.formControl.dirty || (field.options.parentForm &amp;&amp; field.options.parentForm.submitted) || (field.field.validation &amp;&amp; field.field.validation.show)) &amp;&amp; field.formControl.invalid;
     },
   };
 
