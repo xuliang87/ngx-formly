@@ -524,7 +524,7 @@
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
     <h3>File</h3>
 </p>
 <p class="comment">
@@ -558,6 +558,10 @@
 
 
 
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">{{ errorMessage }}</code></pre></td>
+            </tr>
 
 
 
@@ -595,7 +599,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                 <a href="#errorMessage">errorMessage</a>
+                                <a href="#errorMessage">errorMessage</a>
                             </li>
                         </ul>
                     </td>
@@ -683,7 +687,7 @@
                         </td>
                         <td class="col-md-10">
                               <p>
-                                <em>Type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/api/forms/FormControl" target="_blank" >FormControl</a></code>
+                                <em>Type:</em>    <code><a href="https://angular.io/api/forms/FormControl" target="_blank" >FormControl</a></code>
 
                               </p>
                         </td>
@@ -725,15 +729,6 @@
                                         <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/core/src/templates/formly.validation-message.ts:16</a></div>
                                     </td>
                                 </tr>
-                        <tr>
-                            <td class="col-md-4">
-    
-                                    <div class="io-description">
-                                        <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-    
-                                    </div>
-                            </td>
-                        </tr>
     
                 </tbody>
             </table>
@@ -741,7 +736,7 @@
 </div>
 
 
-    <div class="tab-pane fade tab-source-code" id="source">
+    <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers"><code class="language-typescript">import { Component, Input } from &#x27;@angular/core&#x27;;
 import { FormControl } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
@@ -787,7 +782,7 @@ export class FormlyValidationMessage {
     </div>
 
 
-    <div class="tab-pane fade" id="tree">
+    <div class="tab-pane fade" id="c-tree">
         <div id="tree-container"></div>
         <div class="tree-legend">
             <div class="title">
@@ -810,7 +805,7 @@ export class FormlyValidationMessage {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div></div>'
+        var COMPONENT_TEMPLATE = '<div>{{ errorMessage }}</div>'
     var COMPONENTS = [{'name': 'FormlyField', 'selector': 'formly-field'},{'name': 'FormlyForm', 'selector': 'formly-form'},{'name': 'FormlyGroup', 'selector': 'formly-group'},{'name': 'FormlyValidationMessage', 'selector': 'formly-validation-message'}];
     var DIRECTIVES = [{'name': 'FormlyAttributes', 'selector': '[formlyAttributes]'}];
     var ACTUAL_COMPONENT = {'name': 'FormlyValidationMessage'};

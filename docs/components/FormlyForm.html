@@ -524,7 +524,7 @@
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
     <h3>File</h3>
 </p>
 <p class="comment">
@@ -537,7 +537,7 @@
         <h3>Implements</h3>
     </p>
     <p class="comment">
-                <code><a href="https://angular.io/docs/ts/latest/api/api/core/OnChanges" target="_blank" >OnChanges</a></code>
+                <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
     </p>
 
 
@@ -564,6 +564,17 @@
 
 
 
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;formly-field *ngFor&#x3D;&quot;let field of fields&quot;
+  [model]&#x3D;&quot;fieldModel(field)&quot; [form]&#x3D;&quot;form&quot;
+  [field]&#x3D;&quot;field&quot; (modelChange)&#x3D;&quot;changeModel($event)&quot;
+  [ngClass]&#x3D;&quot;field.className&quot;
+  [options]&#x3D;&quot;options&quot;&gt;
+&lt;/formly-field&gt;
+&lt;ng-content&gt;&lt;/ng-content&gt;
+</code></pre></td>
+            </tr>
 
 
 
@@ -584,13 +595,13 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                 <a href="#changeModel">changeModel</a>
+                                <a href="#changeModel">changeModel</a>
                             </li>
                             <li>
-                                 <a href="#fieldModel">fieldModel</a>
+                                <a href="#fieldModel">fieldModel</a>
                             </li>
                             <li>
-                                 <a href="#setOptions">setOptions</a>
+                                <a href="#setOptions">setOptions</a>
                             </li>
                         </ul>
                     </td>
@@ -631,7 +642,7 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <code>constructor(formlyBuilder: <a href="../injectables/FormlyFormBuilder.html">FormlyFormBuilder</a>, parentForm: <a href="https://angular.io/docs/ts/latest/api/api/forms/NgForm" target="_blank">NgForm</a>, parentFormGroup: <a href="https://angular.io/docs/ts/latest/api/api/forms/FormGroupDirective" target="_blank">FormGroupDirective</a>)</code>
+                            <code>constructor(formlyBuilder: <a href="../injectables/FormlyFormBuilder.html">FormlyFormBuilder</a>, parentForm: <a href="https://angular.io/api/forms/NgForm" target="_blank">NgForm</a>, parentFormGroup: <a href="https://angular.io/api/forms/FormGroupDirective" target="_blank">FormGroupDirective</a>)</code>
                         </td>
                     </tr>
                             <tr>
@@ -666,7 +677,7 @@
                                                     <tr>
                                                       <td>parentForm</td>
                                                       <td>
-                                                                <code><a href="https://angular.io/docs/ts/latest/api/api/forms/NgForm" target="_blank" >NgForm</a></code>
+                                                                <code><a href="https://angular.io/api/forms/NgForm" target="_blank" >NgForm</a></code>
                                                       </td>
                                                       <td>
                                                       </td>
@@ -675,7 +686,7 @@
                                                     <tr>
                                                       <td>parentFormGroup</td>
                                                       <td>
-                                                                <code><a href="https://angular.io/docs/ts/latest/api/api/forms/FormGroupDirective" target="_blank" >FormGroupDirective</a></code>
+                                                                <code><a href="https://angular.io/api/forms/FormGroupDirective" target="_blank" >FormGroupDirective</a></code>
                                                       </td>
                                                       <td>
                                                       </td>
@@ -728,6 +739,9 @@
                                 <em>Type:</em>    <code><a href="../interfaces/FormlyFieldConfig.html" target="_self" >FormlyFieldConfig[]</a></code>
 
                               </p>
+                            <p>
+                              <em>Default value: </em><code>[]</code>
+                            </p>
                         </td>
                     </tr>
                             <tr>
@@ -746,9 +760,12 @@
                         </td>
                         <td class="col-md-10">
                               <p>
-                                <em>Type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+                                <em>Type:</em>    <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
 
                               </p>
+                            <p>
+                              <em>Default value: </em><code>new FormGroup({})</code>
+                            </p>
                         </td>
                     </tr>
                             <tr>
@@ -770,6 +787,9 @@
                                 <em>Type:</em>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                               </p>
+                            <p>
+                              <em>Default value: </em><code>{}</code>
+                            </p>
                         </td>
                     </tr>
                             <tr>
@@ -815,7 +835,12 @@
                     <tr>
                         <td class="col-md-4">
                             <a name="changeModel"></a>
-                            <span class="name"><b> changeModel</b><a href="#changeModel"><span class="fa fa-link"></span></a></span>
+                            <span class="name">
+                                <b>
+                                changeModel
+                                </b>
+                                <a href="#changeModel"><span class="fa fa-link"></span></a>
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -876,7 +901,12 @@
                     <tr>
                         <td class="col-md-4">
                             <a name="fieldModel"></a>
-                            <span class="name"><b> fieldModel</b><a href="#fieldModel"><span class="fa fa-link"></span></a></span>
+                            <span class="name">
+                                <b>
+                                fieldModel
+                                </b>
+                                <a href="#fieldModel"><span class="fa fa-link"></span></a>
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -937,7 +967,12 @@
                     <tr>
                         <td class="col-md-4">
                             <a name="setOptions"></a>
-                            <span class="name"><b> setOptions</b><a href="#setOptions"><span class="fa fa-link"></span></a></span>
+                            <span class="name">
+                                <b>
+                                setOptions
+                                </b>
+                                <a href="#setOptions"><span class="fa fa-link"></span></a>
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -970,7 +1005,7 @@
 </div>
 
 
-    <div class="tab-pane fade tab-source-code" id="source">
+    <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers"><code class="language-typescript">import { Component, OnChanges, Input, SimpleChanges, Optional } from &#x27;@angular/core&#x27;;
 import { FormControl, FormGroup, FormArray, NgForm, FormGroupDirective } from &#x27;@angular/forms&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions } from &#x27;./formly.field.config&#x27;;
@@ -1134,7 +1169,7 @@ export class FormlyForm implements OnChanges {
     </div>
 
 
-    <div class="tab-pane fade" id="tree">
+    <div class="tab-pane fade" id="c-tree">
         <div id="tree-container"></div>
         <div class="tree-legend">
             <div class="title">
@@ -1157,7 +1192,7 @@ export class FormlyForm implements OnChanges {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div></div>'
+        var COMPONENT_TEMPLATE = '<div><formly-field *ngFor="let field of fields"  [model]="fieldModel(field)" [form]="form"  [field]="field" (modelChange)="changeModel($event)"  [ngClass]="field.className"  [options]="options"></formly-field><ng-content></ng-content></div>'
     var COMPONENTS = [{'name': 'FormlyField', 'selector': 'formly-field'},{'name': 'FormlyForm', 'selector': 'formly-form'},{'name': 'FormlyGroup', 'selector': 'formly-group'},{'name': 'FormlyValidationMessage', 'selector': 'formly-validation-message'}];
     var DIRECTIVES = [{'name': 'FormlyAttributes', 'selector': '[formlyAttributes]'}];
     var ACTUAL_COMPONENT = {'name': 'FormlyForm'};
