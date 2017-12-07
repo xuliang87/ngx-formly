@@ -727,6 +727,7 @@ export class FormlyFormBuilder {
     this.formId++;
 
     options &#x3D; options || {};
+    options.formState &#x3D; options.formState || {};
     if (!options.showError) {
       options.showError &#x3D; this.formlyConfig.extras.showError;
     }
@@ -833,8 +834,6 @@ export class FormlyFormBuilder {
   }
 
   private initFieldExpression(field: FormlyFieldConfig, model, options: FormlyFormOptions) {
-    options.formState &#x3D; options.formState || {};
-
     if (field.expressionProperties) {
       for (let key in field.expressionProperties as any) {
         if (typeof field.expressionProperties[key] &#x3D;&#x3D;&#x3D; &#x27;string&#x27; || isFunction(field.expressionProperties[key])) {
@@ -851,9 +850,12 @@ export class FormlyFormBuilder {
       }
     }
 
-    if (typeof field.hideExpression &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-      // cache built expression
-      field.hideExpression &#x3D; evalStringExpression(field.hideExpression, [&#x27;model&#x27;, &#x27;formState&#x27;]);
+    if (field.hideExpression) {
+      if (typeof field.hideExpression &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+        // cache built expression
+        field.hideExpression &#x3D; evalStringExpression(field.hideExpression, [&#x27;model&#x27;, &#x27;formState&#x27;]);
+      }
+
       field.hide &#x3D; evalExpression(field.hideExpression, { field }, [model, options.formState]);
     }
   }

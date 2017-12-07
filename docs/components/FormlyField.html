@@ -537,7 +537,6 @@
         <h3>Implements</h3>
     </p>
     <p class="comment">
-                <code><a href="https://angular.io/api/core/DoCheck" target="_blank" >DoCheck</a></code>
                 <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
                 <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
     </p>
@@ -593,6 +592,23 @@
                         <ul class="index-list">
                             <li>
                                 <a href="#fieldComponent">fieldComponent</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#checkExpressionChange">checkExpressionChange</a>
+                            </li>
+                            <li>
+                                <a href="#checkVisibilityChange">checkVisibilityChange</a>
                             </li>
                         </ul>
                     </td>
@@ -828,6 +844,86 @@
 
 
 
+    <section>
+        
+            <h3 id="methods">
+                Methods
+            </h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="checkExpressionChange"></a>
+                            <span class="name">
+                                <b>
+                                checkExpressionChange
+                                </b>
+                                <a href="#checkExpressionChange"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+    <code>checkExpressionChange()</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/core/src/components/formly.field.ts:66</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="checkVisibilityChange"></a>
+                            <span class="name">
+                                <b>
+                                checkVisibilityChange
+                                </b>
+                                <a href="#checkVisibilityChange"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+    <code>checkVisibilityChange()</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/core/src/components/formly.field.ts:52</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 
     <section>
         
@@ -880,7 +976,7 @@
 
     <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers"><code class="language-typescript">import {
-  Component, OnInit, EventEmitter, ElementRef, Input, Output, DoCheck, OnDestroy,
+  Component, OnInit, EventEmitter, ElementRef, Input, Output, OnDestroy,
   ViewContainerRef, ViewChild, ComponentRef, Renderer2, ComponentFactoryResolver,
 } from &#x27;@angular/core&#x27;;
 import { FormGroup, FormArray } from &#x27;@angular/forms&#x27;;
@@ -899,7 +995,7 @@ import { map } from &#x27;rxjs/operator/map&#x27;;
     &lt;div *ngIf&#x3D;&quot;field.template &amp;&amp; !field.fieldGroup&quot; [innerHtml]&#x3D;&quot;field.template&quot;&gt;&lt;/div&gt;
   &#x60;,
 })
-export class FormlyField implements DoCheck, OnInit, OnDestroy {
+export class FormlyField implements OnInit, OnDestroy {
   @Input() model: any;
   @Input() form: FormGroup;
   @Input() field: FormlyFieldConfig;
@@ -917,11 +1013,6 @@ export class FormlyField implements DoCheck, OnInit, OnDestroy {
     private componentFactoryResolver: ComponentFactoryResolver,
   ) {}
 
-  ngDoCheck() {
-    this.checkExpressionChange();
-    this.checkVisibilityChange();
-  }
-
   ngOnInit() {
     this.createFieldComponents();
     if (this.field.hide &#x3D;&#x3D;&#x3D; true) {
@@ -933,6 +1024,53 @@ export class FormlyField implements DoCheck, OnInit, OnDestroy {
     this.componentRefs.map(componentRef &#x3D;&gt; componentRef.destroy());
     this._subscriptions.map(subscriber &#x3D;&gt; subscriber.unsubscribe());
     this._subscriptions &#x3D; this.componentRefs &#x3D; [];
+  }
+
+  checkVisibilityChange() {
+    if (this.field &amp;&amp; this.field.hideExpression) {
+      const hideExpressionResult: boolean &#x3D; !!evalExpression(
+        this.field.hideExpression,
+        this,
+        [this.model, this.options.formState],
+      );
+
+      if (hideExpressionResult !&#x3D;&#x3D; this.field.hide) {
+        this.toggleHide(hideExpressionResult);
+      }
+    }
+  }
+
+  checkExpressionChange() {
+    if (this.field &amp;&amp; this.field.expressionProperties) {
+      const expressionProperties &#x3D; this.field.expressionProperties;
+
+      for (let key in expressionProperties) {
+        const expressionValue &#x3D; evalExpression(
+          expressionProperties[key].expression,
+          this,
+          [this.model, this.options.formState],
+        );
+
+        if (expressionProperties[key].expressionValue !&#x3D;&#x3D; expressionValue) {
+          expressionProperties[key].expressionValue &#x3D; expressionValue;
+          evalExpression(
+            expressionProperties[key].expressionValueSetter,
+            this,
+            [expressionValue, this.model, this.field.templateOptions, this.field.validation],
+          );
+        }
+      }
+
+      const formControl &#x3D; this.field.formControl;
+      if (formControl) {
+        if (formControl.status &#x3D;&#x3D;&#x3D; &#x27;DISABLED&#x27; &amp;&amp; !this.field.templateOptions.disabled) {
+          formControl.enable();
+        }
+        if (formControl.status !&#x3D;&#x3D; &#x27;DISABLED&#x27; &amp;&amp; this.field.templateOptions.disabled) {
+          formControl.disable();
+        }
+      }
+    }
   }
 
   private createFieldComponents() {
@@ -1028,60 +1166,13 @@ export class FormlyField implements DoCheck, OnInit, OnDestroy {
     return ref;
   }
 
-  private checkVisibilityChange() {
-    if (this.field &amp;&amp; this.field.hideExpression) {
-      const hideExpressionResult: boolean &#x3D; !!evalExpression(
-        this.field.hideExpression,
-        this,
-        [this.model, this.options.formState],
-      );
-
-      if (hideExpressionResult !&#x3D;&#x3D; this.field.hide) {
-        this.toggleHide(hideExpressionResult);
-      }
-    }
-  }
-
-  private checkExpressionChange() {
-    if (this.field &amp;&amp; this.field.expressionProperties) {
-      const expressionProperties &#x3D; this.field.expressionProperties;
-
-      for (let key in expressionProperties) {
-        const expressionValue &#x3D; evalExpression(
-          expressionProperties[key].expression,
-          this,
-          [this.model, this.options.formState],
-        );
-
-        if (expressionProperties[key].expressionValue !&#x3D;&#x3D; expressionValue) {
-          expressionProperties[key].expressionValue &#x3D; expressionValue;
-          evalExpression(
-            expressionProperties[key].expressionValueSetter,
-            this,
-            [expressionValue, this.model, this.field.templateOptions, this.field.validation],
-          );
-        }
-      }
-
-      const formControl &#x3D; this.field.formControl;
-      if (formControl) {
-        if (formControl.status &#x3D;&#x3D;&#x3D; &#x27;DISABLED&#x27; &amp;&amp; !this.field.templateOptions.disabled) {
-            formControl.enable();
-        }
-        if (formControl.status !&#x3D;&#x3D; &#x27;DISABLED&#x27; &amp;&amp; this.field.templateOptions.disabled) {
-            formControl.disable();
-        }
-      }
-    }
-  }
-
   private toggleHide(value: boolean) {
     this.field.hide &#x3D; value;
     if (this.field.formControl) {
       if (value &#x3D;&#x3D;&#x3D; true &amp;&amp; this.form.get(this.field.key)) {
-        setTimeout(() &#x3D;&gt; this.removeFieldControl());
+        this.removeFieldControl();
       } else if (value &#x3D;&#x3D;&#x3D; false &amp;&amp; !this.form.get(this.field.key)) {
-        setTimeout(() &#x3D;&gt; this.addFieldControl());
+        this.addFieldControl();
       }
     }
 
