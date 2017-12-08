@@ -566,7 +566,7 @@
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/core/src/services/formly.form.builder.ts:13</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/services/formly.form.builder.ts:12</a></div>
                                         </td>
                                     </tr>
             
@@ -629,7 +629,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/core/src/services/formly.form.builder.ts:17</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/core/src/services/formly.form.builder.ts:16</a></div>
                                         </td>
                                     </tr>
             
@@ -710,7 +710,7 @@
         <pre class="line-numbers"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { FormGroup, FormArray, FormControl, AbstractControl, Validators } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;./formly.config&#x27;;
-import { evalStringExpression, evalExpressionValueSetter, evalExpression, getFieldId, assignModelValue, isObject } from &#x27;./../utils&#x27;;
+import { FORMLY_VALIDATORS, evalStringExpression, evalExpressionValueSetter, evalExpression, getFieldId, assignModelValue, isObject } from &#x27;./../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x27;../components/formly.field.config&#x27;;
 import { getKeyPath, isUndefined, isFunction } from &#x27;../utils&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
@@ -718,7 +718,6 @@ import { Subject } from &#x27;rxjs/Subject&#x27;;
 @Injectable()
 export class FormlyFormBuilder {
   private defaultPath;
-  private validationOpts &#x3D; [&#x27;required&#x27;, &#x27;pattern&#x27;, &#x27;minLength&#x27;, &#x27;maxLength&#x27;, &#x27;min&#x27;, &#x27;max&#x27;];
   private formId &#x3D; 0;
 
   constructor(private formlyConfig: FormlyConfig) {}
@@ -914,9 +913,20 @@ export class FormlyFormBuilder {
 
   private initFieldValidation(field: FormlyFieldConfig) {
     let validators &#x3D; [];
-    this.validationOpts.filter(opt &#x3D;&gt; field.templateOptions &amp;&amp; field.templateOptions[opt]).map((opt) &#x3D;&gt; {
-      validators.push(this.getValidation(opt, field.templateOptions[opt]));
-    });
+    FORMLY_VALIDATORS
+      .filter(opt &#x3D;&gt; (field.templateOptions &amp;&amp; field.templateOptions[opt])
+        || (field.expressionProperties &amp;&amp; field.expressionProperties[&#x60;templateOptions.${opt}&#x60;]),
+      )
+      .map((opt) &#x3D;&gt; {
+        validators.push((control: FormControl) &#x3D;&gt; {
+          if (!field.templateOptions[opt]) {
+            return null;
+          }
+
+          return this.getValidation(opt, field.templateOptions[opt])(control);
+        });
+      });
+
     if (field.validators) {
       for (let validatorName in field.validators) {
         if (validatorName !&#x3D;&#x3D; &#x27;validation&#x27;) {

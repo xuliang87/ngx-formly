@@ -982,7 +982,7 @@
 import { FormGroup, FormArray } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig, TypeOption } from &#x27;../services/formly.config&#x27;;
 import { Field } from &#x27;../templates/field&#x27;;
-import { evalExpression, getFieldModel } from &#x27;../utils&#x27;;
+import { FORMLY_VALIDATORS, evalExpression, getFieldModel } from &#x27;../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x27;./formly.field.config&#x27;;
 import { Subscription } from &#x27;rxjs/Subscription&#x27;;
 import { debounceTime } from &#x27;rxjs/operator/debounceTime&#x27;;
@@ -1058,6 +1058,11 @@ export class FormlyField implements OnInit, OnDestroy {
             this,
             [expressionValue, this.model, this.field.templateOptions, this.field.validation],
           );
+
+          const validators &#x3D; FORMLY_VALIDATORS.map(v &#x3D;&gt; &#x60;templateOptions.${v}&#x60;);
+          if (validators.indexOf(key) !&#x3D;&#x3D; -1 &amp;&amp; this.field.formControl) {
+            this.field.formControl.updateValueAndValidity({ emitEvent: false, onlySelf: true });
+          }
         }
       }
 
