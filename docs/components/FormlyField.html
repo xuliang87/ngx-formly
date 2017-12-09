@@ -1061,7 +1061,7 @@ export class FormlyField implements OnInit, OnDestroy {
 
           const validators &#x3D; FORMLY_VALIDATORS.map(v &#x3D;&gt; &#x60;templateOptions.${v}&#x60;);
           if (validators.indexOf(key) !&#x3D;&#x3D; -1 &amp;&amp; this.field.formControl) {
-            this.field.formControl.updateValueAndValidity({ emitEvent: false, onlySelf: true });
+            this.field.formControl.updateValueAndValidity({ emitEvent: false });
           }
         }
       }
