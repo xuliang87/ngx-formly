@@ -566,7 +566,7 @@
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/services/formly.form.builder.ts:12</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/core/src/services/formly.form.builder.ts:11</a></div>
                                         </td>
                                     </tr>
             
@@ -629,7 +629,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/core/src/services/formly.form.builder.ts:16</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/core/src/services/formly.form.builder.ts:15</a></div>
                                         </td>
                                     </tr>
             
@@ -717,7 +717,6 @@ import { Subject } from &#x27;rxjs/Subject&#x27;;
 
 @Injectable()
 export class FormlyFormBuilder {
-  private defaultPath;
   private formId &#x3D; 0;
 
   constructor(private formlyConfig: FormlyConfig) {}
@@ -764,9 +763,6 @@ export class FormlyFormBuilder {
         this.formlyConfig.getMergedField(field);
         let path: any &#x3D; field.key;
         if (typeof path &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-          if (!isUndefined(field.defaultValue)) {
-            this.defaultPath &#x3D; path;
-          }
           path &#x3D; getKeyPath({key: field.key});
         }
 
@@ -787,10 +783,7 @@ export class FormlyFormBuilder {
           field.key &#x3D; originalKey;
         } else {
           if (!isUndefined(field.defaultValue) &amp;&amp; isUndefined(model[path[0]])) {
-            let modelPath: any &#x3D; getKeyPath({key: this.defaultPath});
-            modelPath &#x3D; modelPath.pop();
-            assignModelValue(model, modelPath, field.defaultValue);
-            this.defaultPath &#x3D; undefined;
+            assignModelValue(model, path[0], field.defaultValue);
           }
           this.addFormControl(form, field, model[path[0]]);
         }
