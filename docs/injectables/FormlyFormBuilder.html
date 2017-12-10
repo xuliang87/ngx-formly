@@ -710,7 +710,7 @@
         <pre class="line-numbers"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { FormGroup, FormArray, FormControl, AbstractControl, Validators } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;./formly.config&#x27;;
-import { FORMLY_VALIDATORS, evalStringExpression, evalExpressionValueSetter, evalExpression, getFieldId, assignModelValue, isObject } from &#x27;./../utils&#x27;;
+import { FORMLY_VALIDATORS, evalStringExpression, evalExpressionValueSetter, evalExpression, getFieldId, assignModelValue, getValueForKey, isObject } from &#x27;./../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x27;../components/formly.field.config&#x27;;
 import { getKeyPath, isUndefined, isFunction } from &#x27;../utils&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
@@ -754,6 +754,9 @@ export class FormlyFormBuilder {
     fields.map((field, index) &#x3D;&gt; {
       field.id &#x3D; getFieldId(&#x60;formly_${this.formId}&#x60;, field, index);
 
+      if (!isUndefined(field.defaultValue) &amp;&amp; isUndefined(getValueForKey(model, field.key))) {
+        assignModelValue(model, field.key, field.defaultValue);
+      }
       this.initFieldTemplateOptions(field);
       this.initFieldExpression(field, model, options);
       this.initFieldValidation(field);
@@ -761,32 +764,28 @@ export class FormlyFormBuilder {
 
       if (field.key &amp;&amp; field.type) {
         this.formlyConfig.getMergedField(field);
-        let path: any &#x3D; field.key;
-        if (typeof path &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-          path &#x3D; getKeyPath({key: field.key});
+        let paths: any &#x3D; field.key;
+        if (typeof paths &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+          paths &#x3D; getKeyPath({key: field.key});
         }
 
-        if (path.length &gt; 1) {
-          const rootPath &#x3D; path.shift();
-          let nestedForm &#x3D; &lt;FormGroup&gt;(form.get(rootPath.toString()) ? form.get(rootPath.toString()) : new FormGroup({}));
-          if (!form.get(rootPath.toString())) {
-            form.addControl(rootPath, nestedForm);
-          }
-          if (!model[rootPath]) {
-            model[rootPath] &#x3D; isNaN(path[0]) ? {} : [];
-          }
+        let rootForm &#x3D; form;
+        paths.forEach((path, index) &#x3D;&gt; {
+          // is last item
+          if (index &#x3D;&#x3D;&#x3D; paths.length - 1) {
+            this.addFormControl(rootForm, field, model[paths[0]]);
+          } else {
+            let nestedForm &#x3D; &lt;FormGroup&gt;(rootForm.get(path) ? rootForm.get(path) : new FormGroup({}));
+            if (!rootForm.get(path)) {
+              rootForm.addControl(path, nestedForm);
+            }
+            if (!model[path]) {
+              model[path] &#x3D; isNaN(paths[0]) ? {} : [];
+            }
 
-          const originalKey &#x3D; field.key;
-          // Should this reassignment not be refactored?
-          field.key &#x3D; path;
-          this.buildForm(nestedForm, [field], model[rootPath], options);
-          field.key &#x3D; originalKey;
-        } else {
-          if (!isUndefined(field.defaultValue) &amp;&amp; isUndefined(model[path[0]])) {
-            assignModelValue(model, path[0], field.defaultValue);
+            rootForm &#x3D; nestedForm;
           }
-          this.addFormControl(form, field, model[path[0]]);
-        }
+        });
       }
 
       if (field.fieldGroup) {
