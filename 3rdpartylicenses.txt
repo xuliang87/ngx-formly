@@ -189,7 +189,7 @@ THE SOFTWARE.
 MIT
 MIT
 
-@ngx-loading-bar/router@1.0.0-alpha.18
+@ngx-loading-bar/router@1.0.0-rc.3
 MIT
 MIT
 

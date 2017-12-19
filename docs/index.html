@@ -531,10 +531,10 @@ application&#39;s forms.</p>
 </ol>
 </li>
 <li><p><a href="https://getbootstrap.com">Bootstrap</a>:</p>
-</li>
+<pre class="line-numbers"><code class="language-bash">  npm install &#64;ngx-formly/bootstrap --save</code></pre></li>
 </ul>
-<pre class="line-numbers"><code class="language-bash">  npm install &#64;ngx-formly/bootstrap --save</code></pre><h4 id="3-import-the-formlymodule-and-ui-pre-defined-types-templates-">3. Import the <code>FormlyModule</code> and UI (pre-defined types/templates):</h4>
-<pre class="line-numbers"><code class="language-ts">import {NgModule} from &#39;&#64;angular/core&#39;;
+<h4 id="3-import-the-formlymodule-and-ui-pre-defined-types-templates-">3. Import the <code>FormlyModule</code> and UI (pre-defined types/templates):</h4>
+<pre class="line-numbers"><code class="language-typescript">import {NgModule} from &#39;&#64;angular/core&#39;;
 import {ReactiveFormsModule} from &#39;&#64;angular/forms&#39;;
 import {FormlyModule} from &#39;&#64;ngx-formly/core&#39;;
 import {FormlyBootstrapModule} from &#39;&#64;ngx-formly/bootstrap&#39;;
@@ -554,7 +554,7 @@ import {FormlyBootstrapModule} from &#39;&#64;ngx-formly/bootstrap&#39;;
   ],
 })
 export class AppModule {}</code></pre><h4 id="3-define-the-form-config-in-your-component-">3. Define the form config in your component:</h4>
-<pre class="line-numbers"><code class="language-ts">import {Component} from &#39;&#64;angular/core&#39;;
+<pre class="line-numbers"><code class="language-typescript">import {Component} from &#39;&#64;angular/core&#39;;
 import {FormGroup} from &#39;&#64;angular/forms&#39;;
 import {FormlyFieldConfig} from &#39;&#64;ngx-formly/core&#39;;
 
