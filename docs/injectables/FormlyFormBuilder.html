@@ -757,13 +757,12 @@ export class FormlyFormBuilder {
       if (!isUndefined(field.defaultValue) &amp;&amp; isUndefined(getValueForKey(model, field.key))) {
         assignModelValue(model, field.key, field.defaultValue);
       }
-      this.initFieldTemplateOptions(field);
+      this.initFieldOptions(field);
       this.initFieldExpression(field, model, options);
       this.initFieldValidation(field);
       this.initFieldAsyncValidation(field);
 
       if (field.key &amp;&amp; field.type) {
-        this.formlyConfig.getMergedField(field);
         const paths: any &#x3D; getKeyPath({ key: field.key });
         let rootForm &#x3D; form, rootModel &#x3D; model;
         paths.forEach((path, index) &#x3D;&gt; {
@@ -849,9 +848,10 @@ export class FormlyFormBuilder {
     }
   }
 
-  private initFieldTemplateOptions(field: FormlyFieldConfig) {
+  private initFieldOptions(field: FormlyFieldConfig) {
     field.templateOptions &#x3D; field.templateOptions || {};
     if (field.key &amp;&amp; field.type) {
+      this.formlyConfig.getMergedField(field);
       field.templateOptions &#x3D; Object.assign({
         label: &#x27;&#x27;,
         placeholder: &#x27;&#x27;,
@@ -872,7 +872,7 @@ export class FormlyFormBuilder {
             }
 
             return new Promise((resolve) &#x3D;&gt; {
-              return validator(control).then(result &#x3D;&gt; {
+              return validator(control, field).then(result &#x3D;&gt; {
                 resolve(result ? null : {[validatorName]: true});
               });
             });
@@ -926,7 +926,7 @@ export class FormlyFormBuilder {
               validator &#x3D; validator.expression;
             }
 
-            return validator(control) ? null : {[validatorName]: true};
+            return validator(control, field) ? null : {[validatorName]: true};
           });
         }
       }
