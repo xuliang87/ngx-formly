@@ -1523,7 +1523,7 @@
                                         <i>Default value : </i><code>{
                 fieldTransform: undefined,
                 showError: function(field: Field) {
-                  return (field.formControl.touched || (field.options.parentForm &amp;&amp; field.options.parentForm.submitted) || (field.field.validation &amp;&amp; field.field.validation.show)) &amp;&amp; field.formControl.invalid;
+                  return field.formControl &amp;&amp; field.formControl.invalid &amp;&amp; (field.formControl.touched || (field.options.parentForm &amp;&amp; field.options.parentForm.submitted) || (field.field.validation &amp;&amp; field.field.validation.show));
                 },
               }</code>
                                     </td>
@@ -1784,7 +1784,7 @@ export class FormlyConfig {
   } &#x3D; {
     fieldTransform: undefined,
     showError: function(field: Field) {
-      return (field.formControl.touched || (field.options.parentForm &amp;&amp; field.options.parentForm.submitted) || (field.field.validation &amp;&amp; field.field.validation.show)) &amp;&amp; field.formControl.invalid;
+      return field.formControl &amp;&amp; field.formControl.invalid &amp;&amp; (field.formControl.touched || (field.options.parentForm &amp;&amp; field.options.parentForm.submitted) || (field.field.validation &amp;&amp; field.field.validation.show));
     },
   };
 
