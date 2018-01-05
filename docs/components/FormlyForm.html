@@ -1286,8 +1286,7 @@ export class FormlyForm implements DoCheck, OnChanges {
   }
 
   private updateInitialValue() {
-    const initialModel &#x3D; reverseDeepMerge(this.form.value, this.model);
-    this.initialModel &#x3D; JSON.parse(JSON.stringify(initialModel));
+    this.initialModel &#x3D; reverseDeepMerge({}, this.model);
   }
 }
 </code></pre>
