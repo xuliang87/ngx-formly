@@ -1221,7 +1221,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>pattern:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>pattern:     <code>string | RegExp</code>
 </code>
                                     </td>
                                 </tr>
@@ -1229,7 +1229,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>    <code>string | RegExp</code>
 
                                         </td>
                                     </tr>
@@ -1494,7 +1494,7 @@ export interface FormlyFieldConfig {
    *
    * {
    *   validation?: (string | ValidatorFn)[] | ValidatorFn;
-   *   [key: string]: ((control: AbstractControl, field: FormlyFieldConfig) &#x3D;&gt; boolean) | ({ expression: (control: AbstractControl, field: FormlyFieldConfig) &#x3D;&gt; boolean, message: string });
+   *   [key: string]: ((control: AbstractControl, field: FormlyFieldConfig) &#x3D;&gt; boolean) | ({ expression: (control: AbstractControl, field: FormlyFieldConfig) &#x3D;&gt; boolean, message: string | ((error, field: FormlyFieldConfig) &#x3D;&gt; string) });
    * }
    */
   validators?: any;
@@ -1613,7 +1613,7 @@ export interface FormlyTemplateOptions {
   min?: number;
   minLength?: number;
   maxLength?: number;
-  pattern?: string;
+  pattern?: string|RegExp;
   required?: boolean;
   tabindex?: number;
   step?: number;
