@@ -751,7 +751,7 @@ export class FormlyFormBuilder {
   }
 
   private registerFormControls(form: FormGroup, fields: FormlyFieldConfig[], model: any, options: FormlyFormOptions) {
-    fields.map((field, index) &#x3D;&gt; {
+    fields.forEach((field, index) &#x3D;&gt; {
       field.id &#x3D; getFieldId(&#x60;formly_${this.formId}&#x60;, field, index);
 
       if (!isUndefined(field.defaultValue) &amp;&amp; isUndefined(getValueForKey(model, field.key))) {
@@ -763,7 +763,7 @@ export class FormlyFormBuilder {
       this.initFieldAsyncValidation(field);
 
       if (field.key &amp;&amp; field.type) {
-        const paths: any &#x3D; getKeyPath({ key: field.key });
+        const paths: any[] &#x3D; getKeyPath({ key: field.key });
         let rootForm &#x3D; form, rootModel &#x3D; model;
         paths.forEach((path, index) &#x3D;&gt; {
           // is last item
@@ -787,36 +787,28 @@ export class FormlyFormBuilder {
 
       if (field.fieldGroup) {
         if (field.key) {
-          if (!model.hasOwnProperty(field.key)) {
-            model[field.key] &#x3D; {};
-          }
-          let nestedForm &#x3D; &lt;FormGroup&gt;form.get(field.key),
-            nestedModel &#x3D; model[field.key] || {};
-
-          if (!nestedForm) {
-            nestedForm &#x3D; new FormGroup(
-              {},
-              field.validators ? field.validators.validation : undefined,
-              field.asyncValidators ? field.asyncValidators.validation : undefined,
-            );
-            this.addControl(form, field.key, nestedForm, field);
-          }
-
-          this.buildForm(nestedForm, field.fieldGroup, nestedModel, options);
+          this.addFormControl(form, field, { [field.key]: {} }, field.key);
+          model[field.key] &#x3D; model[field.key] || {};
+          this.buildForm(field.formControl as FormGroup, field.fieldGroup, model[field.key], options);
         } else {
+          if (field.hideExpression) {
+            field.fieldGroup.forEach(f &#x3D;&gt; {
+              if (!f.hideExpression) {
+                f.hideExpression &#x3D; () &#x3D;&gt; field.hide;
+              }
+            });
+          }
           this.buildForm(form, field.fieldGroup, model, options);
         }
       }
 
-      if (field.fieldArray &amp;&amp; field.key) {
-        if (!(form.get(field.key) instanceof FormArray)) {
-          const arrayForm &#x3D; new FormArray(
-            [],
-            field.validators ? field.validators.validation : undefined,
-            field.asyncValidators ? field.asyncValidators.validation : undefined,
-          );
-          this.addControl(form, field.key, arrayForm, field);
-        }
+      if (field.fieldArray &amp;&amp; field.key &amp;&amp; !(form.get(field.key) instanceof FormArray)) {
+        const arrayForm &#x3D; new FormArray(
+          [],
+          field.validators ? field.validators.validation : undefined,
+          field.asyncValidators ? field.asyncValidators.validation : undefined,
+        );
+        this.addControl(form, field.key, arrayForm, field);
       }
     });
   }
@@ -883,7 +875,7 @@ export class FormlyFormBuilder {
       }
     }
     if (field.asyncValidators &amp;&amp; Array.isArray(field.asyncValidators.validation)) {
-      field.asyncValidators.validation.map(validate &#x3D;&gt; {
+      field.asyncValidators.validation.forEach(validate &#x3D;&gt; {
         if (typeof validate &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
           validators.push(this.formlyConfig.getValidator(validate).validation);
         } else {
@@ -909,7 +901,7 @@ export class FormlyFormBuilder {
       .filter(opt &#x3D;&gt; (field.templateOptions &amp;&amp; field.templateOptions[opt])
         || (field.expressionProperties &amp;&amp; field.expressionProperties[&#x60;templateOptions.${opt}&#x60;]),
       )
-      .map((opt) &#x3D;&gt; {
+      .forEach((opt) &#x3D;&gt; {
         validators.push((control: FormControl) &#x3D;&gt; {
           if (!field.templateOptions[opt]) {
             return null;
@@ -935,7 +927,7 @@ export class FormlyFormBuilder {
     }
 
     if (field.validators &amp;&amp; Array.isArray(field.validators.validation)) {
-      field.validators.validation.map(validate &#x3D;&gt; {
+      field.validators.validation.forEach(validate &#x3D;&gt; {
         if (typeof validate &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
           validators.push(this.formlyConfig.getValidator(validate).validation);
         } else {
@@ -956,13 +948,21 @@ export class FormlyFormBuilder {
   }
 
   private addFormControl(form: FormGroup, field: FormlyFieldConfig, model: any, path: string) {
-    let formControl: AbstractControl;
+    let control: AbstractControl;
     if (field.formControl instanceof AbstractControl) {
-      formControl &#x3D; field.formControl;
+      control &#x3D; field.formControl;
+    } else if (form.get(path)) {
+      control &#x3D; form.get(path);
     } else if (field.component &amp;&amp; field.component.createControl) {
-      formControl &#x3D; field.component.createControl(model[path], field);
+      control &#x3D; field.component.createControl(model[path], field);
+    } else if (field.fieldGroup &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path) {
+      control &#x3D; new FormGroup(
+        model[path],
+        field.validators ? field.validators.validation : undefined,
+        field.asyncValidators ? field.asyncValidators.validation : undefined,
+      );
     } else {
-      formControl &#x3D; new FormControl(
+      control &#x3D; new FormControl(
         model[path],
         field.validators ? field.validators.validation : undefined,
         field.asyncValidators ? field.asyncValidators.validation : undefined,
@@ -970,10 +970,23 @@ export class FormlyFormBuilder {
     }
 
     if (field.templateOptions.disabled) {
-      formControl.disable();
+      control.disable();
     }
 
-    this.addControl(form, path, formControl, field);
+    this.addControl(form, path, control, field);
+  }
+
+  private addControl(form: FormGroup, key: string, formControl: AbstractControl, field: FormlyFieldConfig) {
+    field.formControl &#x3D; formControl;
+    if (field.hide) {
+      return;
+    }
+
+    if (formControl instanceof FormArray) {
+      form.setControl(key, formControl);
+    } else {
+      form.addControl(key, formControl);
+    }
   }
 
   private getValidation(opt, value) {
@@ -990,18 +1003,6 @@ export class FormlyFormBuilder {
         return Validators.min(value);
       case &#x27;max&#x27;:
         return Validators.max(value);
-    }
-  }
-
-  private addControl(form: FormGroup, key: string, formControl: AbstractControl, field: FormlyFieldConfig) {
-    field.formControl &#x3D; formControl;
-    if (field.hide) {
-      return;
-    }
-    if (formControl instanceof FormArray) {
-      form.setControl(key, formControl);
-    } else {
-      form.addControl(key, formControl);
     }
   }
 }

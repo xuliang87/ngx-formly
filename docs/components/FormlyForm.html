@@ -1178,7 +1178,7 @@ export class FormlyForm implements DoCheck, OnChanges {
       return;
     }
 
-    this.formlyFields.map(field &#x3D;&gt; {
+    this.formlyFields.forEach(field &#x3D;&gt; {
       field.checkExpressionChange();
       field.checkVisibilityChange();
     });

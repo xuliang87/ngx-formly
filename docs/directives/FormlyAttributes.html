@@ -797,13 +797,13 @@ export class FormlyAttributes implements OnChanges {
       const fieldChanges &#x3D; changes.field;
       this.attributes
         .filter(attr &#x3D;&gt; this.canApplyRender(fieldChanges, attr))
-        .map(attr &#x3D;&gt; this.renderer.setAttribute(
+        .forEach(attr &#x3D;&gt; this.renderer.setAttribute(
           this.elementRef.nativeElement, attr, this.getPropValue(this.field, attr),
         ));
 
       this.statements
         .filter(statement &#x3D;&gt; this.canApplyRender(fieldChanges, statement))
-        .map(statement &#x3D;&gt; this.renderer.listen(
+        .forEach(statement &#x3D;&gt; this.renderer.listen(
           this.elementRef.nativeElement, statement, this.getStatementValue(statement),
         ));
 
