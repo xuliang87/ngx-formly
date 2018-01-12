@@ -1160,7 +1160,7 @@ export class FormlyField implements OnInit, OnDestroy {
 
   private toggleHide(value: boolean) {
     this.field.hide &#x3D; value;
-    if (this.field.formControl) {
+    if (this.field.formControl &amp;&amp; this.field.key) {
       if (value &#x3D;&#x3D;&#x3D; true &amp;&amp; this.form.get(this.field.key)) {
         this.removeFieldControl();
       } else if (value &#x3D;&#x3D;&#x3D; false &amp;&amp; !this.form.get(this.field.key)) {
