@@ -1023,13 +1023,13 @@ export interface FormlyTemplateOptions {
   required?: boolean;
   tabindex?: number;
   step?: number;
-  focus?: Function;
-  blur?: Function;
-  keyup?: Function;
-  keydown?: Function;
-  click?: Function;
-  change?: Function;
-  keypress?: Function;
+  focus?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  blur?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  keyup?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  keydown?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  click?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  change?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  keypress?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
   [additionalProperties: string]: any;
 }
 

@@ -550,7 +550,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-1515775619955">Unamed property</a>
+                                        <a href="#call-declaration-1515840840160">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -569,7 +569,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-1515775619955"></a>
+                                            <a name="call-declaration-1515840840160"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [form: FormGroup, field: FormlyFieldConfig, model: any, options: FormlyFormOptions]
@@ -770,13 +770,13 @@ export interface FormlyTemplateOptions {
   required?: boolean;
   tabindex?: number;
   step?: number;
-  focus?: Function;
-  blur?: Function;
-  keyup?: Function;
-  keydown?: Function;
-  click?: Function;
-  change?: Function;
-  keypress?: Function;
+  focus?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  blur?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  keyup?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  keydown?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  click?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  change?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  keypress?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
   [additionalProperties: string]: any;
 }
 
