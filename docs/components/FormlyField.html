@@ -214,6 +214,9 @@
                                     <a href="../interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/TemplateManipulators.html" >TemplateManipulators</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/TypeOption.html" >TypeOption</a>
                                 </li>
                                 <li class="link">
@@ -454,6 +457,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TemplateManipulators.html" >TemplateManipulators</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/TypeOption.html" >TypeOption</a>
@@ -967,7 +973,7 @@
   ViewContainerRef, ViewChild, ComponentRef, ComponentFactoryResolver, SimpleChanges,
 } from &#x27;@angular/core&#x27;;
 import { FormGroup, FormArray } from &#x27;@angular/forms&#x27;;
-import { FormlyConfig, TypeOption } from &#x27;../services/formly.config&#x27;;
+import { FormlyConfig, TypeOption, TemplateManipulators } from &#x27;../services/formly.config&#x27;;
 import { Field } from &#x27;../templates/field&#x27;;
 import { FORMLY_VALIDATORS, evalExpression, getFieldModel } from &#x27;../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x27;./formly.field.config&#x27;;
@@ -1122,7 +1128,7 @@ export class FormlyField implements OnInit, OnChanges, OnDestroy {
   }
 
   private getFieldWrappers(type: TypeOption) {
-    let templateManipulators &#x3D; {
+    const templateManipulators: TemplateManipulators &#x3D; {
       preWrapper: [],
       postWrapper: [],
     };
@@ -1142,7 +1148,7 @@ export class FormlyField implements OnInit, OnChanges, OnDestroy {
     return [...preWrappers, ...this.field.wrappers, ...postWrappers];
   }
 
-  private mergeTemplateManipulators(source, target) {
+  private mergeTemplateManipulators(source: TemplateManipulators, target: TemplateManipulators) {
     target &#x3D; target || {};
     if (target.preWrapper) {
       source.preWrapper &#x3D; source.preWrapper.concat(target.preWrapper);

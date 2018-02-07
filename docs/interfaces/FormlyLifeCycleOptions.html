@@ -214,6 +214,9 @@
                                     <a href="../interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/TemplateManipulators.html" >TemplateManipulators</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/TypeOption.html" >TypeOption</a>
                                 </li>
                                 <li class="link">
@@ -456,6 +459,9 @@
                                            <a href="../interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/TemplateManipulators.html" >TemplateManipulators</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/TypeOption.html" >TypeOption</a>
                                        </li>
                                        <li class="link">
@@ -611,7 +617,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="190" class="link-to-prism">src/core/src/components/formly.field.config.ts:190</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="192" class="link-to-prism">src/core/src/components/formly.field.config.ts:192</a></div>
                                         </td>
                                     </tr>
 
@@ -644,7 +650,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="189" class="link-to-prism">src/core/src/components/formly.field.config.ts:189</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="191" class="link-to-prism">src/core/src/components/formly.field.config.ts:191</a></div>
                                         </td>
                                     </tr>
 
@@ -677,7 +683,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="192" class="link-to-prism">src/core/src/components/formly.field.config.ts:192</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="194" class="link-to-prism">src/core/src/components/formly.field.config.ts:194</a></div>
                                         </td>
                                     </tr>
 
@@ -710,7 +716,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="191" class="link-to-prism">src/core/src/components/formly.field.config.ts:191</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="193" class="link-to-prism">src/core/src/components/formly.field.config.ts:193</a></div>
                                         </td>
                                     </tr>
 
@@ -743,7 +749,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="188" class="link-to-prism">src/core/src/components/formly.field.config.ts:188</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="190" class="link-to-prism">src/core/src/components/formly.field.config.ts:190</a></div>
                                         </td>
                                     </tr>
 
@@ -776,7 +782,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="187" class="link-to-prism">src/core/src/components/formly.field.config.ts:187</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="189" class="link-to-prism">src/core/src/components/formly.field.config.ts:189</a></div>
                                         </td>
                                     </tr>
 
@@ -809,7 +815,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="193" class="link-to-prism">src/core/src/components/formly.field.config.ts:193</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="195" class="link-to-prism">src/core/src/components/formly.field.config.ts:195</a></div>
                                         </td>
                                     </tr>
 
@@ -842,7 +848,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="186" class="link-to-prism">src/core/src/components/formly.field.config.ts:186</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="188" class="link-to-prism">src/core/src/components/formly.field.config.ts:188</a></div>
                                         </td>
                                     </tr>
 
@@ -855,7 +861,8 @@
     <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers"><code class="language-typescript">import { FormGroup, AbstractControl, FormGroupDirective, NgForm } from &#x27;@angular/forms&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
-import { Field } from &#x27;./../templates/field&#x27;;
+import { Field } from &#x27;../templates/field&#x27;;
+import { TemplateManipulators } from &#x27;../services/formly.config&#x27;;
 
 export interface FormlyFieldConfig {
   /**
@@ -887,7 +894,7 @@ export interface FormlyFieldConfig {
    */
   validation?: {
     messages?: {
-      [messageProperties: string]: string | ((error, field: FormlyFieldConfig) &#x3D;&gt; string);
+      [messageProperties: string]: string | ((error: any, field: FormlyFieldConfig) &#x3D;&gt; string);
     };
     show?: boolean;
     [additionalProperties: string]: any;
@@ -1030,6 +1037,7 @@ export interface FormlyTemplateOptions {
   click?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
   change?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
   keypress?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  templateManipulators?: TemplateManipulators;
   [additionalProperties: string]: any;
 }
 

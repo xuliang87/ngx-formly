@@ -214,6 +214,9 @@
                                     <a href="../interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/TemplateManipulators.html" >TemplateManipulators</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/TypeOption.html" >TypeOption</a>
                                 </li>
                                 <li class="link">
@@ -454,6 +457,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TemplateManipulators.html" >TemplateManipulators</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/TypeOption.html" >TypeOption</a>
@@ -820,7 +826,7 @@ export class FormlyFormBuilder {
     });
   }
 
-  private initFieldExpression(field: FormlyFieldConfig, model, options: FormlyFormOptions) {
+  private initFieldExpression(field: FormlyFieldConfig, model: any, options: FormlyFormOptions) {
     if (field.expressionProperties) {
       for (let key in field.expressionProperties as any) {
         if (typeof field.expressionProperties[key] &#x3D;&#x3D;&#x3D; &#x27;string&#x27; || isFunction(field.expressionProperties[key])) {
@@ -862,7 +868,7 @@ export class FormlyFormBuilder {
   }
 
   private initFieldAsyncValidation(field: FormlyFieldConfig) {
-    let validators &#x3D; [];
+    let validators: any &#x3D; [];
     if (field.asyncValidators) {
       for (let validatorName in field.asyncValidators) {
         if (validatorName !&#x3D;&#x3D; &#x27;validation&#x27;) {
@@ -873,7 +879,7 @@ export class FormlyFormBuilder {
             }
 
             return new Promise((resolve) &#x3D;&gt; {
-              return validator(control, field).then(result &#x3D;&gt; {
+              return validator(control, field).then((result: boolean) &#x3D;&gt; {
                 resolve(result ? null : {[validatorName]: true});
               });
             });
@@ -882,7 +888,7 @@ export class FormlyFormBuilder {
       }
     }
     if (field.asyncValidators &amp;&amp; Array.isArray(field.asyncValidators.validation)) {
-      field.asyncValidators.validation.forEach(validate &#x3D;&gt; {
+      field.asyncValidators.validation.forEach((validate: any) &#x3D;&gt; {
         if (typeof validate &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
           validators.push(this.formlyConfig.getValidator(validate).validation);
         } else {
@@ -903,7 +909,7 @@ export class FormlyFormBuilder {
   }
 
   private initFieldValidation(field: FormlyFieldConfig) {
-    let validators &#x3D; [];
+    let validators: any &#x3D; [];
     FORMLY_VALIDATORS
       .filter(opt &#x3D;&gt; (field.templateOptions &amp;&amp; field.templateOptions[opt])
         || (field.expressionProperties &amp;&amp; field.expressionProperties[&#x60;templateOptions.${opt}&#x60;]),
@@ -934,7 +940,7 @@ export class FormlyFormBuilder {
     }
 
     if (field.validators &amp;&amp; Array.isArray(field.validators.validation)) {
-      field.validators.validation.forEach(validate &#x3D;&gt; {
+      field.validators.validation.forEach((validate: any) &#x3D;&gt; {
         if (typeof validate &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
           validators.push(this.formlyConfig.getValidator(validate).validation);
         } else {
@@ -996,7 +1002,7 @@ export class FormlyFormBuilder {
     }
   }
 
-  private getValidation(opt, value) {
+  private getValidation(opt: string, value: any) {
     switch (opt) {
       case &#x27;required&#x27;:
         return Validators.required;

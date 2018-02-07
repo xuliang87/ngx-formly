@@ -214,6 +214,9 @@
                                     <a href="../interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/TemplateManipulators.html" >TemplateManipulators</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/TypeOption.html" >TypeOption</a>
                                 </li>
                                 <li class="link">
@@ -456,6 +459,9 @@
                                            <a href="../interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/TemplateManipulators.html" >TemplateManipulators</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/TypeOption.html" >TypeOption</a>
                                        </li>
                                        <li class="link">
@@ -550,7 +556,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-1517502826913">Unamed property</a>
+                                        <a href="#call-declaration-1518008854517">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -569,7 +575,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-1517502826913"></a>
+                                            <a name="call-declaration-1518008854517"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [form: FormGroup, field: FormlyFieldConfig, model: any, options: FormlyFormOptions]
@@ -589,7 +595,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="181" class="link-to-prism">src/core/src/components/formly.field.config.ts:181</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="183" class="link-to-prism">src/core/src/components/formly.field.config.ts:183</a></div>
                                         </td>
                                     </tr>
 
@@ -602,7 +608,8 @@
     <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers"><code class="language-typescript">import { FormGroup, AbstractControl, FormGroupDirective, NgForm } from &#x27;@angular/forms&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
-import { Field } from &#x27;./../templates/field&#x27;;
+import { Field } from &#x27;../templates/field&#x27;;
+import { TemplateManipulators } from &#x27;../services/formly.config&#x27;;
 
 export interface FormlyFieldConfig {
   /**
@@ -634,7 +641,7 @@ export interface FormlyFieldConfig {
    */
   validation?: {
     messages?: {
-      [messageProperties: string]: string | ((error, field: FormlyFieldConfig) &#x3D;&gt; string);
+      [messageProperties: string]: string | ((error: any, field: FormlyFieldConfig) &#x3D;&gt; string);
     };
     show?: boolean;
     [additionalProperties: string]: any;
@@ -777,6 +784,7 @@ export interface FormlyTemplateOptions {
   click?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
   change?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
   keypress?: (field: FormlyFieldConfig, formControl: AbstractControl) &#x3D;&gt; void;
+  templateManipulators?: TemplateManipulators;
   [additionalProperties: string]: any;
 }
 

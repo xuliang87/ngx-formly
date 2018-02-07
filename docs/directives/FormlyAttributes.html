@@ -214,6 +214,9 @@
                                     <a href="../interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/TemplateManipulators.html" >TemplateManipulators</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/TypeOption.html" >TypeOption</a>
                                 </li>
                                 <li class="link">
@@ -454,6 +457,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ManipulatorWrapper.html" >ManipulatorWrapper</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TemplateManipulators.html" >TemplateManipulators</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/TypeOption.html" >TypeOption</a>
@@ -823,7 +829,7 @@ export class FormlyAttributes implements OnChanges {
       return field.templateOptions[prop];
     }
 
-    return field[prop] || &#x27;&#x27;;
+    return (&lt;any&gt;field)[prop] || &#x27;&#x27;;
   }
 
   private getStatementValue(statement: string) {
