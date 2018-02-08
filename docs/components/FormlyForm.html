@@ -622,9 +622,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#buildForm">buildForm</a>
-                            </li>
-                            <li>
                                 <a href="#fields">fields</a>
                             </li>
                             <li>
@@ -654,7 +651,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/core/src/components/formly.form.ts:30</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/core/src/components/formly.form.ts:26</a></div>
                                 </td>
                             </tr>
     
@@ -719,30 +716,6 @@
 
     <section>
         <h3 id="inputs">Inputs</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <a name="buildForm"></a>
-                            <code>buildForm</code>
-                        </td>
-                        <td class="col-md-10">
-                              <p>
-                                <em>Type:</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                              </p>
-                            <p>
-                              <em>Default value: </em><code>true</code>
-                            </p>
-                        </td>
-                    </tr>
-                            <tr>
-                                <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/core/src/components/formly.form.ts:26</a></div>
-                                </td>
-                            </tr>
-                </tbody>
-            </table>
             <table class="table table-sm table-bordered">
                 <tbody>
                     <tr>
@@ -868,7 +841,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/core/src/components/formly.form.ts:66</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/core/src/components/formly.form.ts:59</a></div>
                                 </td>
                             </tr>
     
@@ -934,7 +907,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/core/src/components/formly.form.ts:59</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/core/src/components/formly.form.ts:52</a></div>
                                 </td>
                             </tr>
     
@@ -1000,7 +973,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/core/src/components/formly.form.ts:71</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/core/src/components/formly.form.ts:64</a></div>
                                 </td>
                             </tr>
     
@@ -1046,12 +1019,8 @@ export class FormlyForm implements DoCheck, OnChanges {
   @Input() form: FormGroup &#x3D; new FormGroup({});
   @Input() fields: FormlyFieldConfig[] &#x3D; [];
   @Input() options: FormlyFormOptions;
-  /** @internal */
-  @Input() buildForm: boolean &#x3D; true;
 
   private initialModel: any;
-
-  private initialized &#x3D; false;
 
   constructor(
     private formlyBuilder: FormlyFormBuilder,
@@ -1069,11 +1038,8 @@ export class FormlyForm implements DoCheck, OnChanges {
       this.model &#x3D; this.model || {};
       this.form &#x3D; this.form || (new FormGroup({}));
       this.setOptions();
-      if (this.buildForm !&#x3D;&#x3D; false) {
-        this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
-        this.initialized &#x3D; true;
-        this.checkExpressionChange();
-      }
+      this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
+      this.checkExpressionChange();
       this.updateInitialValue();
     } else if (changes.model &amp;&amp; this.fields &amp;&amp; this.fields.length &gt; 0) {
       this.form.patchValue(this.model);
@@ -1108,10 +1074,6 @@ export class FormlyForm implements DoCheck, OnChanges {
   }
 
   private checkExpressionChange() {
-    if (!this.fields || !this.initialized || !this.buildForm) {
-      return;
-    }
-
     this.formlyExpression.checkFields(this.form, this.fields, this.model, this.options);
   }
 

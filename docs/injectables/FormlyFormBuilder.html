@@ -728,6 +728,10 @@ export class FormlyFormBuilder {
   constructor(private formlyConfig: FormlyConfig) {}
 
   buildForm(form: FormGroup, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
+    if (this.checkAndMarkAsBuilded(fields)) {
+      return;
+    }
+
     this.formId++;
 
     options &#x3D; options || {};
@@ -1017,6 +1021,17 @@ export class FormlyFormBuilder {
       case &#x27;max&#x27;:
         return Validators.max(value);
     }
+  }
+
+  /* to avoid rebuild fields */
+  private checkAndMarkAsBuilded(fields: any): boolean {
+    if (fields[&#x27;__build__&#x27;]) {
+      return true;
+    }
+
+    fields[&#x27;__build__&#x27;] &#x3D; true;
+
+    return false;
   }
 }
 </code></pre>
