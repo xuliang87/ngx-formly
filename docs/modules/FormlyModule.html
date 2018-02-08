@@ -776,6 +776,7 @@ import { FormlyField } from &#x27;./components/formly.field&#x27;;
 import { FormlyAttributes } from &#x27;./components/formly.attributes&#x27;;
 import { FormlyConfig, ConfigOption, FORMLY_CONFIG_TOKEN } from &#x27;./services/formly.config&#x27;;
 import { FormlyFormBuilder } from &#x27;./services/formly.form.builder&#x27;;
+import { FormlyFormExpression } from &#x27;./services/formly.form.expression&#x27;;
 import { FormlyGroup } from &#x27;./components/formly.group&#x27;;
 import { FormlyValidationMessage } from &#x27;./templates/formly.validation-message&#x27;;
 
@@ -794,6 +795,7 @@ export class FormlyModule {
       ngModule: FormlyModule,
       providers: [
         FormlyFormBuilder,
+        FormlyFormExpression,
         FormlyConfig,
         { provide: FORMLY_CONFIG_TOKEN, useValue: config, multi: true },
         { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: config, multi: true },
