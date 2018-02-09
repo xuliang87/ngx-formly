@@ -841,7 +841,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/core/src/components/formly.form.ts:59</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/core/src/components/formly.form.ts:58</a></div>
                                 </td>
                             </tr>
     
@@ -907,7 +907,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/core/src/components/formly.form.ts:52</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/core/src/components/formly.form.ts:51</a></div>
                                 </td>
                             </tr>
     
@@ -973,7 +973,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/core/src/components/formly.form.ts:64</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/core/src/components/formly.form.ts:63</a></div>
                                 </td>
                             </tr>
     
@@ -1039,7 +1039,6 @@ export class FormlyForm implements DoCheck, OnChanges {
       this.form &#x3D; this.form || (new FormGroup({}));
       this.setOptions();
       this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
-      this.checkExpressionChange();
       this.updateInitialValue();
     } else if (changes.model &amp;&amp; this.fields &amp;&amp; this.fields.length &gt; 0) {
       this.form.patchValue(this.model);

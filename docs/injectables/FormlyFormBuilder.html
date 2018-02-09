@@ -567,12 +567,12 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(formlyConfig: <a href="../injectables/FormlyConfig.html">FormlyConfig</a>)</code>
+                                    <code>constructor(formlyConfig: <a href="../injectables/FormlyConfig.html">FormlyConfig</a>, formlyFormExpression: <a href="../components/FormlyForm.html">FormlyFormExpression</a>)</code>
                                 </td>
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/core/src/services/formly.form.builder.ts:11</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/services/formly.form.builder.ts:12</a></div>
                                         </td>
                                     </tr>
             
@@ -594,6 +594,15 @@
                                                               <td>formlyConfig</td>
                                                               <td>
                                                                         <code><a href="../injectables/FormlyConfig.html" target="_self" >FormlyConfig</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>formlyFormExpression</td>
+                                                              <td>
+                                                                        <code><a href="../components/FormlyForm.html" target="_self" >FormlyFormExpression</a></code>
                                                               </td>
                                                               <td>
                                                               </td>
@@ -635,7 +644,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/core/src/services/formly.form.builder.ts:15</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/core/src/services/formly.form.builder.ts:19</a></div>
                                         </td>
                                     </tr>
             
@@ -716,18 +725,27 @@
         <pre class="line-numbers"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { FormGroup, FormArray, FormControl, AbstractControl, Validators } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;./formly.config&#x27;;
-import { FORMLY_VALIDATORS, evalStringExpression, evalExpressionValueSetter, evalExpression, getFieldId, assignModelValue, getValueForKey, isObject } from &#x27;./../utils&#x27;;
+import { FORMLY_VALIDATORS, evalStringExpression, evalExpressionValueSetter, getFieldId, assignModelValue, getValueForKey, isObject } from &#x27;./../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x27;../components/formly.field.config&#x27;;
 import { getKeyPath, isUndefined, isFunction } from &#x27;../utils&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
+import { FormlyFormExpression } from &#x27;./formly.form.expression&#x27;;
 
 @Injectable()
 export class FormlyFormBuilder {
   private formId &#x3D; 0;
 
-  constructor(private formlyConfig: FormlyConfig) {}
+  constructor(
+    private formlyConfig: FormlyConfig,
+    private formlyFormExpression: FormlyFormExpression,
+  ) {}
 
   buildForm(form: FormGroup, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
+    this._buildForm(form, fields, model, options);
+    this.formlyFormExpression.checkFields(form, fields, model, options);
+  }
+
+  private _buildForm(form: FormGroup, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
     if (this.checkAndMarkAsBuilded(fields)) {
       return;
     }
@@ -801,7 +819,7 @@ export class FormlyFormBuilder {
         if (field.key) {
           this.addFormControl(form, field, { [field.key]: {} }, field.key);
           model[field.key] &#x3D; model[field.key] || {};
-          this.buildForm(field.formControl as FormGroup, field.fieldGroup, model[field.key], options);
+          this._buildForm(field.formControl as FormGroup, field.fieldGroup, model[field.key], options);
         } else {
           // if &#x60;hideExpression&#x60; is set in that case we have to deal
           // with toggle FormControl for each field in fieldGroup separately
@@ -815,7 +833,7 @@ export class FormlyFormBuilder {
               f.hideExpression &#x3D; (model, formState) &#x3D;&gt; field.hide || hideExpression(model, formState);
             });
           }
-          this.buildForm(form, field.fieldGroup, model, options);
+          this._buildForm(form, field.fieldGroup, model, options);
         }
       }
 
@@ -840,10 +858,6 @@ export class FormlyFormBuilder {
             expressionValueSetter: evalExpressionValueSetter(key, [&#x27;expressionValue&#x27;, &#x27;model&#x27;, &#x27;templateOptions&#x27;, &#x27;validation&#x27;]),
           };
         }
-
-        const expressionValue &#x3D; evalExpression(field.expressionProperties[key].expression, { field }, [model, options.formState]);
-        field.expressionProperties[key].expressionValue &#x3D; expressionValue;
-        evalExpression(field.expressionProperties[key].expressionValueSetter, { field }, [expressionValue, model, field.templateOptions || {}, field.validation]);
       }
     }
 
@@ -852,8 +866,6 @@ export class FormlyFormBuilder {
         // cache built expression
         field.hideExpression &#x3D; evalStringExpression(field.hideExpression, [&#x27;model&#x27;, &#x27;formState&#x27;]);
       }
-
-      field.hide &#x3D; evalExpression(field.hideExpression, { field }, [model, options.formState]);
     }
   }
 
@@ -995,10 +1007,6 @@ export class FormlyFormBuilder {
 
   private addControl(form: FormGroup, key: string, formControl: AbstractControl, field: FormlyFieldConfig) {
     field.formControl &#x3D; formControl;
-    if (field.hide) {
-      return;
-    }
-
     if (formControl instanceof FormArray) {
       form.setControl(key, formControl);
     } else {
