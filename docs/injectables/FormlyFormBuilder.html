@@ -857,7 +857,7 @@ export class FormlyFormBuilder {
           // cache built expression
           field.expressionProperties[key] &#x3D; {
             expression: isFunction(field.expressionProperties[key]) ? field.expressionProperties[key] : evalStringExpression(field.expressionProperties[key], [&#x27;model&#x27;, &#x27;formState&#x27;]),
-            expressionValueSetter: evalExpressionValueSetter(key, [&#x27;expressionValue&#x27;, &#x27;model&#x27;, &#x27;templateOptions&#x27;, &#x27;validation&#x27;]),
+            expressionValueSetter: evalExpressionValueSetter(key, [&#x27;expressionValue&#x27;, &#x27;model&#x27;, &#x27;templateOptions&#x27;, &#x27;validation&#x27;, &#x27;field&#x27;]),
           };
         }
       }
