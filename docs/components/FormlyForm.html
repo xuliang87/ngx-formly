@@ -636,6 +636,20 @@
                         </ul>
                     </td>
                 </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#modelChange">modelChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </section>
@@ -646,12 +660,12 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <code>constructor(formlyBuilder: <a href="../injectables/FormlyFormBuilder.html">FormlyFormBuilder</a>, formlyExpression: <a href="../components/FormlyForm.html">FormlyFormExpression</a>, parentForm: <a href="https://angular.io/api/forms/NgForm" target="_blank">NgForm</a>, parentFormGroup: <a href="https://angular.io/api/forms/FormGroupDirective" target="_blank">FormGroupDirective</a>)</code>
+                            <code>constructor(formlyBuilder: <a href="../injectables/FormlyFormBuilder.html">FormlyFormBuilder</a>, formlyExpression: <a href="../components/FormlyForm.html">FormlyFormExpression</a>, parentForm: <a href="https://angular.io/api/forms/NgForm" target="_blank">NgForm</a>, parentFormGroup: <a href="https://angular.io/api/forms/FormGroupDirective" target="_blank">FormGroupDirective</a>, parentFormlyForm: <a href="../components/FormlyForm.html">FormlyForm</a>)</code>
                         </td>
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/core/src/components/formly.form.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/core/src/components/formly.form.ts:28</a></div>
                                 </td>
                             </tr>
     
@@ -700,6 +714,15 @@
                                                       <td>parentFormGroup</td>
                                                       <td>
                                                                 <code><a href="https://angular.io/api/forms/FormGroupDirective" target="_blank" >FormGroupDirective</a></code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>parentFormlyForm</td>
+                                                      <td>
+                                                                <code><a href="../components/FormlyForm.html" target="_self" >FormlyForm</a></code>
                                                       </td>
                                                       <td>
                                                       </td>
@@ -811,6 +834,28 @@
             </table>
     </section>
 
+    <section>
+        <h3 id="outputs">Outputs</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">
+                            <a name="modelChange"></a>
+                            <code>modelChange</code>
+                        </td>
+                        <td class="col-md-10">
+                            <em><code>$event</code> type:</em>    <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/core/src/components/formly.form.ts:26</a></div>
+                                </td>
+                            </tr>
+                </tbody>
+            </table>
+    </section>
 
 
 
@@ -841,7 +886,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/core/src/components/formly.form.ts:58</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/core/src/components/formly.form.ts:61</a></div>
                                 </td>
                             </tr>
     
@@ -907,7 +952,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/core/src/components/formly.form.ts:51</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/core/src/components/formly.form.ts:54</a></div>
                                 </td>
                             </tr>
     
@@ -973,7 +1018,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/core/src/components/formly.form.ts:63</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/core/src/components/formly.form.ts:72</a></div>
                                 </td>
                             </tr>
     
@@ -995,7 +1040,7 @@
 
 
     <div class="tab-pane fade tab-source-code" id="c-source">
-        <pre class="line-numbers"><code class="language-typescript">import { Component, DoCheck, OnChanges, Input, SimpleChanges, Optional } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { Component, DoCheck, OnChanges, Input, SimpleChanges, Optional, EventEmitter, Output, SkipSelf } from &#x27;@angular/core&#x27;;
 import { FormControl, FormGroup, FormArray, NgForm, FormGroupDirective } from &#x27;@angular/forms&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions } from &#x27;./formly.field.config&#x27;;
 import { FormlyFormBuilder } from &#x27;../services/formly.form.builder&#x27;;
@@ -1020,6 +1065,8 @@ export class FormlyForm implements DoCheck, OnChanges {
   @Input() fields: FormlyFieldConfig[] &#x3D; [];
   @Input() options: FormlyFormOptions;
 
+  @Output() modelChange &#x3D; new EventEmitter&lt;any&gt;();
+
   private initialModel: any;
 
   constructor(
@@ -1027,6 +1074,7 @@ export class FormlyForm implements DoCheck, OnChanges {
     private formlyExpression: FormlyFormExpression,
     @Optional() private parentForm: NgForm,
     @Optional() private parentFormGroup: FormGroupDirective,
+    @Optional() @SkipSelf() private parentFormlyForm: FormlyForm,
   ) {}
 
   ngDoCheck() {
@@ -1054,6 +1102,12 @@ export class FormlyForm implements DoCheck, OnChanges {
 
   changeModel(event: { key: string, value: any }) {
     assignModelValue(this.model, event.key, event.value);
+    this.modelChange.emit(this.model);
+    if (this.parentFormlyForm) {
+      this.parentFormlyForm.modelChange.next(
+        this.parentFormlyForm.model,
+      );
+    }
     this.checkExpressionChange();
   }
 
@@ -1073,7 +1127,10 @@ export class FormlyForm implements DoCheck, OnChanges {
   }
 
   private checkExpressionChange() {
-    this.formlyExpression.checkFields(this.form, this.fields, this.model, this.options);
+    // only eval expressions it&#x27;s a root component
+    if (!this.parentFormlyForm) {
+      this.formlyExpression.checkFields(this.form, this.fields, this.model, this.options);
+    }
   }
 
   private resetModel(model?: any) {
