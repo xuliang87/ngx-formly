@@ -605,6 +605,9 @@
                                 <a href="#changeModel">changeModel</a>
                             </li>
                             <li>
+                                <a href="#emitModelChange">emitModelChange</a>
+                            </li>
+                            <li>
                                 <a href="#fieldModel">fieldModel</a>
                             </li>
                             <li>
@@ -934,6 +937,43 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
+                            <a name="emitModelChange"></a>
+                            <span class="name">
+                                <b>
+                                emitModelChange
+                                </b>
+                                <a href="#emitModelChange"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+    <code>emitModelChange()</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/core/src/components/formly.form.ts:67</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
                             <a name="fieldModel"></a>
                             <span class="name">
                                 <b>
@@ -1018,7 +1058,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/core/src/components/formly.form.ts:72</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/core/src/components/formly.form.ts:74</a></div>
                                 </td>
                             </tr>
     
@@ -1102,13 +1142,15 @@ export class FormlyForm implements DoCheck, OnChanges {
 
   changeModel(event: { key: string, value: any }) {
     assignModelValue(this.model, event.key, event.value);
+    this.emitModelChange();
+    this.checkExpressionChange();
+  }
+
+  emitModelChange() {
     this.modelChange.emit(this.model);
     if (this.parentFormlyForm) {
-      this.parentFormlyForm.modelChange.next(
-        this.parentFormlyForm.model,
-      );
+      this.parentFormlyForm.emitModelChange();
     }
-    this.checkExpressionChange();
   }
 
   setOptions() {
