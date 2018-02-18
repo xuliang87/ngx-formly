@@ -741,7 +741,7 @@ export class FormlyFormBuilder {
   ) {}
 
   buildForm(form: FormGroup, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
-    if (this.checkAndMarkAsBuilded(fields)) {
+    if (this.isBuilded(fields)) {
       return;
     }
 
@@ -750,7 +750,7 @@ export class FormlyFormBuilder {
   }
 
   private _buildForm(form: FormGroup, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
-    this.markAsChild(fields);
+    this.markAsBuilded(fields);
 
     this.formId++;
 
@@ -1033,23 +1033,13 @@ export class FormlyFormBuilder {
     }
   }
 
-  private markAsChild(fields: any) {
-    if (fields[&#x27;__build__&#x27;]) {
-      return;
-    }
-
-    fields[&#x27;__build_child__&#x27;] &#x3D; true;
+  /* to avoid rebuild fields */
+  private isBuilded(fields: any): boolean {
+    return fields &amp;&amp; fields[&#x27;__build__&#x27;];
   }
 
-  /* to avoid rebuild fields */
-  private checkAndMarkAsBuilded(fields: any): boolean {
-    if (fields[&#x27;__build__&#x27;] || fields[&#x27;__build_child__&#x27;]) {
-      return true;
-    }
-
+  private markAsBuilded(fields: any) {
     fields[&#x27;__build__&#x27;] &#x3D; true;
-
-    return false;
   }
 }
 </code></pre>
