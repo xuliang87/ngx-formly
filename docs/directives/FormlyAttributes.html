@@ -782,7 +782,7 @@ import { FormlyFieldConfig } from &#x27;./formly.field.config&#x27;;
 export class FormlyAttributes implements OnChanges {
   @Input(&#x27;formlyAttributes&#x27;) field: FormlyFieldConfig;
   @Input() formControl: AbstractControl;
-  private attributes &#x3D; [&#x27;id&#x27;, &#x27;name&#x27;, &#x27;placeholder&#x27;, &#x27;tabindex&#x27;, &#x27;step&#x27;, &#x27;aria-describedby&#x27;];
+  private attributes &#x3D; [&#x27;id&#x27;, &#x27;name&#x27;, &#x27;placeholder&#x27;, &#x27;tabindex&#x27;, &#x27;step&#x27;, &#x27;aria-describedby&#x27;, &#x27;readonly&#x27;];
   private statements &#x3D; [&#x27;change&#x27;, &#x27;keydown&#x27;, &#x27;keyup&#x27;, &#x27;keypress&#x27;, &#x27;click&#x27;, &#x27;focus&#x27;, &#x27;blur&#x27;];
 
   @HostListener(&#x27;focus&#x27;) onFocus() {
