@@ -929,12 +929,12 @@ export class FormlyFormBuilder {
   private initFieldValidation(field: FormlyFieldConfig) {
     let validators: any &#x3D; [];
     FORMLY_VALIDATORS
-      .filter(opt &#x3D;&gt; (field.templateOptions &amp;&amp; field.templateOptions[opt])
+      .filter(opt &#x3D;&gt; (field.templateOptions &amp;&amp; field.templateOptions.hasOwnProperty(opt))
         || (field.expressionProperties &amp;&amp; field.expressionProperties[&#x60;templateOptions.${opt}&#x60;]),
       )
       .forEach((opt) &#x3D;&gt; {
         validators.push((control: FormControl) &#x3D;&gt; {
-          if (!field.templateOptions[opt]) {
+          if (field.templateOptions[opt] &#x3D;&#x3D;&#x3D; false) {
             return null;
           }
 
