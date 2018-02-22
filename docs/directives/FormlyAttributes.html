@@ -807,7 +807,7 @@ export class FormlyAttributes implements OnChanges {
           this.elementRef.nativeElement, attr, this.getPropValue(this.field, attr),
         ));
 
-      if (this.field.templateOptions.attributes) {
+      if (this.field.templateOptions &amp;&amp; this.field.templateOptions.attributes) {
         const attributes &#x3D; this.field.templateOptions.attributes;
         Object.keys(attributes).forEach(name &#x3D;&gt; this.renderer.setAttribute(
           this.elementRef.nativeElement, name, attributes[name] as string,
