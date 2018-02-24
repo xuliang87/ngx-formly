@@ -637,7 +637,7 @@
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-            <code>buildForm(form: <a href="https://angular.io/api/forms/FormGroup" target="_blank">FormGroup</a>, fields: <a href="../interfaces/FormlyFieldConfig.html">FormlyFieldConfig[]</a>, model: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, options: <a href="../interfaces/FormlyFormOptions.html">FormlyFormOptions</a>)</code>
+            <code>buildForm(form: FormGroup | FormArray, fields: <a href="../interfaces/FormlyFieldConfig.html">FormlyFieldConfig[]</a>, model: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, options: <a href="../interfaces/FormlyFormOptions.html">FormlyFormOptions</a>)</code>
                                 </td>
                             </tr>
             
@@ -666,7 +666,7 @@
                                                             <tr>
                                                               <td>form</td>
                                                               <td>
-                                                                      <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+                                                                      <code>FormGroup | FormArray</code>
                                                               </td>
                                                               <td>
                                                               </td>
@@ -740,7 +740,7 @@ export class FormlyFormBuilder {
     private formlyFormExpression: FormlyFormExpression,
   ) {}
 
-  buildForm(form: FormGroup, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
+  buildForm(form: FormGroup | FormArray, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
     if (this.isBuilded(fields)) {
       return;
     }
@@ -749,7 +749,7 @@ export class FormlyFormBuilder {
     this.formlyFormExpression.checkFields(form, fields, model, options);
   }
 
-  private _buildForm(form: FormGroup, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
+  private _buildForm(form: FormGroup | FormArray, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
     this.markAsBuilded(fields);
 
     this.formId++;
@@ -780,7 +780,7 @@ export class FormlyFormBuilder {
     this.registerFormControls(form, fields, model, options);
   }
 
-  private registerFormControls(form: FormGroup, fields: FormlyFieldConfig[], model: any, options: FormlyFormOptions) {
+  private registerFormControls(form: FormGroup | FormArray, fields: FormlyFieldConfig[], model: any, options: FormlyFormOptions) {
     fields.forEach((field, index) &#x3D;&gt; {
       field.id &#x3D; getFieldId(&#x60;formly_${this.formId}&#x60;, field, index);
 
@@ -805,7 +805,7 @@ export class FormlyFormBuilder {
             let nestedForm &#x3D; rootForm.get(formPath) as FormGroup;
             if (!nestedForm) {
               nestedForm &#x3D; new FormGroup({});
-              rootForm.addControl(formPath, nestedForm);
+              this.addControl(rootForm, formPath, nestedForm);
             }
             if (!rootModel[path]) {
               rootModel[path] &#x3D; typeof path &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? {} : [];
@@ -837,15 +837,6 @@ export class FormlyFormBuilder {
           }
           this._buildForm(form, field.fieldGroup, model, options);
         }
-      }
-
-      if (field.fieldArray &amp;&amp; field.key &amp;&amp; !(form.get(field.key) instanceof FormArray)) {
-        const arrayForm &#x3D; new FormArray(
-          [],
-          field.validators ? field.validators.validation : undefined,
-          field.asyncValidators ? field.asyncValidators.validation : undefined,
-        );
-        this.addControl(form, field.key, arrayForm, field);
       }
     });
   }
@@ -978,7 +969,7 @@ export class FormlyFormBuilder {
     }
   }
 
-  private addFormControl(form: FormGroup, field: FormlyFieldConfig, model: any, path: string) {
+  private addFormControl(form: FormGroup | FormArray, field: FormlyFieldConfig, model: any, path: string) {
     let control: AbstractControl;
     if (field.formControl instanceof AbstractControl) {
       control &#x3D; field.formControl;
@@ -986,9 +977,15 @@ export class FormlyFormBuilder {
       control &#x3D; form.get(path);
     } else if (field.component &amp;&amp; field.component.createControl) {
       control &#x3D; field.component.createControl(model[path], field);
-    } else if (field.fieldGroup &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path) {
+    } else if (field.fieldGroup &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path &amp;&amp; !field.fieldArray) {
       control &#x3D; new FormGroup(
         model[path],
+        field.validators ? field.validators.validation : undefined,
+        field.asyncValidators ? field.asyncValidators.validation : undefined,
+      );
+    } else if (field.fieldArray &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path) {
+      control &#x3D; new FormArray(
+        [],
         field.validators ? field.validators.validation : undefined,
         field.asyncValidators ? field.asyncValidators.validation : undefined,
       );
@@ -1007,13 +1004,21 @@ export class FormlyFormBuilder {
     this.addControl(form, path, control, field);
   }
 
-  private addControl(form: FormGroup, key: string, formControl: AbstractControl, field: FormlyFieldConfig) {
-    field.formControl &#x3D; formControl;
-    if (formControl instanceof FormArray) {
-      form.setControl(key, formControl);
-    } else {
-      form.addControl(key, formControl);
+  private addControl(form: FormGroup | FormArray, key: string | number, formControl: AbstractControl, field?: FormlyFieldConfig) {
+    if (field) {
+      field.formControl &#x3D; formControl;
     }
+
+    if (form instanceof FormArray) {
+      form.insert(&lt;number&gt;key, formControl);
+    } else {
+      if (formControl instanceof FormArray) {
+        form.setControl(&lt;string&gt;key, formControl);
+      } else {
+        form.addControl(&lt;string&gt;key, formControl);
+      }
+    }
+
   }
 
   private getValidation(opt: string, value: any) {

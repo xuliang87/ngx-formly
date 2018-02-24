@@ -556,7 +556,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-1519319591751">Unamed property</a>
+                                        <a href="#call-declaration-1519468764196">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -575,7 +575,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-1519319591751"></a>
+                                            <a name="call-declaration-1519468764196"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [f: FormlyFieldConfig]
@@ -607,7 +607,7 @@
 
     <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers"><code class="language-typescript">import { Injectable, Inject, InjectionToken } from &#x27;@angular/core&#x27;;
-import { ValidationErrors, FormGroup } from &#x27;@angular/forms&#x27;;
+import { ValidationErrors, FormGroup, FormArray } from &#x27;@angular/forms&#x27;;
 import { Field } from &#x27;./../templates/field&#x27;;
 import { reverseDeepMerge } from &#x27;./../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions } from &#x27;../components/formly.field.config&#x27;;
@@ -633,7 +633,7 @@ export class FormlyConfig {
   };
 
   extras: {
-    fieldTransform?: ((fields: FormlyFieldConfig[], model: any, form: FormGroup, options: FormlyFormOptions) &#x3D;&gt; FormlyFieldConfig[])[],
+    fieldTransform?: ((fields: FormlyFieldConfig[], model: any, form: FormGroup | FormArray, options: FormlyFormOptions) &#x3D;&gt; FormlyFieldConfig[])[],
     showError?: (field: Field) &#x3D;&gt; boolean;
   } &#x3D; {
     fieldTransform: undefined,

@@ -1525,7 +1525,7 @@
 
 
     <div class="tab-pane fade tab-source-code" id="c-source">
-        <pre class="line-numbers"><code class="language-typescript">import { FormGroup, AbstractControl, FormGroupDirective, NgForm } from &#x27;@angular/forms&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { FormGroup, AbstractControl, FormGroupDirective, NgForm, FormArray } from &#x27;@angular/forms&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
 import { Field } from &#x27;../templates/field&#x27;;
 import { TemplateManipulators } from &#x27;../services/formly.config&#x27;;
@@ -1728,7 +1728,7 @@ export interface FormlyFormOptions {
   resetModel?: (model?: any) &#x3D;&gt; void;
   formState?: any;
   fieldChanges?: Subject&lt;FormlyValueChangeEvent&gt;;
-  fieldTransform?: (fields: FormlyFieldConfig[], model: any, form: FormGroup, options: FormlyFormOptions) &#x3D;&gt; FormlyFieldConfig[];
+  fieldTransform?: (fields: FormlyFieldConfig[], model: any, form: FormGroup | FormArray, options: FormlyFormOptions) &#x3D;&gt; FormlyFieldConfig[];
   showError?: (field: Field) &#x3D;&gt; boolean;
   parentForm?: FormGroupDirective | NgForm | null;
 }

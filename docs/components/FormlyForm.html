@@ -775,7 +775,7 @@
                         </td>
                         <td class="col-md-10">
                               <p>
-                                <em>Type:</em>    <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+                                <em>Type:</em>    <code>FormGroup | FormArray</code>
 
                               </p>
                             <p>
@@ -1081,11 +1081,11 @@
 
     <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers"><code class="language-typescript">import { Component, DoCheck, OnChanges, Input, SimpleChanges, Optional, EventEmitter, Output, SkipSelf } from &#x27;@angular/core&#x27;;
-import { FormControl, FormGroup, FormArray, NgForm, FormGroupDirective } from &#x27;@angular/forms&#x27;;
+import { FormGroup, FormArray, NgForm, FormGroupDirective } from &#x27;@angular/forms&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions } from &#x27;./formly.field.config&#x27;;
 import { FormlyFormBuilder } from &#x27;../services/formly.form.builder&#x27;;
 import { FormlyFormExpression } from &#x27;../services/formly.form.expression&#x27;;
-import { assignModelValue, isNullOrUndefined, isObject, reverseDeepMerge, getKey, getValueForKey, getFieldModel } from &#x27;../utils&#x27;;
+import { assignModelValue, isNullOrUndefined, isObject, reverseDeepMerge, getFieldModel } from &#x27;../utils&#x27;;
 
 @Component({
   selector: &#x27;formly-form&#x27;,
@@ -1101,7 +1101,7 @@ import { assignModelValue, isNullOrUndefined, isObject, reverseDeepMerge, getKey
 })
 export class FormlyForm implements DoCheck, OnChanges {
   @Input() model: any &#x3D; {};
-  @Input() form: FormGroup &#x3D; new FormGroup({});
+  @Input() form: FormGroup | FormArray &#x3D; new FormGroup({});
   @Input() fields: FormlyFieldConfig[] &#x3D; [];
   @Input() options: FormlyFormOptions;
 
@@ -1129,7 +1129,7 @@ export class FormlyForm implements DoCheck, OnChanges {
       this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
       this.updateInitialValue();
     } else if (changes.model &amp;&amp; this.fields &amp;&amp; this.fields.length &gt; 0) {
-      this.form.patchValue(this.model);
+      (&lt;any&gt;this.form).patchValue(this.model);
     }
   }
 
@@ -1183,7 +1183,6 @@ export class FormlyForm implements DoCheck, OnChanges {
       this.form.reset(model);
     }
 
-    this.resetFormGroup(model, this.form);
     this.resetFormModel(model, this.model);
   }
 
@@ -1211,52 +1210,6 @@ export class FormlyForm implements DoCheck, OnChanges {
         else {
           formModel[key] &#x3D; model[key];
         }
-      }
-    }
-  }
-
-  private resetFormGroup(model: any, form: FormGroup, actualKey?: string) {
-    for (let controlKey in form.controls) {
-      let key &#x3D; getKey(controlKey, actualKey);
-      if (form.controls[controlKey] instanceof FormGroup) {
-        this.resetFormGroup(model, &lt;FormGroup&gt;form.controls[controlKey], key);
-      }
-      if (form.controls[controlKey] instanceof FormArray) {
-        this.resetFormArray(model, &lt;FormArray&gt;form.controls[controlKey], key);
-      }
-      if (form.controls[controlKey] instanceof FormControl) {
-        form.controls[controlKey].setValue(getValueForKey(model, key));
-      }
-    }
-  }
-
-  private resetFormArray(model: any, formArray: FormArray, key: string) {
-    let newValue &#x3D; getValueForKey(model, key);
-
-    // removes and updates
-    for (let i &#x3D; formArray.length - 1; i &gt;&#x3D; 0; i--) {
-      if (formArray.at(i) instanceof FormGroup) {
-        if (newValue &amp;&amp; !isNullOrUndefined(newValue[i])) {
-          this.resetFormGroup(newValue[i], &lt;FormGroup&gt;formArray.at(i));
-        }
-        else {
-          formArray.removeAt(i);
-          let value &#x3D; getValueForKey(this.model, key);
-          if (Array.isArray(value)) {
-            value.splice(i, 1);
-          }
-        }
-      }
-    }
-
-    // inserts
-    if (Array.isArray(newValue) &amp;&amp; formArray.length &lt; newValue.length) {
-      let remaining &#x3D; newValue.length - formArray.length;
-      let initialLength &#x3D; formArray.length;
-      for (let i &#x3D; 0; i &lt; remaining; i++) {
-        let pos &#x3D; initialLength + i;
-        getValueForKey(this.model, key).push(newValue[pos]);
-        formArray.push(new FormGroup({}));
       }
     }
   }
