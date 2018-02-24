@@ -913,7 +913,7 @@ export abstract class FieldArrayType extends FieldType {
       { ...clone(this.field.fieldArray), key: &#x60;${this.field.fieldGroup.length}&#x60; },
     );
 
-    this.builder.buildForm(this.formControl, [this.field.fieldGroup[i]], this.model[i], this.options);
+    this.builder.buildForm(this.formControl, [this.field.fieldGroup[i]], this.model, this.options);
   }
 
   remove(i) {

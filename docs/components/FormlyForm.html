@@ -991,7 +991,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-    <code>fieldModel(field: <a href="../interfaces/FormlyFieldConfig.html">FormlyFieldConfig</a>)</code>
+    <code>fieldModel(field: <a href="../interfaces/FormlyFieldConfig.html">FormlyFieldConfig</a>, model: )</code>
                         </td>
                     </tr>
     
@@ -1021,6 +1021,14 @@
                                                       <td>field</td>
                                                       <td>
                                                               <code><a href="../interfaces/FormlyFieldConfig.html" target="_self" >FormlyFieldConfig</a></code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>model</td>
+                                                      <td>
                                                       </td>
                                                       <td>
                                                       </td>
@@ -1091,7 +1099,7 @@ import { FormGroup, FormArray, NgForm, FormGroupDirective } from &#x27;@angular/
 import { FormlyFieldConfig, FormlyFormOptions } from &#x27;./formly.field.config&#x27;;
 import { FormlyFormBuilder } from &#x27;../services/formly.form.builder&#x27;;
 import { FormlyFormExpression } from &#x27;../services/formly.form.expression&#x27;;
-import { assignModelValue, isNullOrUndefined, isObject, reverseDeepMerge, getFieldModel } from &#x27;../utils&#x27;;
+import { assignModelValue, isNullOrUndefined, reverseDeepMerge, getFieldModel, clone } from &#x27;../utils&#x27;;
 
 @Component({
   selector: &#x27;formly-form&#x27;,
@@ -1139,11 +1147,11 @@ export class FormlyForm implements DoCheck, OnChanges {
     }
   }
 
-  fieldModel(field: FormlyFieldConfig) {
+  fieldModel(field: FormlyFieldConfig, model &#x3D; this.model) {
     if (field.key &amp;&amp; (field.fieldGroup || field.fieldArray)) {
-      return getFieldModel(this.model, field, true);
+      return getFieldModel(model, field, true);
     }
-    return this.model;
+    return model;
   }
 
   changeModel(event: { key: string, value: any }) {
@@ -1183,41 +1191,37 @@ export class FormlyForm implements DoCheck, OnChanges {
 
   private resetModel(model?: any) {
     model &#x3D; isNullOrUndefined(model) ? this.initialModel : model;
+    this.resetForm(this.fields, model, this.model);
     if (this.options.parentForm) {
       this.options.parentForm.resetForm(model);
     } else {
       this.form.reset(model);
     }
-
-    this.resetFormModel(model, this.model);
   }
 
-  private resetFormModel(model: any, formModel: any, path?: (string | number)[]) {
-    if (!isObject(model) &amp;&amp; !Array.isArray(model)) {
-      return;
-    }
+  private resetForm(fields: FormlyFieldConfig[], newModel: any, modelToUpdate: any) {
+    fields.forEach(field &#x3D;&gt; {
+      if (field.fieldGroup &amp;&amp; field.fieldGroup.length &gt; 0) {
+        let newFieldModel &#x3D; this.fieldModel(field, newModel),
+          fieldModel &#x3D; this.fieldModel(field, modelToUpdate);
+        if (field.fieldArray) {
+          field.fieldGroup.length &#x3D; 0;
+          fieldModel.length &#x3D; 0;
+          const formControl &#x3D; &lt;FormArray&gt;field.formControl;
+          while (formControl.length !&#x3D;&#x3D; 0) {
+            formControl.removeAt(0);
+          }
 
-    // removes
-    for (let key in formModel) {
-      if (!(key in model) || isNullOrUndefined(model[key])) {
-        if (!this.form.get((path || []).concat(key))) {
-          // don&#x27;t remove if bound to a control
-          delete formModel[key];
+          newFieldModel.forEach((m: any, i: number) &#x3D;&gt; {
+            fieldModel[i] &#x3D; m;
+            field.fieldGroup.push({ ...clone(field.fieldArray), key: &#x60;${i}&#x60; });
+            this.formlyBuilder.buildForm(formControl, [field.fieldGroup[i]], newFieldModel, this.options);
+          });
+        } else {
+          this.resetForm(field.fieldGroup, newFieldModel, fieldModel);
         }
       }
-    }
-
-    // inserts and updates
-    for (let key in model) {
-      if (!isNullOrUndefined(model[key])) {
-        if (key in formModel) {
-          this.resetFormModel(model[key], formModel[key], (path || []).concat(key));
-        }
-        else {
-          formModel[key] &#x3D; model[key];
-        }
-      }
-    }
+    });
   }
 
   private updateInitialValue() {
