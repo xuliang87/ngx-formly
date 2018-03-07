@@ -562,7 +562,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-1520328376490">Unamed property</a>
+                                        <a href="#call-declaration-1520417414967">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -581,7 +581,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-1520328376490"></a>
+                                            <a name="call-declaration-1520417414967"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [form: FormGroup, field: FormlyFieldConfig, model: any, options: FormlyFormOptions]
@@ -601,7 +601,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="184" class="link-to-prism">src/core/src/components/formly.field.config.ts:184</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="185" class="link-to-prism">src/core/src/components/formly.field.config.ts:185</a></div>
                                         </td>
                                     </tr>
 
@@ -616,6 +616,7 @@
 import { Subject } from &#x27;rxjs/Subject&#x27;;
 import { Field } from &#x27;../templates/field&#x27;;
 import { TemplateManipulators } from &#x27;../services/formly.config&#x27;;
+import { Observable } from &#x27;rxjs/Observable&#x27;;
 
 export interface FormlyFieldConfig {
   /**
@@ -770,7 +771,7 @@ export interface FormlyTemplateOptions {
   label?: string;
   placeholder?: string;
   disabled?: boolean;
-  options?: any[];
+  options?: any[] | Observable&lt;any[]&gt;;
   rows?: number;
   cols?: number;
   description?: string;

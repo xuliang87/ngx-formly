@@ -608,7 +608,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="210" class="link-to-prism">src/core/src/components/formly.field.config.ts:210</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="211" class="link-to-prism">src/core/src/components/formly.field.config.ts:211</a></div>
                                         </td>
                                     </tr>
 
@@ -641,7 +641,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="211" class="link-to-prism">src/core/src/components/formly.field.config.ts:211</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="212" class="link-to-prism">src/core/src/components/formly.field.config.ts:212</a></div>
                                         </td>
                                     </tr>
 
@@ -674,7 +674,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="212" class="link-to-prism">src/core/src/components/formly.field.config.ts:212</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="213" class="link-to-prism">src/core/src/components/formly.field.config.ts:213</a></div>
                                         </td>
                                     </tr>
 
@@ -689,6 +689,7 @@
 import { Subject } from &#x27;rxjs/Subject&#x27;;
 import { Field } from &#x27;../templates/field&#x27;;
 import { TemplateManipulators } from &#x27;../services/formly.config&#x27;;
+import { Observable } from &#x27;rxjs/Observable&#x27;;
 
 export interface FormlyFieldConfig {
   /**
@@ -843,7 +844,7 @@ export interface FormlyTemplateOptions {
   label?: string;
   placeholder?: string;
   disabled?: boolean;
-  options?: any[];
+  options?: any[] | Observable&lt;any[]&gt;;
   rows?: number;
   cols?: number;
   description?: string;
