@@ -578,7 +578,7 @@
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/services/formly.form.builder.ts:12</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/core/src/services/formly.form.builder.ts:11</a></div>
                                         </td>
                                     </tr>
             
@@ -650,7 +650,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/core/src/services/formly.form.builder.ts:19</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/core/src/services/formly.form.builder.ts:18</a></div>
                                         </td>
                                     </tr>
             
@@ -732,9 +732,8 @@
 import { FormGroup, FormArray, FormControl, AbstractControl, Validators } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;./formly.config&#x27;;
 import { FORMLY_VALIDATORS, evalStringExpression, evalExpressionValueSetter, getFieldId, assignModelValue, getValueForKey, isObject } from &#x27;./../utils&#x27;;
-import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x27;../components/formly.field.config&#x27;;
+import { FormlyFieldConfig, FormlyFormOptions } from &#x27;../components/formly.field.config&#x27;;
 import { getKeyPath, isUndefined, isFunction } from &#x27;../utils&#x27;;
-import { Subject } from &#x27;rxjs/Subject&#x27;;
 import { FormlyFormExpression } from &#x27;./formly.form.expression&#x27;;
 
 @Injectable()
@@ -759,15 +758,6 @@ export class FormlyFormBuilder {
   private _buildForm(form: FormGroup | FormArray, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
     this.formId++;
     this.markAsBuilded(fields, true);
-
-    options &#x3D; options || {};
-    options.formState &#x3D; options.formState || {};
-    if (!options.showError) {
-      options.showError &#x3D; this.formlyConfig.extras.showError;
-    }
-    if (!options.fieldChanges) {
-      options.fieldChanges &#x3D; new Subject&lt;FormlyValueChangeEvent&gt;();
-    }
 
     let fieldTransforms &#x3D; (options &amp;&amp; options.fieldTransform) || this.formlyConfig.extras.fieldTransform;
     if (!Array.isArray(fieldTransforms)) {
