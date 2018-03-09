@@ -1210,20 +1210,17 @@ export class FormlyForm implements DoCheck, OnChanges {
   private resetModel(model?: any) {
     model &#x3D; isNullOrUndefined(model) ? this.initialModel : model;
     this.resetForm(this.fields, model, this.model);
-    if (this.options.parentForm) {
-      this.options.parentForm.resetForm(model);
-    } else {
-      this.form.reset(model);
-    }
+    this.form.reset(model);
   }
 
   private resetForm(fields: FormlyFieldConfig[], newModel: any, modelToUpdate: any) {
     fields.forEach(field &#x3D;&gt; {
       if ((field.fieldGroup &amp;&amp; field.fieldGroup.length &gt; 0) || field.fieldArray) {
-        let newFieldModel &#x3D; this.fieldModel(field, newModel),
+        const newFieldModel &#x3D; this.fieldModel(field, newModel),
           fieldModel &#x3D; this.fieldModel(field, modelToUpdate);
 
         if (field.fieldArray) {
+          field.fieldGroup &#x3D; field.fieldGroup || [];
           field.fieldGroup.length &#x3D; 0;
 
           if (fieldModel !&#x3D;&#x3D; newFieldModel) {
