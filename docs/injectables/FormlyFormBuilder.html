@@ -815,7 +815,7 @@ export class FormlyFormBuilder {
 
       if (field.fieldGroup) {
         if (field.key) {
-          this.addFormControl(form, field, { [field.key]: {} }, field.key);
+          this.addFormControl(form, field, { [field.key]: field.fieldArray ? [] : {} }, field.key);
           model[field.key] &#x3D; model[field.key] || (field.fieldArray ? [] : {});
           this._buildForm(field.formControl as FormGroup, field.fieldGroup, model[field.key], options);
         } else {
@@ -967,10 +967,11 @@ export class FormlyFormBuilder {
 
   private addFormControl(form: FormGroup | FormArray, field: FormlyFieldConfig, model: any, path: string) {
     let control: AbstractControl;
-    if (field.formControl instanceof AbstractControl) {
-      control &#x3D; field.formControl;
-    } else if (form.get(path)) {
-      control &#x3D; form.get(path);
+    if (field.formControl instanceof AbstractControl || form.get(path)) {
+      control &#x3D; field.formControl || form.get(path);
+      if (control.value !&#x3D;&#x3D; model[path]) {
+        control.patchValue(model[path]);
+      }
     } else if (field.component &amp;&amp; field.component.createControl) {
       control &#x3D; field.component.createControl(model[path], field);
     } else if (field.fieldGroup &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path &amp;&amp; !field.fieldArray) {
