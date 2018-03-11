@@ -1210,7 +1210,14 @@ export class FormlyForm implements DoCheck, OnChanges {
   private resetModel(model?: any) {
     model &#x3D; isNullOrUndefined(model) ? this.initialModel : model;
     this.resetForm(this.fields, model, this.model);
-    this.form.reset(model);
+
+    // we should call &#x60;NgForm::resetForm&#x60; to ensure changing &#x60;submitted&#x60; state after resetting form
+    // but only when the current component is a root one.
+    if (!this.parentFormlyForm &amp;&amp; this.options.parentForm) {
+      this.options.parentForm.resetForm(model);
+    } else {
+      this.form.reset(model);
+    }
   }
 
   private resetForm(fields: FormlyFieldConfig[], newModel: any, modelToUpdate: any) {
