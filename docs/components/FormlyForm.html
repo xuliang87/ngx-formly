@@ -904,7 +904,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/core/src/components/formly.form.ts:64</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/core/src/components/formly.form.ts:68</a></div>
                                 </td>
                             </tr>
     
@@ -970,7 +970,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/core/src/components/formly.form.ts:70</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/core/src/components/formly.form.ts:74</a></div>
                                 </td>
                             </tr>
     
@@ -1007,7 +1007,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/core/src/components/formly.form.ts:57</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/core/src/components/formly.form.ts:61</a></div>
                                 </td>
                             </tr>
     
@@ -1081,7 +1081,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/core/src/components/formly.form.ts:77</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/core/src/components/formly.form.ts:81</a></div>
                                 </td>
                             </tr>
     
@@ -1152,7 +1152,11 @@ export class FormlyForm implements DoCheck, OnChanges {
       this.model &#x3D; this.model || {};
       this.form &#x3D; this.form || (new FormGroup({}));
       this.setOptions();
-      this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
+      if (!this.isBuilded(this.fields)) {
+        this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
+      } else if (changes.model) {
+        this.resetModel(this.model);
+      }
       this.updateInitialValue();
     } else if (changes.model &amp;&amp; this.fields &amp;&amp; this.fields.length &gt; 0) {
       this.resetModel(this.model);
@@ -1230,7 +1234,7 @@ export class FormlyForm implements DoCheck, OnChanges {
           field.fieldGroup &#x3D; field.fieldGroup || [];
           field.fieldGroup.length &#x3D; 0;
 
-          if (fieldModel !&#x3D;&#x3D; newFieldModel) {
+          if (fieldModel !&#x3D;&#x3D; newFieldModel &amp;&amp; fieldModel) {
             fieldModel.length &#x3D; 0;
           }
 
@@ -1253,6 +1257,10 @@ export class FormlyForm implements DoCheck, OnChanges {
 
   private updateInitialValue() {
     this.initialModel &#x3D; reverseDeepMerge({}, this.model);
+  }
+
+  private isBuilded(fields: any): boolean {
+    return fields &amp;&amp; fields[&#x27;__build__&#x27;];
   }
 }
 </code></pre>
