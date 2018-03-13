@@ -573,8 +573,8 @@ import {FormlyFieldConfig} from &#39;&#64;ngx-formly/core&#39;;
 &#64;Component({
   selector: &#39;app&#39;,
   template: `
-    &lt;form [formGroup]=&quot;form&quot; (ngSubmit)=&quot;submit(userModel)&quot;&gt;
-      &lt;formly-form [model]=&quot;userModel&quot; [fields]=&quot;userFields&quot;&gt;
+    &lt;form [formGroup]=&quot;form&quot; (ngSubmit)=&quot;submit(model)&quot;&gt;
+      &lt;formly-form [form]=&quot;form&quot; [fields]=&quot;fields&quot; [model]=&quot;model&quot;&gt;
         &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot;&gt;Submit&lt;/button&gt;
       &lt;/formly-form&gt;
     &lt;/form&gt;
@@ -582,8 +582,8 @@ import {FormlyFieldConfig} from &#39;&#64;ngx-formly/core&#39;;
 })
 export class AppComponent {
   form = new FormGroup({});
-  userModel = { email: &#39;email&#64;gmail.com&#39; };
-  userFields: Array&lt;FormlyFieldConfig&gt; = [{
+  model = { email: &#39;email&#64;gmail.com&#39; };
+  fields: FormlyFieldConfig[] = [{
     key: &#39;email&#39;,
     type: &#39;input&#39;,
     templateOptions: {
@@ -594,8 +594,8 @@ export class AppComponent {
     }
   }];
 
-  submit(user) {
-    console.log(user);
+  submit(model) {
+    console.log(model);
   }
 }</code></pre><p>From there, it&#39;s just JavaScript. Allowing for DRY, maintainable, reusable forms.</p>
 <h2 id="roadmap">Roadmap</h2>
