@@ -1156,13 +1156,13 @@ export class FormlyForm implements DoCheck, OnChanges {
         if (changes.form) {
           delete (&lt;any&gt;this.fields)[&#x27;__build__&#x27;];
         } else if (changes.model) {
-          this.resetModel(this.model);
+          this.patchModel(this.model);
         }
       }
       this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
       this.updateInitialValue();
     } else if (changes.model &amp;&amp; this.fields &amp;&amp; this.fields.length &gt; 0) {
-      this.resetModel(this.model);
+      this.patchModel(this.model);
     }
   }
 
@@ -1214,9 +1214,14 @@ export class FormlyForm implements DoCheck, OnChanges {
     this.formlyExpression.checkFields(this.form, this.fields, this.model, this.options);
   }
 
+  private patchModel(model: any) {
+    this.resetFieldArray(this.fields, model, this.model);
+    (&lt;FormGroup&gt; this.form).patchValue(model, { onlySelf: true });
+  }
+
   private resetModel(model?: any) {
     model &#x3D; isNullOrUndefined(model) ? this.initialModel : model;
-    this.resetForm(this.fields, model, this.model);
+    this.resetFieldArray(this.fields, model, this.model);
 
     // we should call &#x60;NgForm::resetForm&#x60; to ensure changing &#x60;submitted&#x60; state after resetting form
     // but only when the current component is a root one.
@@ -1227,7 +1232,7 @@ export class FormlyForm implements DoCheck, OnChanges {
     }
   }
 
-  private resetForm(fields: FormlyFieldConfig[], newModel: any, modelToUpdate: any) {
+  private resetFieldArray(fields: FormlyFieldConfig[], newModel: any, modelToUpdate: any) {
     fields.forEach(field &#x3D;&gt; {
       if ((field.fieldGroup &amp;&amp; field.fieldGroup.length &gt; 0) || field.fieldArray) {
         const newFieldModel &#x3D; this.fieldModel(field, newModel),
@@ -1252,7 +1257,7 @@ export class FormlyForm implements DoCheck, OnChanges {
             this.formlyBuilder.buildForm(formControl, [field.fieldGroup[i]], newFieldModel, this.options);
           });
         } else {
-          this.resetForm(field.fieldGroup, newFieldModel, fieldModel);
+          this.resetFieldArray(field.fieldGroup, newFieldModel, fieldModel);
         }
       }
     });

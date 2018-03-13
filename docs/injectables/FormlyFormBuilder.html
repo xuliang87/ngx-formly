@@ -731,7 +731,7 @@
         <pre class="line-numbers"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { FormGroup, FormArray, FormControl, AbstractControl, Validators } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;./formly.config&#x27;;
-import { FORMLY_VALIDATORS, evalStringExpression, evalExpressionValueSetter, getFieldId, assignModelValue, getValueForKey, isObject } from &#x27;./../utils&#x27;;
+import { FORMLY_VALIDATORS, evalStringExpression, evalExpressionValueSetter, getFieldId, assignModelValue, getValueForKey, isObject, isNullOrUndefined } from &#x27;./../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions } from &#x27;../components/formly.field.config&#x27;;
 import { getKeyPath, isUndefined, isFunction } from &#x27;../utils&#x27;;
 import { FormlyFormExpression } from &#x27;./formly.form.expression&#x27;;
@@ -969,7 +969,10 @@ export class FormlyFormBuilder {
     let control: AbstractControl;
     if (field.formControl instanceof AbstractControl || form.get(path)) {
       control &#x3D; field.formControl || form.get(path);
-      if (control.value !&#x3D;&#x3D; model[path]) {
+      if (
+        !(isNullOrUndefined(control.value) &amp;&amp; isNullOrUndefined(model[path]))
+        &amp;&amp; control.value !&#x3D;&#x3D; model[path]
+      ) {
         control.patchValue(model[path]);
       }
     } else if (field.component &amp;&amp; field.component.createControl) {
