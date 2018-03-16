@@ -746,13 +746,6 @@ export class FormlyFormBuilder {
   ) {}
 
   buildForm(form: FormGroup | FormArray, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
-    this._buildForm(form, fields, model, options);
-    this.formlyFormExpression.checkFields(form, fields, model, options);
-  }
-
-  private _buildForm(form: FormGroup | FormArray, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
-    this.formId++;
-
     let fieldTransforms &#x3D; (options &amp;&amp; options.fieldTransform) || this.formlyConfig.extras.fieldTransform;
     if (!Array.isArray(fieldTransforms)) {
       fieldTransforms &#x3D; [fieldTransforms];
@@ -767,6 +760,12 @@ export class FormlyFormBuilder {
       }
     });
 
+    this._buildForm(form, fields, model, options);
+    this.formlyFormExpression.checkFields(form, fields, model, options);
+  }
+
+  private _buildForm(form: FormGroup | FormArray, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
+    this.formId++;
     this.registerFormControls(form, fields, model, options);
   }
 
@@ -1009,15 +1008,14 @@ export class FormlyFormBuilder {
     }
 
     if (form instanceof FormArray) {
-      form.insert(&lt;number&gt;key, formControl);
+      if (form.at(&lt;number&gt; key) !&#x3D;&#x3D; formControl) {
+        form.setControl(&lt;number&gt;key, formControl);
+      }
     } else {
-      if (formControl instanceof FormArray) {
+      if (form.get(&lt;string&gt; key) !&#x3D;&#x3D; formControl) {
         form.setControl(&lt;string&gt;key, formControl);
-      } else {
-        form.addControl(&lt;string&gt;key, formControl);
       }
     }
-
   }
 
   private getValidation(opt: string, value: any) {
