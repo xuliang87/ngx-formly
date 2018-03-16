@@ -665,7 +665,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/core/src/components/formly.field.ts:32</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/core/src/components/formly.field.ts:28</a></div>
                                 </td>
                             </tr>
     
@@ -728,7 +728,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/core/src/components/formly.field.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/core/src/components/formly.field.ts:23</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -749,7 +749,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/core/src/components/formly.field.ts:25</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/core/src/components/formly.field.ts:22</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -770,7 +770,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/core/src/components/formly.field.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/core/src/components/formly.field.ts:21</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -794,7 +794,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/core/src/components/formly.field.ts:27</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/core/src/components/formly.field.ts:24</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -817,7 +817,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/core/src/components/formly.field.ts:28</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/core/src/components/formly.field.ts:25</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -864,7 +864,7 @@
                         </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/core/src/components/formly.field.ts:29</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/core/src/components/formly.field.ts:26</a></div>
                                 </td>
                             </tr>
     
@@ -885,9 +885,6 @@ import { FormGroup } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig, TypeOption, TemplateManipulators } from &#x27;../services/formly.config&#x27;;
 import { Field } from &#x27;../templates/field&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions } from &#x27;./formly.field.config&#x27;;
-import { Subscription } from &#x27;rxjs/Subscription&#x27;;
-import { debounceTime } from &#x27;rxjs/operator/debounceTime&#x27;;
-import { map } from &#x27;rxjs/operator/map&#x27;;
 
 @Component({
   selector: &#x27;formly-field&#x27;,
@@ -908,7 +905,6 @@ export class FormlyField implements OnInit, OnChanges, OnDestroy {
   @ViewChild(&#x27;fieldComponent&#x27;, {read: ViewContainerRef}) fieldComponent: ViewContainerRef;
 
   private componentRefs: ComponentRef&lt;Field&gt;[] &#x3D; [];
-  private _subscriptions: Subscription[] &#x3D; [];
 
   constructor(
     private formlyConfig: FormlyConfig,
@@ -916,7 +912,9 @@ export class FormlyField implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.createFieldComponents();
+    if (!this.field.template) {
+      this.createFieldComponent();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -932,48 +930,16 @@ export class FormlyField implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.componentRefs.forEach(componentRef &#x3D;&gt; componentRef.destroy());
-    this._subscriptions.forEach(subscriber &#x3D;&gt; subscriber.unsubscribe());
-    this._subscriptions &#x3D; this.componentRefs &#x3D; [];
-  }
-
-  private createFieldComponents() {
-    if (this.field &amp;&amp; !this.field.template &amp;&amp; !this.field.fieldGroup &amp;&amp; !this.field.fieldArray) {
-      let debounce &#x3D; 0;
-      if (this.field.modelOptions &amp;&amp; this.field.modelOptions.debounce &amp;&amp; this.field.modelOptions.debounce.default) {
-        debounce &#x3D; this.field.modelOptions.debounce.default;
-      }
-
-      const fieldComponentRef &#x3D; this.createFieldComponent();
-      if (this.field.key) {
-        let valueChanges &#x3D; fieldComponentRef.instance.formControl.valueChanges;
-        if (debounce &gt; 0) {
-          valueChanges &#x3D; debounceTime.call(valueChanges, debounce);
-        }
-        if (this.field.parsers &amp;&amp; this.field.parsers.length &gt; 0) {
-          this.field.parsers.forEach(parserFn &#x3D;&gt; {
-            valueChanges &#x3D; map.call(valueChanges, parserFn);
-          });
-        }
-
-        this._subscriptions.push(valueChanges.subscribe((event) &#x3D;&gt;
-          this.modelChange.emit({ key: this.field.key, value: event }),
-        ));
-      }
-    } else if (this.field.fieldGroup || this.field.fieldArray) {
-      this.createFieldComponent();
-    }
+    this.componentRefs &#x3D; [];
   }
 
   private createFieldComponent(): ComponentRef&lt;Field&gt; {
-    if (this.field.fieldGroup) {
-      this.field.type &#x3D; this.field.type || &#x27;formly-group&#x27;;
-    }
     const type &#x3D; this.formlyConfig.getType(this.field.type),
       wrappers &#x3D; this.getFieldWrappers(type);
 
     let fieldComponent &#x3D; this.fieldComponent;
     wrappers.forEach(wrapperName &#x3D;&gt; {
-      let wrapperRef &#x3D; this.createComponent(fieldComponent, this.formlyConfig.getWrapper(wrapperName).component);
+      const wrapperRef &#x3D; this.createComponent(fieldComponent, this.formlyConfig.getWrapper(wrapperName).component);
       fieldComponent &#x3D; wrapperRef.instance.fieldComponent;
     });
 
