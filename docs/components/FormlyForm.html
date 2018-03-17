@@ -1088,7 +1088,7 @@
 
     <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers"><code class="language-typescript">import { Component, DoCheck, OnChanges, Input, SimpleChanges, Optional, EventEmitter, Output, SkipSelf, OnDestroy } from &#x27;@angular/core&#x27;;
-import { FormGroup, FormArray, NgForm, FormGroupDirective } from &#x27;@angular/forms&#x27;;
+import { FormGroup, FormArray, NgForm, FormGroupDirective, FormControl } from &#x27;@angular/forms&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x27;./formly.field.config&#x27;;
 import { FormlyFormBuilder } from &#x27;../services/formly.form.builder&#x27;;
 import { FormlyFormExpression } from &#x27;../services/formly.form.expression&#x27;;
@@ -1233,8 +1233,11 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
   }
 
   private patchModel(model: any) {
+    this.clearModelSubscriptions();
     this.resetFieldArray(this.fields, model, this.model);
+    this.initializeFormValue(this.form);
     (&lt;FormGroup&gt; this.form).patchValue(model, { onlySelf: true });
+    this.trackModelChanges(this.fields);
   }
 
   private resetModel(model?: any) {
@@ -1279,6 +1282,16 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
         }
       }
     });
+  }
+
+  private initializeFormValue(control) {
+    if (control instanceof FormControl) {
+      control.setValue(null);
+    } else if (control instanceof FormGroup) {
+      Object.keys(control.controls).forEach(k &#x3D;&gt; this.initializeFormValue(control.controls[k]));
+    } else if (control instanceof FormArray) {
+      control.controls.forEach(c &#x3D;&gt; this.initializeFormValue(c));
+    }
   }
 
   private updateInitialValue() {
