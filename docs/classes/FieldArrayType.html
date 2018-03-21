@@ -787,7 +787,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/core/src/templates/field-array.type.ts:39</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/core/src/templates/field-array.type.ts:40</a></div>
                                         </td>
                                     </tr>
             
@@ -914,6 +914,7 @@ export abstract class FieldArrayType extends FieldType {
     );
 
     this.builder.buildForm(this.formControl, [this.field.fieldGroup[i]], this.model, this.options);
+    (&lt;any&gt; this.options).resetTrackModelChanges();
   }
 
   remove(i) {
@@ -921,6 +922,7 @@ export abstract class FieldArrayType extends FieldType {
     this.field.fieldGroup.splice(i, 1);
     this.field.fieldGroup.forEach((f, index) &#x3D;&gt; f.key &#x3D; &#x60;${index}&#x60;);
     this.model.splice(i, 1);
+    (&lt;any&gt; this.options).resetTrackModelChanges();
   }
 }
 </code></pre>
