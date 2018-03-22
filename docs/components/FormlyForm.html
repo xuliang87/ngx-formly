@@ -1211,7 +1211,7 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
 
   private trackModelChanges(fields: FormlyFieldConfig[], rootKey: string[] &#x3D; []) {
     fields.forEach(field &#x3D;&gt; {
-      if (field.key &amp;&amp; !field.fieldGroup &amp;&amp; !field.fieldArray) {
+      if (field.key &amp;&amp; field.type &amp;&amp; !field.fieldGroup &amp;&amp; !field.fieldArray) {
         let valueChanges &#x3D; field.formControl.valueChanges;
         const debounce &#x3D; field.modelOptions &amp;&amp; field.modelOptions.debounce &amp;&amp; field.modelOptions.debounce.default;
         if (debounce &gt; 0) {
