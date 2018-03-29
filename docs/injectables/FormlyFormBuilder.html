@@ -848,6 +848,8 @@ export class FormlyFormBuilder {
     }
 
     if (field.hideExpression) {
+      // delete hide value in order to force re-evalute it in FormlyFormExpression.
+      delete field.hide;
       if (typeof field.hideExpression &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
         // cache built expression
         field.hideExpression &#x3D; evalStringExpression(field.hideExpression, [&#x27;model&#x27;, &#x27;formState&#x27;]);
