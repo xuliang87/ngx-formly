@@ -855,18 +855,6 @@ export class FormlyFormBuilder {
         field.hideExpression &#x3D; evalStringExpression(field.hideExpression, [&#x27;model&#x27;, &#x27;formState&#x27;]);
       }
     }
-
-    if (field.key &amp;&amp; field.fieldGroup &amp;&amp; field.fieldGroup.length &gt; 0 &amp;&amp; field.expressionProperties &amp;&amp; field.expressionProperties.hasOwnProperty(&#x27;templateOptions.disabled&#x27;)) {
-      field.fieldGroup.forEach(f &#x3D;&gt; {
-        f.expressionProperties &#x3D; f.expressionProperties || {};
-        let disabledExpression: any &#x3D; f.expressionProperties[&#x27;templateOptions.disabled&#x27;] || (() &#x3D;&gt; false);
-        if (typeof disabledExpression &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-          disabledExpression &#x3D; evalStringExpression(disabledExpression, [&#x27;model&#x27;, &#x27;formState&#x27;]);
-        }
-
-        f.expressionProperties[&#x27;templateOptions.disabled&#x27;] &#x3D; (model: any, formState: any) &#x3D;&gt; field.templateOptions.disabled || disabledExpression(model, formState);
-      });
-    }
   }
 
   private initFieldOptions(field: FormlyFieldConfig) {
@@ -1011,6 +999,23 @@ export class FormlyFormBuilder {
 
     if (field.templateOptions.disabled) {
       control.disable();
+    }
+
+    // Replace decorated property with a getter that returns the observable.
+    // https://github.com/angular-redux/store/blob/master/src/decorators/select.ts#L79-L85
+    if (delete field.templateOptions.disabled) {
+      Object.defineProperty(field.templateOptions, &#x27;disabled&#x27;, {
+        get: (function () { return !this.formControl.enabled; }).bind(field),
+        set: (function (value: boolean) {
+          if (this.expressionProperties &amp;&amp; this.expressionProperties.hasOwnProperty(&#x27;templateOptions.disabled&#x27;)) {
+            this.expressionProperties[&#x27;templateOptions.disabled&#x27;].expressionValue &#x3D; value;
+          }
+
+          value ? this.formControl.disable() : this.formControl.enable();
+        }).bind(field),
+        enumerable: true,
+        configurable: true,
+      });
     }
 
     this.addControl(form, path, control, field);
