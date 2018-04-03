@@ -837,11 +837,20 @@ export class FormlyFormBuilder {
   private initFieldExpression(field: FormlyFieldConfig, model: any, options: FormlyFormOptions) {
     if (field.expressionProperties) {
       for (const key in field.expressionProperties as any) {
+        if (key.indexOf(&#x27;field.&#x27;) &#x3D;&#x3D;&#x3D; 0) {
+          console.warn(&#x60;FormlyForm: field(${field.key}) using &quot;field.&quot; path in &quot;expressionProperties&quot; is deprecated, use &quot;${key.replace(&#x27;field.&#x27;, &#x27;&#x27;)}&quot; instead.&#x60;);
+        }
+
         if (typeof field.expressionProperties[key] &#x3D;&#x3D;&#x3D; &#x27;string&#x27; || isFunction(field.expressionProperties[key])) {
           // cache built expression
           field.expressionProperties[key] &#x3D; {
             expression: isFunction(field.expressionProperties[key]) ? field.expressionProperties[key] : evalStringExpression(field.expressionProperties[key], [&#x27;model&#x27;, &#x27;formState&#x27;]),
-            expressionValueSetter: evalExpressionValueSetter(key, [&#x27;expressionValue&#x27;, &#x27;model&#x27;, &#x27;templateOptions&#x27;, &#x27;validation&#x27;, &#x27;field&#x27;]),
+            expressionValueSetter: evalExpressionValueSetter(
+              key.indexOf(&#x27;field.&#x27;) &#x3D;&#x3D;&#x3D; 0 || key.indexOf(&#x27;model.&#x27;) &#x3D;&#x3D;&#x3D; 0
+                ? key
+                : &#x60;field.${key}&#x60;,
+              [&#x27;expressionValue&#x27;, &#x27;model&#x27;, &#x27;field&#x27;],
+            ),
           };
         }
       }
