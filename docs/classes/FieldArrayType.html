@@ -610,7 +610,7 @@
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/core/src/templates/field-array.type.ts:23</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/core/src/templates/field-array.type.ts:24</a></div>
                                         </td>
                                     </tr>
             
@@ -666,14 +666,14 @@
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-            <code>add()</code>
+            <code>add(i?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, initialModel?: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
                                 </td>
                             </tr>
             
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/core/src/templates/field-array.type.ts:29</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/core/src/templates/field-array.type.ts:30</a></div>
                                         </td>
                                     </tr>
             
@@ -681,9 +681,49 @@
                                 <td class="col-md-4">
             
                                         <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <table class="params">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>Type</td>
+                                                            <td>Optional</td>
+                                                            <td>Description</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                              <td>i</td>
+                                                              <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                              </td>
+                                                              <td>
+                                                                  true
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>initialModel</td>
+                                                              <td>
+                                                                      <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                              </td>
+                                                              <td>
+                                                                  true
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <div class="io-description">
                                             <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
             
                                         </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -712,7 +752,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/core/src/templates/field-array.type.ts:10</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/core/src/templates/field-array.type.ts:11</a></div>
                                         </td>
                                     </tr>
             
@@ -780,14 +820,14 @@
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-            <code>remove(i: )</code>
+            <code>remove(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                                 </td>
                             </tr>
             
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/core/src/templates/field-array.type.ts:40</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/core/src/templates/field-array.type.ts:45</a></div>
                                         </td>
                                     </tr>
             
@@ -809,6 +849,7 @@
                                                             <tr>
                                                               <td>i</td>
                                                               <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
                                                               </td>
                                                               <td>
                                                               </td>
@@ -865,7 +906,7 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/core/src/templates/field-array.type.ts:8</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/core/src/templates/field-array.type.ts:9</a></div>
                                         </td>
                                     </tr>
             
@@ -878,11 +919,12 @@
 
 
     <div class="tab-pane fade tab-source-code" id="c-source">
-        <pre class="line-numbers"><code class="language-typescript">import { FormArray } from &#x27;@angular/forms&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { FormArray, FormGroup } from &#x27;@angular/forms&#x27;;
 import { FormlyFieldConfig } from &#x27;../components/formly.field.config&#x27;;
 import { FieldType } from &#x27;./field.type&#x27;;
 import { clone } from &#x27;../utils&#x27;;
 import { FormlyFormBuilder } from &#x27;../services/formly.form.builder&#x27;;
+import { isNullOrUndefined } from &#x27;util&#x27;;
 
 export abstract class FieldArrayType extends FieldType {
   formControl: FormArray;
@@ -906,18 +948,22 @@ export abstract class FieldArrayType extends FieldType {
     super();
   }
 
-  add() {
-    const i &#x3D; this.field.fieldGroup.length;
-    this.model.push({});
-    this.field.fieldGroup.push(
-      { ...clone(this.field.fieldArray), key: &#x60;${this.field.fieldGroup.length}&#x60; },
-    );
+  add(i?: number, initialModel?: any) {
+    i &#x3D; isNullOrUndefined(i) ? this.field.fieldGroup.length : i;
+
+    this.model.splice(i, 0, initialModel ? clone(initialModel) : {});
+    this.formControl.insert(i, new FormGroup({}));
+    this.field.fieldGroup.splice(i, 0, { ...clone(this.field.fieldArray) });
+
+    this.field.fieldGroup.forEach((field, index) &#x3D;&gt; {
+      field.key &#x3D; &#x60;${index}&#x60;;
+    });
 
     this.builder.buildForm(this.formControl, [this.field.fieldGroup[i]], this.model, this.options);
     (&lt;any&gt; this.options).resetTrackModelChanges();
   }
 
-  remove(i) {
+  remove(i: number) {
     this.formControl.removeAt(i);
     this.field.fieldGroup.splice(i, 1);
     this.field.fieldGroup.forEach((f, index) &#x3D;&gt; f.key &#x3D; &#x60;${index}&#x60;);
