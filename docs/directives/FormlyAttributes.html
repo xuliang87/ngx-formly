@@ -250,6 +250,9 @@
                                   <a href="../miscellaneous/functions.html" data-type="entity-link" >Functions</a>
                                 </li>
                                 <li class="link">
+                                  <a href="../miscellaneous/typealiases.html" data-type="entity-link" >Type aliases</a>
+                                </li>
+                                <li class="link">
                                   <a href="../miscellaneous/variables.html" data-type="entity-link" >Variables</a>
                                 </li>
                         </ul>
@@ -496,6 +499,9 @@
                    >
                                        <li class="link">
                                          <a href="../miscellaneous/functions.html" data-type="entity-link" >Functions</a>
+                                       </li>
+                                       <li class="link">
+                                         <a href="../miscellaneous/typealiases.html" data-type="entity-link" >Type aliases</a>
                                        </li>
                                        <li class="link">
                                          <a href="../miscellaneous/variables.html" data-type="entity-link" >Variables</a>
@@ -843,8 +849,11 @@ export class FormlyAttributes implements OnChanges {
 
   private getStatementValue(statement: string) {
     const fn &#x3D; this.field.templateOptions[statement];
+    if (fn.length &#x3D;&#x3D;&#x3D; 2) {
+      console.warn(&#x60;FormlyForm: field(${this.field.key}) Passing formControl as a second argument for &quot;${statement}&quot; is deprecated and it will be removed in the 3.0 version, use &quot;field.formControl&quot; instead&#x60;);
+    }
 
-    return () &#x3D;&gt; fn(this.field, this.formControl);
+    return (event: any) &#x3D;&gt; fn.length !&#x3D;&#x3D; 2 ? fn(this.field, event) : fn(this.field, this.formControl);
   }
 
   private canApplyRender(fieldChange: SimpleChange, prop: string): Boolean {
